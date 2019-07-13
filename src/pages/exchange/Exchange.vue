@@ -1563,8 +1563,8 @@ export default {
       this[silder] = val;
     },
     init() { 
-	 // var params = this.$route.params[0]; 
-	 var params = this.$route.params.pathMatch;
+	 var params = this.$route.params[0]; 
+	 // var params = this.$route.params.pathMatch;
       if (params == undefined) {
         this.$router.push("/exchange/" + this.defaultPath);
         params = this.defaultPath;

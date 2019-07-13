@@ -503,6 +503,8 @@ module.exports = {
 				transfertip2: 'Available Transfer Quantity',
 				transfertip3: 'from',
 				transfertip4: 'Transfer to',
+				transfertip5: 'Transfer to OTC Account', 
+				transfertip6: 'Transfer to Exchange Account',
 				transfersuccess: 'Transfer Success!',
 				transfererr1: 'Please enter a valid quantity!',
                 transfererr2: 'Exceeds the maximum number of Transfer!',

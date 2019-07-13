@@ -13,7 +13,7 @@
             <!--{{$t('uc.finance.record.to')}}-->
             <!--</span>-->
             <!--<DatePicker v-model="endDate" type="date"></DatePicker>-->
-            <span>币种：</span>
+            <span>{{$t('uc.finance.record.symbol')}}：</span>
             <Select v-model="coinType" style="width:100px;margin-right:30px;" @on-change="getAddrList" clearable>
               <Option v-for="item in coinList" :value="item.unit" :key="item.unit">{{ item.unit }}</Option>
             </Select>
@@ -172,43 +172,8 @@ export default {
         align: "center",
         width: 160,
         key:"createTime"
-      });
-      columns.push({
-        title: this.$t("uc.finance.record.type"),
-        render: function(h, params) {
-          let str = "";
-          let type = params.row.type;
-          if (type == 0) {
-            str = '转入法币账户';
-          } else if (type == 1) {
-            str = '转入币币账户';
-          } else if (type == 2) {
-            str = that.$t("uc.finance.record.transaccount");
-          } else if (type == 3) {
-            str = that.$t("uc.finance.record.exchange");
-          } else if (type == 4) {
-            str = that.$t("uc.finance.record.otcbuy");
-          } else if (type == 5) {
-            str = that.$t("uc.finance.record.otcsell");
-          } else if (type == 6) {
-            str = that.$t("uc.finance.record.activityaward");
-          } else if (type == 7) {
-            str = that.$t("uc.finance.record.promotionaward");
-          } else if (type == 8) {
-            str = that.$t("uc.finance.record.dividend");
-          } else if (type == 9) {
-            str = that.$t("uc.finance.record.vote");
-          } else if (type == 10) {
-            str = that.$t("uc.finance.record.handrecharge");
-          } else if (type == 11) {
-            str = that.$t("uc.finance.record.match");
-          }else {
-            str = "充值";
-          }
-          return h("div", str, "");
-        }
-      });
-      columns.push({
+	  });
+	  columns.push({
         title: this.$t("uc.finance.record.symbol"),
         align: "center",
         key:"symbol",
@@ -217,8 +182,20 @@ export default {
         }
       });
       columns.push({
-        // title: this.$t("uc.finance.record.num"),
-        title: "到账数量", //到账数量
+        title: this.$t("uc.finance.record.type"),
+        render: function(h, params) {
+          let str = "";
+          let type = params.row.type;
+          if (type == 0) {
+            str = this.$t("uc.finance.money.transfertip5");
+          } else if (type == 1) {
+            str = this.$t("uc.finance.money.transfertip6");
+          }
+          return h("div", str, "");
+        }
+      });
+      columns.push({
+        title: this.$t("uc.finance.record.num"),
         align: "center",
         render(h, params) {
           return h(
@@ -232,7 +209,7 @@ export default {
           );
         }
       });
-      columns.push({
+     /**  columns.push({
         title: this.$t("uc.finance.record.shouldfee"), //"应付手续费"
         align: "center",
         render(h, params) {
@@ -276,7 +253,7 @@ export default {
             that.toFloor(params.row.realFee || "0")
           );
         }
-      });
+      }); */
       columns.push({
         title: this.$t("uc.finance.record.status"),
         // key: "status",
