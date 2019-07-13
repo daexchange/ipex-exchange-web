@@ -131,8 +131,9 @@
                                                 </div>
                                                 <div class="photo-req">
                                                     <h3>{{$t('uc.safe.required')}}</h3>
-                                                    <p>{{$t('uc.safe.required2_1')}}</p>
-                                                    <p>{{$t('uc.safe.required2_2')}}</p>
+                                                    <!--<p>{{$t('uc.safe.required2_1')}}</p>
+                                                    <p>{{$t('uc.safe.required2_2')}}</p>-->
+                                                    <div>{{$t('uc.safe.required2_1_2')}}</div>
                                                     <p>{{$t('uc.safe.required2_3')}}</p>
                                                     <p>{{$t('uc.safe.required2_4')}}</p>
                                                     <p>{{$t('uc.safe.required2_5')}}</p>
@@ -1131,7 +1132,7 @@ export default {
 
     .photo-information {
         float: left;
-        width: 400px;
+        width: 365px;
     }
     .photo-require {
         /*float: right;*/
@@ -1142,10 +1143,9 @@ export default {
     }
     .photo-handle {
         float: left;
-        width: 400px;
+        width: 365px;
     }
     .photo-req {
-        float: right;
         padding-top: 20px;
         font-size: 16px;
         color: #4e5b85;

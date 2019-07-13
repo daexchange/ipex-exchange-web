@@ -781,6 +781,7 @@ module.exports = {
             required1_4: 'The image must be JPG/JPEG/PNG format, and no larger than 2M.',
             required2_1: 'Please provide a photo of you holding your passport. In the same picture have a reference to IPEX',
             required2_2: 'application date, and your signature will do. Make sure your face will be clearly visible;',
+            required2_1_2: 'Please provide a photo of you holding your passport. In the same picture have a reference to OceanEx and application date displayed - a note with the word “OceanEx”, application date, and your signature will do. Make sure your face will be clearly visible and that all passport details are clearly readable.',
             required2_3: 'Face clearly visiable;',
             required2_4: 'Passport clearly readable;',
             required2_5: 'Note with the word "IPEX", application date, and your signature.',
