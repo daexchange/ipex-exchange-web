@@ -179,7 +179,9 @@
 
     .main-nav /deep/ .ivu-tabs-bar {
         /*border-color: #4c5151;*/
-        border-color: #0B0D1B;
+        /*border-color: #0B0D1B;*/
+        border-color: #515a6e;
+        border-width: 1px;
     }
 
     .main-nav /deep/ .ivu-tabs-nav .ivu-tabs-tab-active {
