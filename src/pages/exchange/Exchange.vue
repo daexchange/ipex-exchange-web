@@ -1562,7 +1562,7 @@ export default {
     silderGo(silder, val) {
       this[silder] = val;
     },
-    init() {
+    init() { 
 	 // var params = this.$route.params[0]; 
 	 var params = this.$route.params.pathMatch;
       if (params == undefined) {
@@ -1573,17 +1573,16 @@ export default {
 	  var paramArray = params.split("_");
 	  const paramArray_0 = paramArray[0];
 	  const basecion = paramArray[1];
-	//currentCoin.coin}}/{{currentCoin.base
-      if (basecion) {
+      if (basecion&&this.basecion!='favor')  {
         this.basecion = basecion;
 	  }
 	  var exchangeCoinSettlement = basecion.toUpperCase();
 	  var exchangeCoin = paramArray_0.toUpperCase();
 
       this.currentCoin.symbol = exchangeCoin + "/" + exchangeCoinSettlement;
-     // this.currentCoin.coin = exchangeCoin;
+      this.currentCoin.coin = exchangeCoin;
 	  this.currentCoin.base = exchangeCoinSettlement;
-
+ 
       this.$store.commit("navigate", "nav-exchange");
       this.$store.commit("setSkin", this.skin);
       this.loadBaseSymbol();
