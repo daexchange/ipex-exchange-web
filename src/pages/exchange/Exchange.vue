@@ -1563,15 +1563,17 @@ export default {
       this[silder] = val;
     },
     init() {
-      var params = this.$route.params[0];
+	 // var params = this.$route.params[0]; 
+	 var params = this.$route.params.pathMatch;
       if (params == undefined) {
         this.$router.push("/exchange/" + this.defaultPath);
         params = this.defaultPath;
 	  }
+	 
 	  var paramArray = params.split("_");
 	  const paramArray_0 = paramArray[0];
 	  const basecion = paramArray[1];
-
+	//currentCoin.coin}}/{{currentCoin.base
       if (basecion) {
         this.basecion = basecion;
 	  }
@@ -2610,8 +2612,8 @@ export default {
     },
     gohref(currentRow, oldCurrentRow) {
       // location.href = "/#exchange/" + currentRow.href;
-      // location.reload();
-      const path = "/exchange/" + currentRow.href;
+	  // location.reload();
+	  const path = "/exchange/" + currentRow.href;
       this.$router.push({
         path
       });
