@@ -262,6 +262,8 @@ export default {
             this.getList();
             this.clearValues();
             this.$Message.success(resp.message);
+          }else if(resp.code == 500) {
+            this.$Message.error('转账失败');
           } else {
             this.$Message.error(resp.message);
           }
@@ -299,7 +301,7 @@ export default {
       params["page"] = this.transaction.page;
       params["pageSize"] = this.transaction.pageSize;
       this.$http
-        .post(this.host + "/uc/exange/transfer/record", params)
+        .post(this.host + "/uc/transfer-other/record/page", params)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0) {
@@ -488,7 +490,14 @@ export default {
   .ivu-input {
     height: 40px;
     line-height: 40px;
+	color: #fff;
   }
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    background-color: #fff;
+    background-image: none;
+    color: rgb(0, 0, 0);
 }
 </style>
 

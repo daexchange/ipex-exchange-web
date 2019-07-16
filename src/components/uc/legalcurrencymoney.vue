@@ -86,7 +86,7 @@ export default {
       this.coinId = coinName;
       //获取
       this.$http
-        .post(this.host + "/uc/legal-currency/asset/wallet/coin?coinId="+coinName)
+        .post(this.host + "/uc/legal-currency/asset/coin?coinId="+coinName)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0) {

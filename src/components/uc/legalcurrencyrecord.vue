@@ -50,14 +50,15 @@ export default {
       endTime: "",
       recordValue: "",
       recordType: [
-         
         {
-          value: 4,
-          label: this.$t("uc.finance.record.otcbuy")
+          value: 0,
+		 // label: this.$t("uc.finance.record.otcbuy")
+		  label: this.$t("uc.finance.money.transfertip5")
         },
         {
-          value: 5,
-          label: this.$t("uc.finance.record.otcsell")
+          value: 1,
+		  //label: this.$t("uc.finance.record.otcsell")
+		  label: this.$t("uc.finance.money.transfertip6")
         }
       ],
       coinList: [],
@@ -96,8 +97,29 @@ export default {
           return;
         }
       }
+	},
+	clearValues() {
+     
+    //  this.withdrawAdress = "";
+    //  this.inputAddress = "";
+    //  this.withdrawAmount = 0;
+      // this.withdrawFee= 0;
+     // this.withdrawOutAmount = 0;
     },
     getAddrList() {
+      //初始化页面上的值
+      this.clearValues();
+      //获取地址
+      this.$http
+		.post(this.host + "/uc/withdraw/support/coin/info")
+        .then(response => {
+          var resp = response.body;
+          if (resp.code == 0 && resp.data.length > 0) {
+            this.coinList = resp.data;
+          } else {
+            this.$Message.error(resp.message);
+          }
+        });
     },
     getType() {
       // console.log(this.recordValue);
@@ -143,7 +165,7 @@ export default {
         symbol,
         type
       };
-      this.$http.post(this.host + "/uc/legal-currency/asset/transaction/all", params).then(response => {
+      this.$http.post(this.host + "/uc/transfer-self/record/page", params).then(response => {
           var resp = response.body;
           if (resp.code == 0) {
             this.loading = false;
@@ -185,11 +207,11 @@ export default {
         title: this.$t("uc.finance.record.type"),
         render: function(h, params) {
           let str = "";
-          let type = params.row.type;
+		  let type = params.row.type;
           if (type == 0) {
-            str = this.$t("uc.finance.money.transfertip5");
+            str = that.$t("uc.finance.money.transfertip5");
           } else if (type == 1) {
-            str = this.$t("uc.finance.money.transfertip6");
+            str = that.$t("uc.finance.money.transfertip6");
           }
           return h("div", str, "");
         }
