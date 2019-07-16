@@ -10,10 +10,10 @@
                         <MenuItem class="menuItem-trade" @click.native="buyIn" name="buyIn">购买</MenuItem>
                         <MenuItem class="menuItem-trade" @click.native="sellOut" name="sellOut">出售</MenuItem>
                     </MenuGroup>
-                    <MenuGroup title="大宗交易">
+                    <!--<MenuGroup title="大宗交易">
                         <MenuItem class="menuItem-trade" name="buyInBlock">购买</MenuItem>
                         <MenuItem class="menuItem-trade" name="sellOutBlock">出售</MenuItem>
-                    </MenuGroup>
+                    </MenuGroup>-->
                     <MenuItem class="menuItem-adver" name="publishAdver">发布广告</MenuItem>
                     <MenuItem class="menuItem-adver" name="goBusiness" @click.native="goBusiness">成为商家</MenuItem>
                 </Menu>
