@@ -51,24 +51,17 @@
             </div>
             <div class="form-group-container form-group-container2">
               <div class="form-group form-fee">
-                <label class="label-amount"> {{$t('uc.finance.withdraw.fee')}}
-                  <!--<p class="label-fr">-->
-                  <!--<span>{{$t('uc.finance.withdraw.range')}}：{{currentCoin.minTxFee}} - {{currentCoin.maxTxFee}}</span>-->
-                  <!--</p>-->
-                </label>
+                <label class="label-amount"> {{$t('uc.finance.withdraw.fee')}}</label>
                 <div class="input-group" style="margin-top:14px;position:relative;">
                   <Slider v-if="currentCoin.maxTxFee > currentCoin.minTxFee" v-model="withdrawFee" show-input :step="(currentCoin.maxTxFee - currentCoin.minTxFee)/10" :max="currentCoin.maxTxFee" :min="currentCoin.minTxFee"></Slider>
-                  <!--<Poptip v-else trigger="focus" :content="$t('uc.finance.withdraw.tip1')+currentCoin.minTxFee+$t('uc.finance.withdraw.tip1')+currentCoin.maxTxFee" style="width: 100%;">-->
                   <InputNumber readonly v-model="withdrawFee" :min="currentCoin.minTxFee" :max="currentCoin.maxTxFee" size="large"></InputNumber>
                   <span class="input-group-addon addon-tag uppercase">{{currentCoin.unit}}</span>
-                  <!--</Poptip>-->
                 </div>
               </div>
               <div class="form-group">
                 <label>{{$t('uc.finance.withdraw.arriamount')}}</label>
                 <div class="input-group" style="margin-top:14px;position:relative;">
                   <InputNumber readonly v-model="withdrawOutAmount" :placeholder="$t('uc.finance.withdraw.arriamount')" size="large"></InputNumber>
-                  <!-- <input id="withdrawOutAmount" class="form-control form-out-amount" disabled="" maxlength="20" type="text" value="0"> -->
                   <span class="input-group-addon addon-tag uppercase">{{currentCoin.unit}}</span>
                 </div>
               </div>
@@ -76,18 +69,12 @@
             <div class="action-foot">
               <Button id="withdrawSubmit" long size="large" type="primary" style="height:40px;" @click="apply">{{$t('uc.finance.transfer.title')}}</Button>
             </div>
-           <!-- <div class="action-content pt10">
-              <div class="action-body">
-                <p class="acb-p1">{{$t('common.tip')}}</p>
-                <p class="acb-p2">• {{$t('uc.finance.withdraw.msg3')}}：{{currentCoin.minAmount}}{{$t('uc.finance.withdraw.msg4')}}。<br>• {{$t('uc.finance.withdraw.msg5')}}<br>• {{$t('uc.finance.withdraw.msg6')}} </p>
-              </div>
-            </div> -->
             <div class="action-content">
               <div class="action-body">
                 <p class="acb-p1">{{$t('uc.finance.transfer.record')}}</p>
                 <div class="order-table">
                   <p class="acb-p2" style="margin-bottom:10px;">• {{$t('uc.finance.withdraw.click')}}
-                    <i class="ivu-icon ivu-icon-funnel"></i>{{$t('uc.finance.withdraw.filtrate')}}</p>
+                  <i class="ivu-icon ivu-icon-funnel"></i>{{$t('uc.finance.withdraw.filtrate')}}</p>
                   <Table :columns="tableColumnsWithdraw" :data="tableWithdraw" :loading="loading"></Table>
                   <div id="pages">
                     <div style="float: right;">
@@ -198,7 +185,7 @@ export default {
           this.countdown = 60;
           this.codeIsSending = false;
         }
-      }, 10);
+      }, 1000);
     },
     changePage(index) {
       this.transaction.page = index - 1;
@@ -263,7 +250,7 @@ export default {
             this.clearValues();
             this.$Message.success(resp.message);
           }else if(resp.code == 500) {
-            this.$Message.error('转账失败');
+            this.$Message.error(resp.message);
           } else {
             this.$Message.error(resp.message);
           }
