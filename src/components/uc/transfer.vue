@@ -13,15 +13,15 @@
             <div class="action-inner">
               <div class="inner-left">
                 <p class="describe">{{$t('uc.finance.withdraw.symbol')}}</p>
-                <Select v-model="coinType" style="width:100px;margin-top: 14px;" @on-change="getAddrList">
-                  <Option v-for="item in coinList" :value="item.unit" :key="item.unit">{{ item.unit }}</Option>
+                <Select v-model="coinType" style="width:100px;margin-top: 14px;" @on-change="getCurrentCoin">
+                  <Option v-for="item in coinList" :value="item.coin.unit" :key="item.coin.unit">{{ item.coin.unit }}</Option>
                 </Select>
               </div>
               <div class="inner-box">
                 <div class="form-group form-address">
                   <label for="controlAddress" class="controlAddress describe">{{$t('uc.finance.transfer.toaccount')}}</label>
                   <div class="control-input-group">
-                    <Input ref="address" v-model="withdrawAdress" filterable clearable @on-query-change="onAddressChange">
+                    <Input ref="address" v-model="withdrawAdress" filterable clearable @on-query-change="onAccountChange" :placeholder="$t('uc.finance.transfer.accounttip')">
                     </Input>
                   </div>
                 </div>
@@ -42,8 +42,9 @@
                   </p>
                 </label>
                 <div class="input-group">
-                  <Poptip trigger="focus" :content="$t('uc.finance.withdraw.tip1')+currentCoin.withdrawScale+$t('uc.finance.withdraw.tip11')+currentCoin.minAmount+' ,'+$t('uc.finance.withdraw.tip2')+currentCoin.maxAmount" style="width: 100%;">
-                    <InputNumber @on-change="computerAmount" v-model="withdrawAmount" :placeholder="$t('uc.finance.withdraw.numtip1')" size="large" :min="currentCoin.minAmount" :max="currentCoin.maxAmount"></InputNumber>
+					 <!-- minerFee :content="$t('uc.finance.withdraw.tip1')+currentCoin.withdrawScale+$t('uc.finance.withdraw.tip11')+currentCoin.minAmount+' ,'+$t('uc.finance.withdraw.tip2')+currentCoin.maxAmount" -->
+                  <Poptip trigger="focus" :content="$t('uc.finance.withdraw.tip1')+currentCoin.balance" style="width: 100%;">
+                    <InputNumber @on-change="computerAmount" v-model="withdrawAmount" :placeholder="$t('uc.finance.transfer.numtip1')" size="large" :min="0" :max="currentCoin.balance"></InputNumber>
                     <span class="input-group-addon addon-tag uppercase firstt">{{currentCoin.unit}}</span>
                   </Poptip>
                 </div>
@@ -78,7 +79,7 @@
                   <Table :columns="tableColumnsWithdraw" :data="tableWithdraw" :loading="loading"></Table>
                   <div id="pages">
                     <div style="float: right;">
-                      <Page class="pages_a" :total="transaction.total" :current="transaction.page + 1" @on-change="changePage"></Page>
+                      <Page class="pages_a" :total="transaction.total" :current="transaction.page" :page="transaction.page" @on-change="changePage"></Page>
                     </div>
                   </div>
                 </div>
@@ -145,9 +146,9 @@ export default {
   },
   watch: {
     currentCoin: function() {
-      this.withdrawFee =
-        this.currentCoin.minTxFee +
-        (this.currentCoin.maxTxFee - this.currentCoin.minTxFee) / 2;
+      this.withdrawFee = this.currentCoin.minerFee;
+       // this.currentCoin.minTxFee +
+      //  (this.currentCoin.maxTxFee - this.currentCoin.minTxFee) / 2;
     }
   },
   methods: {
@@ -188,10 +189,10 @@ export default {
       }, 1000);
     },
     changePage(index) {
-      this.transaction.page = index - 1;
+      this.transaction.page = index;
       this.getList();
     },
-    onAddressChange(data) {
+    onAccountChange(data) {
       this.inputAddress = data;
     },
     clearValues() {
@@ -245,35 +246,58 @@ export default {
             this.modal = false;
             this.formInline.code = "";
             this.formInline.fundpwd = "";
-            this.transaction.page = 0;
+            this.transaction.page = 1;
             this.getList();
             this.clearValues();
             this.$Message.success(resp.message);
-          }else if(resp.code == 500) {
+          }else if(resp.code == 1) {
+            this.$Message.error(resp.message);
+          } else if(resp.code == 500) {
             this.$Message.error(resp.message);
           } else {
             this.$Message.error(resp.message);
           }
         });
-	},getAddrList() {
+	},
+	getCurrentCoin() {
+      //初始化页面上的值
+      this.clearValues();
+      //获取地址
+	  	if (this.coinType) {
+            for (let i = 0; i < this.coinList.length; i++) {
+                if (this.coinType == this.coinList[i].coin.unit) {
+				  this.currentCoin = this.coinList[i].coin;
+				  this.currentCoin.balance = this.coinList[i].balance;
+                  break;
+                }
+            }
+        } else {
+			this.currentCoin = this.coinList[0].coin;
+			this.currentCoin.balance = this.coinList[0].balance;
+            this.coinType = this.currentCoin.unit;
+        }
+    },
+	getCoins() {
       //初始化页面上的值
       this.clearValues();
       //获取地址
       this.$http
-		.post(this.host + "/uc/withdraw/support/coin/info")
+		.post(this.host + "/uc/exange/asset/wallet")
         .then(response => {
           var resp = response.body;
           if (resp.code == 0 && resp.data.length > 0) {
-            this.coinList = resp.data;
+			this.coinList = resp.data;
             if (this.coinType) {
-              for (let i = 0; i < resp.data.length; i++) {
-                if (this.coinType == resp.data[i].unit) {
-                  this.currentCoin = resp.data[i];
+              for (let i = 0; i < this.coinList.length; i++) {
+                if (this.coinType == this.coinList[i].coin.unit) {
+				  this.currentCoin = this.coinList[i].coin;
+				  this.currentCoin.balance = this.coinList[i].balance;
                   break;
                 }
               }
             } else {
-              this.currentCoin = this.coinList[0];
+			  this.currentCoin = this.coinList[0].coin;
+			  this.currentCoin.balance = this.coinList[0].balance;
               this.coinType = this.currentCoin.unit;
             }
           } else {
@@ -284,7 +308,7 @@ export default {
     getList() {
       this.loading = true;
       //获取tableWithdraw
-      let params = {};
+	  let params = {};
       params["page"] = this.transaction.page;
       params["pageSize"] = this.transaction.pageSize;
       this.$http
@@ -293,8 +317,7 @@ export default {
           var resp = response.body;
           if (resp.code == 0) {
             this.tableWithdraw = resp.data;
-            this.transaction.total = resp.totalElements;
-            this.transaction.page = resp.number;
+		    this.transaction.total = resp.totalElement;
           } else {
             this.$Message.error(resp.message);
           }
@@ -342,7 +365,8 @@ export default {
     },
     valid() {
       this.withdrawAdress = this.withdrawAdress || this.inputAddress;
-      if (this.coinType == "") {
+	 let reg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+	 if (this.coinType == "") {
         this.$Message.error(this.$t("uc.finance.withdraw.symboltip"));
         return false;
       } else if (this.withdrawAdress == "") {
@@ -351,16 +375,16 @@ export default {
       } else if (
         this.withdrawAmount == "" ||
         this.withdrawAmount == 0 ||
-        this.withdrawAmount - 0 < this.currentCoin.minAmount
+        this.withdrawAmount> this.currentCoin.balance
       ) {
         this.$Message.error(
-          this.$t("uc.finance.transfer.numtip2") + this.currentCoin.minAmount
+		  this.$t("uc.finance.transfer.numtip2") 
         );
         return false;
-      } else if (this.withdrawAmount - 0 < this.withdrawFee) {
+      } /**else if (this.withdrawAmount - 0 < this.withdrawFee) {
         this.$Message.error(this.$t("uc.finance.withdraw.numtip3"));
         return false;
-      } else if (
+	  } else if (
         this.withdrawFee == "" ||
         this.withdrawFee == 0 ||
         this.withdrawFee - 0 > this.currentCoin.maxTxFee ||
@@ -374,11 +398,14 @@ export default {
             this.currentCoin.maxTxFee
         );
         return false;
+	  } */else if (!reg.test(this.withdrawAdress)) {
+		this.$Message.error(this.$t("uc.finance.transfer.accounterr"));
+	   	return false;
       } else {
         return true;
       }
     },
-    apply() {
+    apply() { 
       if (this.valid()) {
 		this.modal = true;
 		this.formInline.code="";
@@ -397,7 +424,8 @@ export default {
   created() {
     this.$http.options.emulateJSON = false;
     this.coinType = this.$route.query.name || "";
-    this.getAddrList();
+	this.getCoins();
+	this.transaction.page = 1;
     this.getList(0, 10, 1);
   },
   computed: {
@@ -411,8 +439,8 @@ export default {
       if (this.coinList.length > 0) {
         this.coinList.forEach(v => {
           filters.push({
-            label: v.unit,
-            value: v.unit
+            label: v.coin.unit,
+            value: v.coin.unit
           });
         });
       }
@@ -448,6 +476,10 @@ export default {
       columns.push({
         title: this.$t("uc.finance.withdraw.fee"),
         key: "fee"
+	  });
+	  columns.push({
+        title: this.$t("uc.finance.withdraw.arriamount"),
+        key: "arrivedAmount"
       });
       columns.push({
         title: this.$t("uc.finance.withdraw.status"),
@@ -457,11 +489,11 @@ export default {
           if (params.row.status == 0) {
             text = this.$t("uc.finance.withdraw.status_1");
           } else if (params.row.status == 1) {
-            text = '转账成功';
+            text = this.$t("uc.finance.withdraw.status_5");
           } else if (params.row.status == 2) {
             text = this.$t("uc.finance.withdraw.status_3");
           } else if (params.row.status == 3) {
-            text = this.$t("uc.finance.withdraw.status_4");
+			text = this.$t("uc.finance.withdraw.status_4");
           }
           return h("div", [h("p", text)]);
         }

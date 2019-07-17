@@ -1,4 +1,4 @@
-﻿module.exports = {
+module.exports = {
     common: {
         center: '个人中心',
         login: '登录',
@@ -484,6 +484,9 @@
 				time: '转账时间',
 				accounttip: '请填入转账账户',
 				numtip2: '请填写正确转账数量，最小值为',
+				accounterr: '转账账户格式不正确',
+				numtip1: '输入转账数量',
+				numtip2: '请填写正确转账数量',
 			},
             money: {
                 cointype: '币种名称',
@@ -692,7 +695,8 @@
                 status_1: '审核中',
                 status_2: '转账中',
                 status_3: '失败',
-                status_4: '成功',
+				status_4: '成功',
+				status_5: '转账成功',
                 remark: '备注',
                 add: '添加',
                 addresslist: '地址列表',
@@ -714,7 +718,7 @@
                 operate: '操作',
                 fundpwdtip: '请输入资金密码',
                 click: '点击',
-                filtrate: '可筛选'
+				filtrate: '可筛选',
             }
         },
         member: {
