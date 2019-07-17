@@ -48,10 +48,18 @@
         </div>
       </div>
       <div class="section" id="page2">
-        <div class="page2nav">
+        <!--<div class="page2nav">
           <ul class="brclearfix">
             <li v-show="!(index==3&&!isLogin)" v-for="(item,index) in indexBtn" @click="addClass(index)" :class="{'active':index==choseBtn,'ivu-btn-default':index!=choseBtn}" :key="index">{{item.text}}</li>
           </ul>
+        </div>-->
+        <div class="tabPage">
+          <Tabs v-model="pane" @on-click="changeTab" :animated="false">
+            <!--<TabPane v-for="(item, index) in baseSymbols"
+                     :key="index" :name="item.name"
+                     :label="item.label"></TabPane>-->
+            <TabPane v-for="(item,index) in baseSymbols" :key="index" :name="item.name" :label="item.label"></TabPane>
+          </Tabs>
         </div>
         <div class="ptjy">
           <Table v-if="choseBtn==3" :columns="favorColumns" :data="dataIndex" class="tables" :disabled-hover="true" :loading="loading"></Table>
@@ -133,6 +141,8 @@ export default {
   data() {
     let self = this;
     return {
+      pane: '',
+      baseSymbols: [],
       loading: false,
       // progress: 0,
       // already: 0,
@@ -834,6 +844,7 @@ export default {
       this.loadPicData();
       this.addClass(0);
       // this.getmoneyData();
+      this.loadBaseSymbol();
       this.loadDataPage(this.pageNo);
     },
     stop: function() {
@@ -986,6 +997,41 @@ export default {
         Math.pow(10, c)
       );
     },
+    loadBaseSymbol() {
+      let params = {
+      };
+      this.$http.post(this.host + this.api.market.baseSymbols, params).then(response => {
+        var resp = response.body;
+        //先清空已有数据
+        this.baseSymbols = [];
+        for (var i = 0; i < resp.length; i++) {
+          var baseSymbol = resp[i];
+          this.baseSymbols.push({
+            label: baseSymbol,
+            name: baseSymbol.toLowerCase()
+          });
+        }
+        if (this.isLogin==true) {
+          this.baseSymbols.push({
+            label: this.$t("service.CUSTOM"),
+            name: 'favor'
+          });
+        }
+      });
+    },
+    changeTab () {
+      if (this.pane==='usdt') {
+        this.dataIndex = this.coins.USDT;
+      } else if (this.pane==='btc') {
+        this.dataIndex = this.coins.BTC;
+      } else if (this.pane==='eth') {
+        this.dataIndex = this.coins.ETH;
+      } else if (this.pane==='pwr') {
+        this.dataIndex = this.coins.PWR;
+      } else if (this.pane==='favor') {
+        this.dataIndex = this.coins.favor;
+      }
+    },
     addClass(index) {
       this.choseBtn = index;
       if (index == 0) {
@@ -1123,6 +1169,20 @@ export default {
 };
 </script>
 <style scoped lang="scss" >
+
+  .tabPage /deep/ .ivu-tabs-nav .ivu-tabs-tab {
+    font-size: 18px;
+  }
+
+  .tabPage /deep/ .ivu-tabs-nav .ivu-tabs-tab-active {
+    color: #f0a70a;
+  }
+
+  .tabPage /deep/ .ivu-tabs-bar {
+    border-width: 0px;
+  }
+
+
 #pagetips {
   background: #0b1520;
   padding: 0 14%;

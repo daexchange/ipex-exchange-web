@@ -15,7 +15,7 @@
 .ivu-tabs-nav-scrollable {
     padding: 0 20px;
 }
-.ivu-tabs-nav .ivu-tabs-tab-active {
+.sc_filter /deep/ .ivu-tabs-nav .ivu-tabs-tab-active {
     color: #f3f3f3 !important;
 }
 .ivu-tabs-mini .ivu-tabs-tab {
