@@ -2,11 +2,11 @@
   <div class="nav-rights withdraw">
     <div class="nav-right">
       <div class="rightarea">
-        <section class="trade-groups merchant-tops">
-          <!-- <i class="merchant-icon tips"></i>
+       <!-- <section class="trade-groups merchant-tops">
+           <i class="merchant-icon tips"></i>
           <span class="tips-word">{{$t('uc.finance.withdraw.pickup')}}</span> 
-          <router-link to="/uc/withdraw/address">{{$t('uc.finance.withdraw.addressmanager')}}</router-link>-->
-        </section>
+          <router-link to="/uc/withdraw/address">{{$t('uc.finance.withdraw.addressmanager')}}</router-link>
+        </section>-->
         <section>
           <div class="table-inner action-box">
             <!-- <i class="angle" style="right: 27px;"></i> -->

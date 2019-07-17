@@ -172,11 +172,11 @@ export default {
               // 判断是否实名认证，未认证跳转到实名认证页面；
               this.$Message.success(this.$t("otc.publishad.submittip1"));
               self.$router.push("/uc/safe");
-            } else if (resp.data.phoneVerified == 0) {
+			} /** else if (resp.data.phoneVerified == 0) {
               // 判断是否是手机号0，1，未认证跳转到实名认证页面；
               this.$Message.success(this.$t("otc.publishad.submittip2"));
               self.$router.push("/uc/safe");
-            } else if (resp.data.fundsVerified == 0) {
+            } */else if (resp.data.fundsVerified == 0) {
               // 判断是否设置交易密码，未认证跳转到实名认证页面；
               this.$Message.success(this.$t("otc.publishad.submittip3"));
               self.$router.push("/uc/safe");
