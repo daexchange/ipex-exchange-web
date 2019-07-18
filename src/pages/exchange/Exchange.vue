@@ -325,7 +325,7 @@ $night-color: #fff;
   }
   .fold-back-next-coin {
     padding-top: 8px;
-    color: #f3f3f3;
+    /*color: #f3f3f3;*/
   }
   .fold-selectCoin {
     margin: 0 16px 0 16px;

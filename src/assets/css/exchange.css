@@ -7,6 +7,7 @@
 
 .ivu-tabs .ivu-tabs-bar {
     border-width: 0px;
+    margin-bottom: 1px;
 }
 .ivu-tabs-nav {
     /*padding-left: 10px;*/
@@ -70,12 +71,12 @@
     background-color: #192330;
 }
 
-.ivu-tabs-nav-wrap .ivu-icon-ios-arrow-back:before {
+/*.ivu-tabs-nav-wrap .ivu-icon-ios-arrow-back:before {
     content: "";
 }
 .ivu-tabs-nav-wrap .ivu-icon-ios-arrow-forward:before {
     content: "";
-}
+}*/
 
 
 
@@ -85,6 +86,7 @@
 }
 
 .sc_filter span {
+    bottom: 0px;
     padding: 0 0px;
     font-size: 14px;
     display: inline-block;
