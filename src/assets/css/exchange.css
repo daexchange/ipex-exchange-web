@@ -5,7 +5,7 @@
     background: #263142;
 }
 
-.ivu-tabs .ivu-tabs-bar {
+.sc_filter .ivu-tabs .ivu-tabs-bar {
     border-width: 0px;
     margin-bottom: 1px;
 }
@@ -137,9 +137,7 @@
     cursor: pointer;
 }
 
-.sc_filter span {
-    /* margin-right: 16%; */
-}
+
 
 .sc_table th {
     cursor: pointer;
