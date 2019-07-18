@@ -248,8 +248,8 @@ export default {
             this.formInline.fundpwd = "";
             this.transaction.page = 1;
             this.getList();
-            this.clearValues();
-            this.$Message.success(resp.message);
+			this.clearValues();
+            this.$Message.success(this.$t("uc.finance.withdraw.status_5"));
           }else if(resp.code == 1) {
             this.$Message.error(resp.message);
           } else if(resp.code == 500) {
