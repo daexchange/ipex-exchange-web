@@ -24,12 +24,12 @@
                 <section class="accountContent">
                     <div class="account-in">
                         <!-- 1 -->
-                        <div class="account-item" style="display:none">
+                        <div class="account-item" >
                             <div class="account-item-in">
-                                <Icon type="person" style="font-size: 18px;color: #00b5f6;"></Icon>
+                                <Icon type="md-person" style="font-size: 18px;color: #00b5f6;"></Icon>
                                 <span class="card-number">{{$t('uc.safe.nickname')}}</span>
                                 <p class="bankInfo" style="color: #fff;">
-                                    bearbaby
+                                    {{user.username}}
                                 </p>
                                 <span>{{$t('uc.safe.binded')}}</span>
                             </div>
