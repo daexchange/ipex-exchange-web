@@ -1022,19 +1022,6 @@ export default {
       });
     },
     changeTab () {
-      /*if (this.pane==='usdt') {
-        this.dataIndex = this.coins.USDT;
-      } else if (this.pane==='btc') {
-        this.dataIndex = this.coins.BTC;
-      } else if (this.pane==='eth') {
-        this.dataIndex = this.coins.ETH;
-      } else if (this.pane==='pwr') {
-        this.dataIndex = this.coins.PWR;
-      } else if (this.pane==='favor') {
-        this.dataIndex = this.coins.favor;
-      }*/
-      /*let rowCoin = this.pane;
-      this.dataIndex = this.coins.symbol[rowCoin];*/
       let keyCoin = [];
       for (let i=0; i<this.coins.symbol.length; i++) {
           if (this.coins.symbol[i].base===this.pane.toUpperCase()) {
