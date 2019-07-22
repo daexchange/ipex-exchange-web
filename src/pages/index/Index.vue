@@ -141,7 +141,7 @@ export default {
   data() {
     let self = this;
     return {
-      pane: '',
+      pane: 'usdt',
       baseSymbols: [],
       loading: false,
       // progress: 0,
@@ -429,6 +429,8 @@ export default {
       ],
       //当前市场上的交易币种，按交易对分
       coins: {
+        paneCoin: '',
+        symbol: [],
         _map: [],
         USDT: [],
         BTC: [],
@@ -1020,7 +1022,7 @@ export default {
       });
     },
     changeTab () {
-      if (this.pane==='usdt') {
+      /*if (this.pane==='usdt') {
         this.dataIndex = this.coins.USDT;
       } else if (this.pane==='btc') {
         this.dataIndex = this.coins.BTC;
@@ -1030,26 +1032,29 @@ export default {
         this.dataIndex = this.coins.PWR;
       } else if (this.pane==='favor') {
         this.dataIndex = this.coins.favor;
+      }*/
+      /*let rowCoin = this.pane;
+      this.dataIndex = this.coins.symbol[rowCoin];*/
+      let keyCoin = [];
+      for (let i=0; i<this.coins.symbol.length; i++) {
+          if (this.coins.symbol[i].base===this.pane.toUpperCase()) {
+              keyCoin.push(this.coins.symbol[i]);
+          }
       }
+      this.dataIndex = keyCoin;
     },
-    addClass(index) {
-      this.choseBtn = index;
-      if (index == 0) {
-        this.dataIndex = this.coins.USDT;
-      } else if (index == 1) {
-        this.dataIndex = this.coins.BTC;
-      } else if (index == 2) {
-        this.dataIndex = this.coins.ETH;
-      } else if (index == 3) {
-        this.dataIndex = this.coins.favor;
-
-        // if (this.isLogin) {
-        //   this.dataIndex = this.coins.favor;
-        // } else {
-        //   this.$router.push("/login");
-        // }
-      }
-    },
+      addClass(index) {
+          //this.choseBtn = index;
+          /*if (index == 0) {
+            this.dataIndex = this.coins.USDT;
+          } else if (index == 1) {
+            this.dataIndex = this.coins.BTC;
+          } else if (index == 2) {
+            this.dataIndex = this.coins.ETH;
+          } else if (index == 3) {
+            this.dataIndex = this.coins.favor;
+          }*/
+      },
     getSymbol() {
       this.loading = true;
       this.$http
@@ -1068,14 +1073,17 @@ export default {
             coin.href = (coin.coin + "_" + coin.base).toLowerCase();
             coin.isFavor = false;
             this.coins._map[coin.symbol] = coin;
-            this.coins[coin.base].push(coin);
+            // this.coins[coin.base].push(coin);
+            this.coins.symbol.push(coin);
           }
           if (this.isLogin) {
             this.getFavor();
           }
           this.startWebsock();
           this.loading = false;
+          this.changeTab();
         });
+
     },
     // getFavor() {
     //   //查询自选
