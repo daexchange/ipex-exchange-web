@@ -14,7 +14,7 @@
                         <MenuItem class="menuItem-trade" name="buyInBlock">购买</MenuItem>
                         <MenuItem class="menuItem-trade" name="sellOutBlock">出售</MenuItem>
                     </MenuGroup>-->
-                    <MenuItem class="menuItem-adver" name="publishAdver">发布广告</MenuItem>
+                    <MenuItem class="menuItem-adver" name="publishAdver" @click.native="publishAdver">发布广告</MenuItem>
                     <MenuItem class="menuItem-adver" name="goBusiness" @click.native="goBusiness">成为商家</MenuItem>
                 </Menu>
             </div>
@@ -95,7 +95,16 @@
             },
             tabSelected () {
                 this.$router.push("/otc/trade/" + this.pane);
-            },
+			},
+			publishAdver () {
+				if (this.isLogin) {
+                    this.$router.push({
+                        path: "/uc/ad/create"
+                    });
+                } else {
+                    this.$Message.warning("请先登录");
+                }
+			},
             goBusiness() {
                 if (this.isLogin) {
                     this.$router.push({

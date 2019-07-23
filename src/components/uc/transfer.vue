@@ -247,10 +247,11 @@ export default {
             this.formInline.code = "";
             this.formInline.fundpwd = "";
             this.transaction.page = 1;
-            this.getList();
+			this.getList();
+			this.getCoins();
 			this.clearValues();
             this.$Message.success(this.$t("uc.finance.withdraw.status_5"));
-          }else if(resp.code == 1) {
+		 }else if(resp.code == 1) {
             this.$Message.error(resp.message);
           } else if(resp.code == 500) {
             this.$Message.error(resp.message);

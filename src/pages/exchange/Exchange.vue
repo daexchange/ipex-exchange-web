@@ -238,7 +238,6 @@
           <div class="tab-menu" id="tabM">
             <span :class="{ active: isSelected1 }"  @click="handleTab(1)">{{$t("exchange.pankou")}}</span>
             <span :class="{ active: isSelected2 }"  @click="handleTab(2)">{{$t("exchange.realtransaction")}}</span>
-
           </div>
             <div v-if="isShow === 1" class="Pankou cur1" :transition="expand" >
               <div class="handlers">
