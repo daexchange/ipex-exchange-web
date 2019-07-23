@@ -184,7 +184,7 @@ export default {
       columns.push({
         title: this.$t("uc.finance.money.operate"),
         key: "price1",
-        width: 295,
+        width: 297,
         align: "center",
         render: function(h, params) {
           var actions = [];
@@ -348,6 +348,13 @@ export default {
                   line-height: 25px;
                   font-size: 14px;
                 }
+              }
+              p .ivu-btn.ivu-btn-success {
+                  border: 1px solid #1ea2d8;
+                  border-radius: 20px;
+                  span {
+                      color: #1ea2d8;
+                  }
               }
               p .ivu-btn.ivu-btn-info {
                 border: 1px solid #f0ac19;
