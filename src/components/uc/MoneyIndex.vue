@@ -128,12 +128,13 @@ export default {
       columns.push({
         title: this.$t("uc.finance.money.cointype"),
         key: "coinType",
-        width: 100,
+        // width: 150,
         align: "center"
       });
       columns.push({
         title: this.$t("uc.finance.money.balance"),
         key: "balance",
+        // width: 180,
         align: "center",
         render(h, params) {
           return h(
@@ -150,6 +151,7 @@ export default {
       columns.push({
         title: this.$t("uc.finance.money.frozen"),
         key: "frozenBalance",
+        // width: 180,
         align: "center",
         render(h, params) {
           return h(
@@ -165,6 +167,7 @@ export default {
       });
       columns.push({
         title: this.$t("uc.finance.money.needreleased"),
+        // width: 180,
         align: "center",
         render(h, params) {
           return h(
@@ -181,6 +184,7 @@ export default {
       columns.push({
         title: this.$t("uc.finance.money.operate"),
         key: "price1",
+        width: 295,
         align: "center",
         render: function(h, params) {
           var actions = [];
