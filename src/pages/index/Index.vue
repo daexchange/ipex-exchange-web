@@ -62,7 +62,7 @@
           </Tabs>
         </div>
         <div class="ptjy">
-          <Table v-if="choseBtn==3" :columns="favorColumns" :data="dataIndex" class="tables" :disabled-hover="true" :loading="loading"></Table>
+          <Table v-if="pane==='favor'" :columns="favorColumns" :data="dataIndex" class="tables" :disabled-hover="true" :loading="loading"></Table>
           <Table v-else :columns="coins.columns" :data="dataIndex" class="tables" :disabled-hover="true" :loading="loading"></Table>
         </div>
       </div>
@@ -432,10 +432,6 @@ export default {
         paneCoin: '',
         symbol: [],
         _map: [],
-        USDT: [],
-        BTC: [],
-        ETH: [],
-        PWR: [],
         favor: [],
         columns: [
           {
@@ -749,7 +745,6 @@ export default {
           text: this.$t("service.CUSTOM")
         }
       ],
-      choseBtn: 0,
       valueCal: 0,
       showArrow: "never",
       speed: 5000,
@@ -1022,13 +1017,26 @@ export default {
       });
     },
     changeTab () {
-      let keyCoin = [];
-      for (let i=0; i<this.coins.symbol.length; i++) {
+      /*for (let i=0; i<this.coins.symbol.length; i++) {
           if (this.coins.symbol[i].base===this.pane.toUpperCase()) {
               keyCoin.push(this.coins.symbol[i]);
           }
       }
-      this.dataIndex = keyCoin;
+      if (this.pane==='favor') {
+        this.dataIndex = this.coins.favor;
+        return;
+      }*/
+      let keyCoin = [];
+      if (this.pane==='favor') {
+        this.dataIndex = this.coins.favor;
+      } else {
+        for (let i=0; i<this.coins.symbol.length; i++) {
+          if (this.coins.symbol[i].base===this.pane.toUpperCase()) {
+            keyCoin.push(this.coins.symbol[i]);
+          }
+        }
+        this.dataIndex = keyCoin;
+      }
     },
       addClass(index) {
           //this.choseBtn = index;
