@@ -1017,15 +1017,6 @@ export default {
       });
     },
     changeTab () {
-      /*for (let i=0; i<this.coins.symbol.length; i++) {
-          if (this.coins.symbol[i].base===this.pane.toUpperCase()) {
-              keyCoin.push(this.coins.symbol[i]);
-          }
-      }
-      if (this.pane==='favor') {
-        this.dataIndex = this.coins.favor;
-        return;
-      }*/
       let keyCoin = [];
       if (this.pane==='favor') {
         this.dataIndex = this.coins.favor;
