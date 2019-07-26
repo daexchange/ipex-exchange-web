@@ -55,9 +55,6 @@
         </div>-->
         <div class="tabPage">
           <Tabs v-model="pane" @on-click="changeTab" :animated="false">
-            <!--<TabPane v-for="(item, index) in baseSymbols"
-                     :key="index" :name="item.name"
-                     :label="item.label"></TabPane>-->
             <TabPane v-for="(item,index) in baseSymbols" :key="index" :name="item.name" :label="item.label"></TabPane>
           </Tabs>
         </div>
