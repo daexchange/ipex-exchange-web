@@ -1150,7 +1150,9 @@ export default {
           }
         ],
         askRows: [],
-        bidRows: []
+		bidRows: [],
+		askRowsTemp: [],
+		bidRowsTemp: []
       },
       currentOrder: {
         columns: [
@@ -2121,15 +2123,146 @@ export default {
    		var temp = this.showCoinScale-this.currentCoinScale;
     	if (temp<0) {
     		this.showCoinScale=this.showCoinScale+1;
-    		this.baseCoinScale = this.showCoinScale;
-    	}
+			this.baseCoinScale = this.showCoinScale;
+			this.fixData();
+		}
+		
     },
     miuns(){
     	var temp = this.currentCoinScale-this.showCoinScale;
     	if (temp<2) {
     		this.showCoinScale=this.showCoinScale-1;
-    		this.baseCoinScale = this.showCoinScale;
-    	}
+			this.baseCoinScale = this.showCoinScale;
+			this.fixData();
+		}
+	},
+	fixData(){
+		this.plate.askRows = [];
+		this.plate.bidRows = [];
+		const askRows1 = this.plate.askRowsTemp;
+		const bidRows1 = this.plate.bidRowsTemp;
+		let askData = [];
+		let bidData = [];
+
+  	    for (var i = askRows1.length; i >0 ; i--) {
+			if (askRows1[i-1].price != 0) {				
+				var row = {};
+                row.direction = askRows1[i-1].direction;
+			    row.price = askRows1[i-1].price;
+				row.amount = askRows1[i-1].amount;
+				row.totalAmount = askRows1[i-1].totalAmount;
+				askData.push(row);
+			}
+		} 
+ 
+		for (var i = askData.length-1; i >=0; i--) {
+			for (var j = i-1; j >=0; j--) {
+			 if (askData[j].needsplice != 1) {
+				if (askData[i].price.toFixed(this.baseCoinScale)==
+				  	askData[j].price.toFixed(this.baseCoinScale)) {
+					if (askData[i].fixamount == undefined) {
+						askData[i].fixamount = askData[i].amount;
+			        }
+					askData[i].fixamount = askData[j].amount + askData[i].fixamount;
+					askData[j].needsplice=1;
+				}
+			  }
+			}
+		}
+
+		for (var i = 0; i < askData.length; i++) {
+			if (askData[i].needsplice == 1) {
+				askData.splice(i,1); 
+				i--;
+			} else {
+				if (askData[i].fixamount != undefined) {
+                    askData[i].amount = askData[i].fixamount;
+				}
+			}
+		}
+
+		const askLength  = askData.length;
+		if (askLength < this.plate.maxPostion) {
+			for (var i = this.plate.maxPostion; i > askLength; i--) {
+                var ask = { price: 0, amount: 0 };
+                ask.direction = "SELL";
+                ask.position = i;
+                ask.totalAmount = ask.amount;
+                this.plate.askRows.push(ask);
+            }
+		}
+		
+		for (var i = askLength; i > 0; i--) {
+                var ask = askData[i - 1];
+                ask.direction = "SELL";
+                ask.position = i;
+                this.plate.askRows.push(ask);
+        }
+		
+		
+		//const rows = this.plate.askRows,
+        //        len = rows.length,
+        //        totle = rows[0].totalAmount;
+        this.plate.askTotle = askData[askData.length-1].totalAmount;
+	   // totle = this.plate.askRows[0].totalAmount;
+          
+             // totle = rows[this.plate.maxPostion - askRowsTemp.items.length]
+			 //       .totalAmount;
+	
+		for (var i = bidRows1.length; i >0 ; i--) {
+			if (bidRows1[i-1].price != 0) {				
+				var row = {};
+                row.direction = bidRows1[i-1].direction;
+			    row.price = bidRows1[i-1].price;
+				row.amount = bidRows1[i-1].amount;
+				row.totalAmount = bidRows1[i-1].totalAmount;
+				bidData.push(row);
+			}
+		} 
+ 
+		for (var i = 0; i <bidData.length; i++) {
+			for (var j = i+1; j<bidData.length; j++) {
+			 if (bidData[j].needsplice != 1) {
+				if (bidData[i].price.toFixed(this.baseCoinScale)==
+				  	bidData[j].price.toFixed(this.baseCoinScale)) {
+					if (bidData[i].fixamount == undefined) {
+						bidData[i].fixamount = bidData[i].amount;
+			        }
+					bidData[i].fixamount = bidData[j].amount + bidData[i].fixamount;
+					bidData[j].needsplice=1;
+				}
+			  }
+			}
+		}
+
+		for (var i = 0; i < bidData.length; i++) {
+			if (bidData[i].needsplice == 1) {
+				bidData.splice(i,1); 
+				i--;
+			} else {
+				if (bidData[i].fixamount != undefined) {
+                    bidData[i].amount = bidData[i].fixamount;
+				}
+			}
+		}
+
+		const bidLength  = bidData.length;
+
+		for (var i = bidLength; i > 0; i--) {
+            var bid = bidData[i - 1];
+            bid.direction = "BUY";
+            bid.position = i;
+            this.plate.bidRows.push(bid);
+        }
+		if (bidLength < this.plate.maxPostion) {
+			for (var i = this.plate.maxPostion; i > bidLength; i--) {
+                var bid = { price: 0, amount: 0 };
+                bid.direction = "BUY";
+                bid.position = i;
+                bid.totalAmount = bid.amount;
+                this.plate.bidRows.push(bid);
+            }
+		}
     },
     getPlate() {
       //买卖盘
@@ -2155,7 +2288,8 @@ export default {
                 var ask = resp.ask.items[i - 1];
                 ask.direction = "SELL";
                 ask.position = i;
-                this.plate.askRows.push(ask);
+				this.plate.askRows.push(ask);
+				this.plate.askRowsTemp.push(ask);
               }
               const rows = this.plate.askRows,
                 len = rows.length,
@@ -2167,13 +2301,15 @@ export default {
                 ask.direction = "SELL";
                 ask.position = i;
                 ask.totalAmount = ask.amount;
-                this.plate.askRows.push(ask);
+				this.plate.askRows.push(ask);
+				this.plate.askRowsTemp.push(ask);
               }
               for (var i = resp.ask.items.length; i > 0; i--) {
                 var ask = resp.ask.items[i - 1];
                 ask.direction = "SELL";
                 ask.position = i;
-                this.plate.askRows.push(ask);
+				this.plate.askRows.push(ask);
+				this.plate.askRowsTemp.push(ask);
               }
               const rows = this.plate.askRows,
                 len = rows.length,
@@ -2196,6 +2332,7 @@ export default {
               bid.direction = "BUY";
               bid.position = i + 1;
               this.plate.bidRows.push(bid);
+	      this.plate.bidRowsTemp.push(bid);
               if (i == this.plate.maxPostion - 1) break;
             }
             if (resp.bid.items.length < this.plate.maxPostion) {
@@ -2209,6 +2346,7 @@ export default {
                 bid.position = i + 1;
                 bid.totalAmount = 0;
                 this.plate.bidRows.push(bid);
+		this.plate.bidRowsTemp.push(bid);
               }
               const rows = this.plate.bidRows,
                 len = rows.length,
@@ -2222,7 +2360,7 @@ export default {
             }
             //this.plate.bidRows = this.plate.bidRows.slice(0,this.plate.maxPostion);
           }
-        });
+		});
     },
     getPlateFull() {
       //深度图
@@ -2282,7 +2420,13 @@ export default {
             this.trade.rows.push(resp[i]);
           }
         });
-    },
+	},
+	washBidData(bidData){
+      
+				
+				
+                
+	},
     startWebsock() {
       if (this.stompClient) {
         this.stompClient.ws.close();
@@ -2380,10 +2524,79 @@ export default {
         stompClient.subscribe(
           "/topic/market/trade-plate/" + that.currentCoin.symbol,
           function(msg) {
-            var resp = JSON.parse(msg.body);
+			var resp = JSON.parse(msg.body);
             if (resp.direction == "SELL") {
-              var asks = resp.items;
-              that.plate.askRows = [];
+			  that.plate.askRows = [];
+			  that.plate.askRowsTemp = [];
+			  let items = resp.items;
+			  let askData = [];
+
+			  for (var i = 0; i <items.length; i++) {
+				if ( i == 0 || items[i].price == 0 ) {
+                    items[i].totalAmount = items[i].amount;
+                } else {
+                    items[i].totalAmount = items[i-1].totalAmount + items[i].amount;
+				}
+              }
+	          
+  	    	for (var i = items.length; i >0 ; i--) {
+				if (items[i-1].price != 0) {				
+						var row = {};
+               		 	row.direction = items[i-1].direction;
+			    		row.price = items[i-1].price;
+						row.amount = items[i-1].amount;
+						row.totalAmount = items[i-1].totalAmount;
+						askData.push(row);
+				}
+				that.plate.askRowsTemp.push(items[i-1]);
+			} 
+ 
+			for (var i = 0; i <askData.length; i++) {
+				for (var j = i+1; j <askData.length; j++) {
+			 		if (askData[j].needsplice != 1) {
+						if (askData[i].price.toFixed(that.baseCoinScale)==
+				  			askData[j].price.toFixed(that.baseCoinScale)) {
+							if (askData[i].fixamount == undefined) {
+								askData[i].fixamount = askData[i].amount;
+			        		}
+							askData[i].fixamount = askData[j].amount + askData[i].fixamount;
+							askData[j].needsplice=1;
+						}
+			  		}
+				}
+			}
+ 
+			for (var i = 0; i < askData.length; i++) {
+				if (askData[i].needsplice == 1) {
+					askData.splice(i,1); 
+					i--;
+				} else {
+					if (askData[i].fixamount != undefined) {
+                    	askData[i].amount = askData[i].fixamount;
+					}
+				}
+			}
+
+			const askLength  = askData.length;
+			if (askLength < that.plate.maxPostion) {
+				for (var i = that.plate.maxPostion; i > askLength; i--) {
+                	var ask = { price: 0, amount: 0 };
+                	ask.direction = "SELL";
+                	ask.position = i;
+                	ask.totalAmount = ask.amount;
+                	that.plate.askRows.push(ask);
+            	}
+			}
+		
+			//for (var i = askLength; i > 0; i--) {
+			for (var i = 0; i < askLength; i++) {
+                var ask = askData[i];
+                ask.direction = "SELL";
+                ask.position = i;
+                that.plate.askRows.push(ask);
+        	}
+             /** var asks = resp.items;
+			 
               let totle = 0;
               for (var i = that.plate.maxPostion - 1; i >= 0; i--) {
                 var ask = {};
@@ -2395,7 +2608,8 @@ export default {
                 }
                 ask.direction = "SELL";
                 ask.position = i + 1;
-                that.plate.askRows.push(ask);
+				that.plate.askRows.push(ask);
+				that.plate.askRowsTemp.push(ask);
               }
               for (var i = that.plate.askRows.length - 1; i >= 0; i--) {
                 if (
@@ -2411,35 +2625,80 @@ export default {
                 }
                 totle += that.plate.askRows[i].amount;
               }
-              that.plate.askTotle = totle;
-              // if (asks.length >= that.plate.maxPostion){
-              //     that.plate.askRows = [];
-              //
-              //     for(var i=0;i<asks.length;i++){
-              //       if (i == 0) asks[i].totalAmount = asks[i].amount;
-              //       else asks[i].totalAmount = asks[i-1].totalAmount + asks[i].amount;
-              //     }
-              //
-              //     for(var i = that.plate.maxPostion; i > 0 ;i--) {
-              //       var ask = asks[i-1];
-              //       ask.direction = 'SELL';
-              //       ask.position = i;
-              //       that.plate.askRows.push(ask);
-              //     }
-              // }else {
-              //   for (var i=0;i<asks.length;i++){
-              //       that.updatePlate("sell", asks[i]);
-              //   }
-              //
-              //   for(var i=that.plate.askRows.length-1;i>=0;i--){
-              //     that.plate.askRows[i].direction = 'SELL';
-              //     that.plate.askRows[i].position = that.plate.maxPostion - i;
-              //     if (i == that.plate.askRows.length-1) that.plate.askRows[i].totalAmount = that.plate.askRows[i].amount;
-              //     else that.plate.askRows[i].totalAmount = that.plate.askRows[i+1].totalAmount + that.plate.askRows[i].amount;
-              //   }
-              // }
+              that.plate.askTotle = totle; */
             } else {
-              var bids = resp.items;
+				let items = resp.items;
+				that.plate.bidRows = [];
+	  			that.plate.bidRowsTemp = [];
+            	let bidData = [];
+            	
+            	for (var i = 0; i < items.length; i++) {
+                	if (i == 0 || items[i].amount == 0) {
+                  		items[i].totalAmount = items[i].amount;
+                	} else {
+                  		items[i].totalAmount =items[i - 1].totalAmount +items[i].amount;
+					}
+					that.plate.bidRowsTemp.push(items[i]);
+              	}
+				 
+				for (var i = items.length; i >0 ; i--) {
+			      if (items[i-1].price != 0) {				
+				    var row = {};
+                    row.direction = items[i-1].direction;
+			        row.price = items[i-1].price;
+				    row.amount = items[i-1].amount;
+				    row.totalAmount = items[i-1].totalAmount;
+				    bidData.push(row);
+			      }
+				} 
+				
+				for (var i = 0; i <bidData.length; i++) {
+			      for (var j = i+1; j<bidData.length; j++) {
+			         if (bidData[j].needsplice != 1) {
+				        if (bidData[i].price.toFixed(that.baseCoinScale)==
+				  	          bidData[j].price.toFixed(that.baseCoinScale)) {
+					      if (bidData[i].fixamount == undefined) {
+						   bidData[i].fixamount = bidData[i].amount;
+			              }
+					       bidData[i].fixamount = bidData[j].amount + bidData[i].fixamount;
+					       bidData[j].needsplice=1;
+				         }
+			         }
+			      }
+				}
+				
+            
+		for (var i = 0; i < bidData.length; i++) {
+			if (bidData[i].needsplice == 1) {
+				bidData.splice(i,1); 
+				i--;
+			} else {
+				if (bidData[i].fixamount != undefined) {
+                    bidData[i].amount = bidData[i].fixamount;
+				}
+			}
+		}
+
+		const bidLength  = bidData.length;
+
+		for (var i = bidLength; i > 0; i--) {
+            var bid = bidData[i - 1];
+            bid.direction = "BUY";
+            bid.position = i-1;
+            that.plate.bidRows.push(bid);
+		}
+
+		if (bidLength < that.plate.maxPostion) {
+			for (var i = that.plate.maxPostion; i > bidLength; i--) {
+                var bid = { price: 0, amount: 0 };
+                bid.direction = "BUY";
+                bid.position = i;
+                bid.totalAmount = bid.amount;
+                that.plate.bidRows.push(bid);
+            }
+		} 
+			   //that.washBidData(bidData);
+              /** var bids = resp.items;
               that.plate.bidRows = [];
               let totle = 0;
               for (var i = 0; i < that.plate.maxPostion; i++) {
@@ -2454,45 +2713,12 @@ export default {
                 bid.position = i + 1;
                 that.plate.bidRows.push(bid);
               }
-              for (var i = 0; i < that.plate.bidRows.length; i++) {
-                if (i == 0 || that.plate.bidRows[i].amount == 0) {
-                  that.plate.bidRows[i].totalAmount =
-                    that.plate.bidRows[i].amount;
-                } else {
-                  that.plate.bidRows[i].totalAmount =
-                    that.plate.bidRows[i - 1].totalAmount +
-                    that.plate.bidRows[i].amount;
-                }
-                totle += that.plate.bidRows[i].amount;
-              }
-              that.plate.bidTotle = totle;
-              // if (bids.length >= that.plate.maxPostion){
-              //     that.plate.bidRows = [];
-              //
-              //     for(var i=0;i<bids.length;i++){
-              //       if (i == 0) bids[i].totalAmount = bids[i].amount;
-              //       else bids[i].totalAmount = bids[i-1].totalAmount + bids[i].amount;
-              //     }
-              //     for(var i=0;i < that.plate.maxPostion; i++){
-              //         var bid = bids[i];
-              //         bid.direction = 'BUY';
-              //         bid.position = i + 1;
-              //         that.plate.bidRows.push(bid);
-              //     }
-              // }else {
-              //     for (var i=0;i<bids.length;i++){
-              //       that.updatePlate("buy", bids[i])
-              //     }
-              //
-              //     for(var i=0;i<that.plate.bidRows.length;i++){
-              //       that.plate.bidRows[i].direction = 'BUY';
-              //       that.plate.bidRows[i].position = i + 1;
-              //       if (i == 0) that.plate.bidRows[i].totalAmount = that.plate.bidRows[i].amount;
-              //       else that.plate.bidRows[i].totalAmount = that.plate.bidRows[i-1].totalAmount + that.plate.bidRows[i].amount;
-              //     }
-              // }
-            }
-          }
+              
+			  that.plate.bidTotle = totle;*/
+			  
+
+			}
+		  }
         );
       });
     },
