@@ -45,17 +45,6 @@
           <div class="fold-selectCoin">{{ upCoin }}</div>
           <div @click="nextCoin()" class="fold-next-coin"><Icon class="fold-back-next-coin" type="ios-arrow-forward" /></div>
         </div>
-        <!--<div class="sc_filter_fold">
-          <div id="sc_1" @click="changeBg('#sc_1')" @mouseover="changeBgOver('#sc_1')" @mouseout="changeBgOut('#sc_1')">
-            <span>USDT</span>
-          </div>
-          <div id="sc_2" @click="changeBg('#sc_2')" @mouseover="changeBgOver('#sc_2')" @mouseout="changeBgOut('#sc_2')">
-            <span>BTC</span>
-          </div>
-          <div id="sc_3" @click="changeBg('#sc_3')" @mouseover="changeBgOver('#sc_3')" @mouseout="changeBgOut('#sc_3')">
-            <span>ETH</span>
-          </div>
-        </div>-->
         <Table class="left-table-fold" @on-current-change="gohref" highlight-row v-if="basecion!='favor'" :no-data-text="this.$t('common.nodata')" :id="this.currentCoin.coin" :columns="coins.column" :data="coins.tableData"></Table>
         <Table class="left-table-fold" @on-current-change="gohref" highlight-row v-if="basecion=='favor'" :no-data-text="this.$t('common.nodata')" id="collect" :columns="favorColumn" :data="coins.favor"></Table>
       </div>
