@@ -173,7 +173,8 @@ export default {
       time: null,
       content: " ",
       wechat: this.$t("footer.wechat"),
-        isRouterAlive: true
+      isRouterAlive: true,
+      minHeight: 0
     };
   },
   mounted() {
