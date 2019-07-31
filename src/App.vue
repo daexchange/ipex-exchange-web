@@ -16,7 +16,7 @@
                   <router-link to="/exchange">
                     <MenuItem name="nav-exchange">{{$t("header.exchange")}}</MenuItem>
                   </router-link>
-                  <router-link to="/otc/trade/usdt">
+                  <router-link to="/otc/trade/ETH">
                     <MenuItem name="nav-otc">{{$t("header.otc")}}</MenuItem>
                   </router-link>
 <!--                  <router-link to="">
