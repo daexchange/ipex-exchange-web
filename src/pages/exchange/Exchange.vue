@@ -749,7 +749,8 @@ export default {
       selectedPlate: "all", //当前显示的买卖盘
       CNYRate: null,
       datafeed: null,
-      defaultPath: "btc_usdt",
+	  //defaultPath: "btc_usdt",
+	  defaultPath: "TLM_ETH",
       basecion: "usdt",
       coinScale: 4,
       baseCoinScale: 2,
