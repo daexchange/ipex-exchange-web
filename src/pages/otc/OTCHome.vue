@@ -46,7 +46,7 @@
         name: "OTCHome",
         data() {
             return {
-                pane: 'USDT',
+                pane: '',
                 price: '7.00',
                 range: 0.01,
                 updown: '',
