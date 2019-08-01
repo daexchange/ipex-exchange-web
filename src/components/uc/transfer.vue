@@ -96,7 +96,7 @@
       </p>
       <Form class="withdraw-form-inline" ref="formInline" :model="formInline" inline>
         <FormItem prop="code">
-          <Input type="text" v-model="formInline.code" :placeholder="$t('uc.regist.smscode')">
+          <Input type="text" v-model="formInline.code" :placeholder="$t('uc.regist.emailcode')">
           </Input>
           <input id="sendCode" @click="sendCode();" type="Button" :value="sendcodeValue" :disabled="codeIsSending">
           </input>
