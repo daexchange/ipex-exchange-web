@@ -138,7 +138,8 @@ export default {
   data() {
     let self = this;
     return {
-      pane: 'usdt',
+	 // pane: 'usdt',
+	  pane: 'ETH',
       baseSymbols: [],
       loading: false,
       // progress: 0,
