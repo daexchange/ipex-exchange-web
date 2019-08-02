@@ -139,7 +139,7 @@ export default {
     let self = this;
     return {
 	 // pane: 'usdt',
-	  pane: 'ETH',
+	  pane: 'eth',
       baseSymbols: [],
       loading: false,
       // progress: 0,
