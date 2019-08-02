@@ -176,7 +176,7 @@ export default {
       this.formInline.fundpwd = "";
     },
     sendCode() {
-      this.$http.post(this.host + "/uc/mobile/withdraw/code").then(response => {
+      this.$http.post(this.host + "/uc/email/withdraw/code").then(response => {
         var resp = response.body;
         if (resp.code == 0) {
           this.settime();
