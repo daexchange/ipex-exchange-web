@@ -222,7 +222,7 @@ export default {
     ok() {
       if (this.formInline.code == "") {
         this.modal = true;
-        this.$Message.error("请填写短信验证码");
+        this.$Message.error("请填写验证码");
         return;
       }
       if (this.formInline.fundpwd == "") {

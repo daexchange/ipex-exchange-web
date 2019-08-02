@@ -114,7 +114,7 @@
           <Input type="text" v-model="user.mobilePhone" disabled></Input>
         </FormItem> -->
         <FormItem prop="code">
-          <Input type="text" v-model="formInline.code" :placeholder="$t('uc.regist.smscode')">
+          <Input type="text" v-model="formInline.code" :placeholder="$t('uc.regist.emailcode')">
           </Input>
           <input id="sendCode" @click="sendCode();" type="Button" :value="sendcodeValue" :disabled="codeIsSending">
           </input>
@@ -240,7 +240,7 @@ export default {
     ok() {
       if (this.formInline.code == "") {
         this.modal = true;
-        this.$Message.error("请填写短信验证码");
+        this.$Message.error("请填写验证码");
         return;
       }
       if (this.formInline.fundpwd == "") {
