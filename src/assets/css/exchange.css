@@ -160,6 +160,16 @@ span.price {
     color: #f15057 !important;
 }
 
+.hover_hide_buy {
+    display: none;
+    color: #00b275 !important;
+}
+
+.hover_hide_sell {
+    display: none;
+    color: #f15057 !important;
+}
+
 .kline {
     float: right;
     width: 77%;

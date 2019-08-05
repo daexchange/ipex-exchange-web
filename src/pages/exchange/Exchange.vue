@@ -234,7 +234,7 @@
               <span @click="changePlate('buy')" class="handler handler-green" :class="{active:selectedPlate=='buy'}"></span>
               <span @click="changePlate('sell')" class="handler handler-red" :class="{active:selectedPlate=='sell'}"></span>
             </div>
-              <Table v-show="selectedPlate!='buy'" @on-current-change="buyPlate" highlight-row ref="currentRowTable" class="sell_table" :columns="plate.columns" :data="plate.askRows"></Table>
+              <Table v-show="selectedPlate!='buy'" @on-current-change="buyPlate" highlight-row ref="currentRowTable" class="sell_table" :columns="plate.columns" :data="plate.askRows" @mouseover.native="showCNYPrice"></Table>
               <div class="plate-nowprice">
                 <span class="price" :class="{buy:currentCoin.change>0,sell:currentCoin.change<0}">{{currentCoin.price}}</span>
                 <span v-if="currentCoin.change>0" class="buy">↑</span>
@@ -248,9 +248,9 @@
                   </div>
                 </div>
               </div>
-              <Table v-show="selectedPlate!='sell'" @on-current-change="sellPlate" highlight-row class="buy_table" :class="{hidden:selectedPlate==='all'}" :columns="plate.columns" :data="plate.bidRows"></Table>
+              <Table v-show="selectedPlate!='sell'" @on-current-change="sellPlate" highlight-row class="buy_table" :class="{hidden:selectedPlate==='all'}" :columns="plate.columns" :data="plate.bidRows" @mouseover.native="showCNYPrice"></Table>
             </div>
-            <Table v-if="isShow === 2"  :transition="expand" :columns="trade.columns" :data="trade.rows"></Table>
+            <Table id="table-trad" v-if="isShow === 2"  :transition="expand" :columns="trade.columns" :data="trade.rows" @mouseover.native="showCNYPrice"></Table>
 
         <!--  <div class="tab-main" style=""> </div>-->
         </div>
@@ -722,6 +722,7 @@ export default {
   data() {
     let self = this;
     return {
+      CNYPrice: 1,
 	  pane: '',
 	  expand: '',
 	  baseSymbols: [],
@@ -976,8 +977,9 @@ export default {
             render: (h, params) => {
               const row = params.row;
               const className = row.direction == "BUY" ? "buy" : "sell";
-
-              return h(
+              let CNYPrice = "";
+              const classHover = 'hover_hide_' + className;
+              return [h(
                 "span",
                 {
                   attrs: {
@@ -985,7 +987,15 @@ export default {
                   }
                 },
                 params.row.price.toFixed(this.baseCoinScale)
-              );
+              ), h(
+                "span",
+                {
+                  attrs: {
+                    class: classHover
+                  }
+                },
+                CNYPrice
+              )];
             },
             renderHeader: (h, params) => {
               const title =
@@ -1046,13 +1056,16 @@ export default {
             title: self.$t("exchange.price"),
             key: "price",
             render: (h, params) => {
-              let str = "";
+              let showSpan = "";
+              let hideSpan = "";
               let price = "";
+              let CNYPrice = "";
               const className = params.row.direction.toLowerCase();
-              params.row.price == 0 && (str = h("span", {}, "--"));
+              const classHover = 'hover_hide_' + className;
+              params.row.price == 0 && (showSpan = h("span", {}, "--")) && (hideSpan = h("span", {}, "--"));
               params.row.price != 0 &&
                 (price = params.row.price.toFixed(this.baseCoinScale)) &&
-                (str = h(
+                (showSpan = h(
                   "span",
                   {
                     attrs: {
@@ -1060,8 +1073,17 @@ export default {
                     }
                   },
                   price
-                ));
-              return str;
+                )) &&
+               (hideSpan = h(
+                 "span",
+                 {
+                   attrs: {
+                     class: classHover
+                   }
+                 },
+                 CNYPrice
+               ));
+              return [showSpan, hideSpan];
             },
             renderHeader: (h, params) => {
               const title =
@@ -1492,6 +1514,19 @@ export default {
     this.init();
   },
   methods: {
+    showCNYPrice(){
+        let cnyPrice = this.CNYPrice;
+        $(".ivu-table-row-hover").children().eq(0).hover(function () {
+          let basePrice = $(this).find("span").eq(0).text();
+          let priceBaseCNY = basePrice * cnyPrice;
+          $(this).find("span").eq(1).text("￥" + priceBaseCNY.toFixed(2));
+          $(this).find("span").eq(0).css("display", "none");
+          $(this).find("span").eq(1).css("display", "inline");
+        }, function () {
+          $(this).find("span").eq(1).css("display", "none");
+          $(this).find("span").eq(0).css("display", "inline");
+        });
+    },
     backCoin() {
       for (let i=1; i<this.baseSymbols.length; i++) {
         if (this.baseSymbols[i].name===this.basecion) {
@@ -1690,6 +1725,10 @@ export default {
           var resp = response.body;
           this.CNYRate = resp.data;
         });
+      this.$http.get(this.host + "/uc/coin/cny-rate/ETH").then(response => {
+        var resp = response.body;
+        this.CNYPrice = resp.data;
+      })
     },
     getCoin(symbol) {
       return this.coins._map[symbol];
