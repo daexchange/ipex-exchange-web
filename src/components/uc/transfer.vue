@@ -90,7 +90,8 @@
       </div>
     </div>
 
-    <Modal v-model="modal" width="450">
+    <Modal v-model="modal" width="450" :mask-closable="false">
+	
       <p slot="header">
         {{$t('uc.finance.transfer.title')}}
       </p>

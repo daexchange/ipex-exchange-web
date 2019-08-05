@@ -101,7 +101,7 @@
         </section>
       </div>
     </div>
-    <Modal v-model="modal" width="450">
+    <Modal v-model="modal" width="450" :mask-closable="false">
       <!-- <P style="color:red;font-weight: bold;">
         {{$t('uc.finance.withdraw.fundpwdtip')}}<br/>
         <Input type="password" v-model="fundpwd" :placeholder="$t('otc.chat.msg7')"></Input>

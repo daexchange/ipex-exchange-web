@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <Modal v-model="modal" :title="$t('uc.finance.money.fundstransfer')" @on-ok="transferAccount">
+    <Modal v-model="modal" :title="$t('uc.finance.money.fundstransfer')" @on-ok="transferAccount" :mask-closable="false">
     	<div id="wrapper">
 			<i-button long style="height:70px;">
 					<div id="first">{{$t('uc.finance.money.transfertip3')}}<br/><span>{{ from }}</span></div>
@@ -27,7 +27,7 @@
       </p>
       <P style="font-weight: bold;padding: 10px 0;">{{$t('uc.finance.money.transfertip2')}}：{{balanceAmount}}</p>
     </Modal>
-    <Modal v-model="modal_msg" :title="$t('uc.finance.money.fundstransfer')">
+    <Modal v-model="modal_msg" :title="$t('uc.finance.money.fundstransfer')" :mask-closable="false">
       <p>{{match_msg}}</p>
     </Modal>
   </div>

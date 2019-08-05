@@ -48,7 +48,7 @@
       </div>
     </div>
     <!-- model -->
-    <Modal v-model="modal2" width="360">
+    <Modal v-model="modal2" width="360" :mask-closable="false">
       <p slot="header" style="color:#f60;text-align:center">
         <Icon type="ios-mail" size="20" color="#00b5f6;" />
         <span>{{$t('uc.finance.withdraw.safevalidate')}}</span>
