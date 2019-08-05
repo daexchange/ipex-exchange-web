@@ -39,7 +39,7 @@
       </Form>
     </div>
       <div>
-          <el-dialog title="安全验证" :visible.sync="dialogVisible">
+          <el-dialog title="安全验证" :visible.sync="dialogVisible" :close-on-click-modal="false">
               <el-form :model="form">
                   <el-form-item label-width="120px">
                       <el-input v-model="formInline.emailCode" :placeholder="$t('uc.login.emailcode')" autocomplete="off">
@@ -274,7 +274,7 @@
             this.$Message.error(resp.message);
           }
         });
-      },
+	  },
       sendEmailCode(email) {
         let api = "/uc/email/login/code";
         var params = {};
