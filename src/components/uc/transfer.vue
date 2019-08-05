@@ -90,15 +90,26 @@
       </div>
     </div>
 
-   
-<Modal title="xxx" width="450" v-model="modal" onClick="addNew"  >
-   <!--重点就是下面的代码了-->
-   <div slot="footer">
-    <Button type="text" size="large"  >取消</Button>
-    <Button type="primary" size="large" >确定</Button>
-   </div>
-</Modal>
- 
+    <Modal v-model="modal" width="450">
+      <p slot="header">
+        {{$t('uc.finance.transfer.title')}}
+      </p>
+      <Form class="withdraw-form-inline" ref="formInline" :model="formInline" inline>
+        <FormItem prop="code">
+          <Input type="text" v-model="formInline.code" :placeholder="$t('uc.regist.emailcode')">
+          </Input>
+          <input id="sendCode" @click="sendCode();" type="Button" :value="sendcodeValue" :disabled="codeIsSending">
+          </input>
+        </FormItem>
+        <FormItem>
+          <Input type="password" v-model="formInline.fundpwd" :placeholder="$t('otc.chat.msg7')"></Input>
+        </FormItem>
+      </Form>
+      <div slot="footer">
+        <span style="margin-right:50px" @click="cancel">取消</span>
+        <span style="background:#f0ac19;color:#fff;width:80px;border-radius:30px;display:inline-block;text-align:center;height:30px;line-height: 30px;" @click="ok">确定</span>
+      </div>
+    </Modal>
   </div>
 </template>
 <script>
@@ -141,15 +152,11 @@ export default {
     }
   },
   methods: {
-    cancel() {console.log(666);
-     // this.modal = false;
+    cancel() {
+      this.modal = false;
       this.formInline.code = "";
       this.formInline.fundpwd = "";
-	},
-	addNew() {console.log(88);
-     // this.modal = false;
-   
-	},
+    },
     sendCode() {
       this.$http.post(this.host + "/uc/email/exange/transfer/code").then(response => {
         var resp = response.body;
@@ -212,7 +219,7 @@ export default {
         this.tableWithdraw = this.allTableWithdraw;
       }
     },
-    ok() {console.log(777); 
+    ok() {
       if (this.formInline.code == "") {
         this.modal = true;
         this.$Message.error("请填写验证码");
