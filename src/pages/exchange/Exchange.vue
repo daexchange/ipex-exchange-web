@@ -1515,14 +1515,17 @@ export default {
   },
   methods: {
     showCNYPrice(){
-        let cnyPrice = this.CNYPrice;
-        $(".ivu-table-row-hover").children().eq(0).hover(function () {
-          let basePrice = $(this).find("span").eq(0).text();
+ 		let cnyPrice = this.CNYPrice;
+		$(".ivu-table-row-hover").children().eq(0).mousemove(function () {
+	 	  let basePrice = $(this).find("span").eq(0).text();
           let priceBaseCNY = basePrice * cnyPrice;
           $(this).find("span").eq(1).text("￥" + priceBaseCNY.toFixed(2));
           $(this).find("span").eq(0).css("display", "none");
-          $(this).find("span").eq(1).css("display", "inline");
-        }, function () {
+          $(this).find("span").eq(1).css("display", "inline"); 
+		})
+
+        $(".ivu-table-row-hover").children().eq(0).hover(function () {
+	    }, function () {
           $(this).find("span").eq(1).css("display", "none");
           $(this).find("span").eq(0).css("display", "inline");
         });
