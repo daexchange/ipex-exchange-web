@@ -121,7 +121,7 @@
         <div v-show="certStatus === 0" style="text-align: center;font-size: 16px;margin-top:50px">
           <Checkbox v-model="single"></Checkbox>
           <span>{{$t("uc.identity.read")}}</span>
-          <router-link target="_blank" to="/helpdetail?cate=1&id=11&cateTitle=常见问题" class="cur" style="color:#f0a70a">{{$t('uc.identity.agreement')}}</router-link>
+          <router-link target="_blank" to="/helpdetail?cate=1&id=2&cateTitle=常见问题" class="cur" style="color:#f0a70a">{{$t('uc.identity.agreement')}}</router-link>
         </div>
         <!-- 同意第一步的按钮 -->
         <div v-show="certStatus === 0" class="sq">
@@ -439,7 +439,6 @@ export default {
       this.$http
         .get(this.host + this.api.uc.apply)
         .then(res => {
-          debugger;
           var resp = res.body;
           if (resp.code == 0) {
             this.$Message.success(resp.message);
@@ -502,14 +501,17 @@ export default {
           this.$Message.error("Please upload the transaction certificate");
         return;
       }
+      console.log(11111111)
       var params = {};
       params["businessAuthDepositId"] = this.getAudiCoin(
         this.apply_form.coinSymbol
       ).id;
+      console.log(22222222)
       params["json"] = JSON.stringify(this.apply_form);
       this.$http
         .post(this.host + "/uc/approve/certified/business/apply", params)
         .then(res => {
+          console.log(33333333)
           var resp = res.body;
           if (resp.code == 0) {
             this.$Message.success("提交成功!");
@@ -518,7 +520,10 @@ export default {
           } else {
             this.$Message.error(resp.message);
           }
-        });
+        }).catch(error => {
+          alert("提交失败，请重新提交！")
+      });
+      console.log(44444444)
     }
   },
   created() {

@@ -32,7 +32,7 @@
                         </FormItem>
                         <FormItem class="check-agree">
                             <Checkbox v-model="formItem2.single" @on-change="disable()" @keyup.native="disable()">{{$t('uc.regist.agreement')}}</Checkbox>
-                            <a href="#/helpdetail?cate=1&id=17&cateTitle=常见问题" target="_blank" style="">《{{$t('uc.regist.userprotocol')}}》</a>
+                            <a href="#/helpdetail?cate=1&id=1&cateTitle=常见问题" target="_blank" style="">《{{$t('uc.regist.userprotocol')}}》</a>
                         </FormItem>
                         <FormItem class="form_submit">
                             <Button v-if="formItem2.isOk" type="primary" @click="handleSubmit('formItem2')" long>{{$t('uc.regist.regist')}}</Button>
