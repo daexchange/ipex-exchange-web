@@ -79,6 +79,7 @@
                                       <Row>
                                         <Col span="8">
                                         <input type="hidden" name="aliPreview" :value="aliPreview" />
+                                        <div class="receiving">上传支付宝收款码</div>
                                         <img v-if="aliImg" :alt="$t('uc.account.imgtip')" style="width: 200px;height: 200px;" :src="aliImg">
                                         <img v-else :alt="$t('uc.account.imgtip')" style="width: 200px;height: 200px;" src="../../assets/images/upload_placeholder.png">
                                         <div class="acc_sc">
@@ -133,6 +134,7 @@
                                       <Row>
                                         <Col span="8">
                                           <input type="hidden" name="wePreview" :value="wePreview" />
+                                          <div class="receiving">上传微信收款码</div>
                                           <img v-if="weImg" :alt="$t('uc.account.imgtip')" style="width: 200px;height: 200px;" :src="weImg" >
                                           <img v-else :alt="$t('uc.account.imgtip')" style="width: 200px;height: 200px;" src="../../assets/images/upload_placeholder.png">
                                           <div class="acc_sc">
@@ -545,6 +547,14 @@ export default {
 }
 </script>
 <style scoped>
+
+
+    .receiving {
+        color: #f0a70a;
+        padding-bottom: 8px;
+    }
+
+
 .account-box .account-in .account-item .account-detail {
     padding: 30px 0;
     /* background: white; */
