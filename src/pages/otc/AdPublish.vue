@@ -537,9 +537,36 @@ export default {
       });
     },
     getMember() {
+      //判断是否进行实名认证；
+      let status;
+      this.$http.post(this.host + "/uc/approve/security/setting", {})
+          .then(response => {
+             let resp = response.body;
+            if (resp.code === 0) {
+              if (resp.data.realName == null || resp.data.realName == "") {
+                this.$Message.warning(this.$t("otc.publishad.submittip1"));
+                this.$router.push("/uc/safe");
+                status = 0;
+              }
+              //else if (resp.data.phoneVerified == 0) {
+              //    this.$Message.warning(this.$t("otc.publishad.submittip2"));
+              //    self.$router.push("/uc/safe");
+              //}
+              else if (resp.data.fundsVerified == 0) {
+                this.$Message.warning(this.$t("otc.publishad.submittip3"));
+                this.$router.push("/uc/safe");
+                status = 0;
+              }
+            } else {
+              this.$Message.error(resp.message);
+            }
+           });
       //获取个人安全信息
       let self = this;
       this.$http.get(this.host + this.api.uc.identification).then(res => {
+        if (status == 0) {
+          return;
+        }
         let certifiedBusinessStatus = res.body.data.certifiedBusinessStatus;
         if (certifiedBusinessStatus == 2) {
           this.getAccount();

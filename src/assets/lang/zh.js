@@ -385,7 +385,7 @@ module.exports = {
             unionpay: '银联',
             submit_failure: '提交失败!',
             submit_success: '',
-            submittip1: '请先进行实名等一系列认证',
+            submittip1: '请先进行实名认证',
             submittip2: '请先进行手机等一系列认证',
             submittip3: '请先进行资金密码等一系列认证',
             submittip4: '请至少绑定一种支付方式',
