@@ -767,6 +767,7 @@ module.exports = {
             pwdvalidate1: '请输入密码',
         },
         safe: {
+            nicknametip: '请输入昵称',
             safelevel_low: '安全等级：低',
             safelevel_high: '安全等级：高',
             safelevel_medium: '安全等级：中',

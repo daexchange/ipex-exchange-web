@@ -761,6 +761,7 @@ module.exports = {
             emailcodetip: 'Enter email verification code',
         },
         safe: {
+            nicknametip: 'Please enter nickname',
             safelevel_low: 'Security Level: Low',
             safelevel_high: 'Security Level: High',
             safelevel_medium: 'Security Level: Medium',

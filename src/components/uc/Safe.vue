@@ -30,7 +30,7 @@
                                 <span class="card-number">{{$t('uc.safe.nickname')}}</span>
                                 <p v-show="isBinded" class="bankInfo" style="color: #fff;">{{user.username}}</p>
                                 <div v-show="!isBinded" class="bankInfo">
-                                    <Input v-model="nickname" placeholder="请输入昵称" size="large" class="bankInfo"/>
+                                    <Input v-model="nickname" :placeholder="this.$t('uc.safe.nicknametip')" size="large" class="bankInfo"/>
                                 </div>
                                 <a v-if="status==0" class="btn" @click="bindUserName">{{$t('uc.safe.set')}}</a>
                                 <a v-else class="btn" @click="saveUserName">{{$t('uc.safe.save')}}</a>
@@ -1128,6 +1128,7 @@ export default {
           if (resp.code == 0) {
             this.user = resp.data;
             this.usernameS = this.user.username && this.user.username.slice(0,1);
+            this.$store.commit("setMember", resp.data);
           } else {
             this.$Message.error(this.loginmsg);
             // this.$Message.error(this.$t('common.logintip'));
