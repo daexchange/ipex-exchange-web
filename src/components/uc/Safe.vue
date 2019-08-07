@@ -745,6 +745,7 @@ export default {
   },
   methods: {
       bindUserName() {
+          this.nickname = this.user.username;
           this.isBinded = false;
           this.status = 1;
       },
