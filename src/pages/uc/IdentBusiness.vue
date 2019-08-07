@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="identbusiness" style=" padding: 81px;padding-top: 80px;">
     <div class="content">
       <!---->
@@ -468,62 +468,135 @@ export default {
     apply3(form) {
       if (this.apply_form.telno == "") {
         this.$store.state.lang != "English" &&
-          this.$Message.error("请填写手机号");
+		  //this.$Message.error("请填写手机号")
+		 this.$message({
+          		message: '请填写手机号',
+          		type: 'error',
+           		center:true
+         });	 
+		  
         this.$store.state.lang == "English" &&
-          this.$Message.error("Please fill in your cell phone number");
+		//  this.$Message.error("Please fill in your cell phone number");
+		this.$message({
+          	message: 'Please fill in your cell phone number',
+          	type: 'error',
+           	center:true
+		});
         return;
       }
       if (this.apply_form.wechat == "") {
         this.$store.state.lang != "English" &&
-          this.$Message.error("请填写微信号");
+		 // this.$Message.error("请填写微信号")
+		this.$message({
+          		message: '请填写微信号',
+          		type: 'error',
+           		center:true
+        });
         this.$store.state.lang == "English" &&
-          this.$Message.error("Please fill in your cell wechat number");
+		 // this.$Message.error("Please fill in your cell wechat number");
+		  this.$message({
+          	message: 'Please fill in your cell wechat number',
+          	type: 'error',
+           	center:true
+		});
         return;
       }
       if (this.apply_form.qq == "") {
         this.$store.state.lang != "English" &&
-          this.$Message.error("请填写qq号");
+		 // this.$Message.error("请填写qq号");
+		this.$message({
+          		message: '请填写qq号',
+          		type: 'error',
+           		center:true
+        });
+		  
         this.$store.state.lang == "English" &&
-          this.$Message.error("Please fill in your cell qq number");
-        return;
-      }
+         // this.$Message.error("Please fill in your cell qq number");
+	    this.$message({
+          		message: 'Please fill in your cell qq number',
+          		type: 'error',
+           		center:true
+        });
+	 
+	 	return;
+	  }
+	  if (this.apply_form.coinSymbol == "") {
+		this.$store.state.lang != "English" &&
+		  this.$message({
+          		message: '请选择保证金币种',
+          		type: 'error',
+           		center:true
+         	 })
+		  ;
+         this.$store.state.lang == "English" &&
+		 this.$message({
+          	message: 'Please select the coin',
+          	type: 'error',
+           	center:true	
+         });
+         return;
+	  }
+	  
       if (this.apply_form.assetData == "") {
         this.$store.state.lang != "English" &&
-          this.$Message.error("请上传资产证明");
+		 // this.$Message.error("请上传资产证明");
+		  this.$message({
+          		message: '请上传资产证明',
+          		type: 'error',
+           		center:true
+         	 })
+		  ;
         this.$store.state.lang == "English" &&
-          this.$Message.error("Please upload the asset certificate");
+		//  this.$Message.error("Please upload the asset certificate");
+		this.$message({
+          	message: 'Please upload the asset certificate',
+          	type: 'error',
+           	center:true	
+        });
         return;
       }
       if (this.apply_form.tradeData == "") {
         this.$store.state.lang != "English" &&
-          this.$Message.error("请上传交易证明");
+		  //this.$Message.error("请上传交易证明");
+		  this.$message({
+          	message: '请上传交易证明',
+          	type: 'error',
+           	center:true	
+          });
         this.$store.state.lang == "English" &&
-          this.$Message.error("Please upload the transaction certificate");
-        return;
+          //this.$Message.error("Please upload the transaction certificate");
+		 this.$message({
+          	message: 'Please upload the transaction certificate',
+          	type: 'error',
+           	center:true	
+          });
+		
+		return;
       }
-      console.log(11111111)
       var params = {};
       params["businessAuthDepositId"] = this.getAudiCoin(
         this.apply_form.coinSymbol
       ).id;
-      console.log(22222222)
       params["json"] = JSON.stringify(this.apply_form);
       this.$http
         .post(this.host + "/uc/approve/certified/business/apply", params)
         .then(res => {
-          console.log(33333333)
           var resp = res.body;
           if (resp.code == 0) {
             this.$Message.success("提交成功!");
             this.modal_apply = false;
             this.certStatus = 1;
           } else {
-            this.$Message.error(resp.message);
+			//this.$Message.error(resp.message);
+			this.$message({
+          		message: resp.message,
+          		type: 'error',
+           		center:true	
+          	});
           }
         }).catch(error => {
           alert("提交失败，请重新提交！")
       });
-      console.log(44444444)
     }
   },
   created() {
