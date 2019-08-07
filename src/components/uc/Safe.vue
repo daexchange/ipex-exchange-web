@@ -28,10 +28,13 @@
                             <div class="account-item-in">
                                 <Icon type="md-person" style="font-size: 18px;color: #00b5f6;"></Icon>
                                 <span class="card-number">{{$t('uc.safe.nickname')}}</span>
-                                <p class="bankInfo" style="color: #fff;">
-                                    {{user.username}}
-                                </p>
-                                <span>{{$t('uc.safe.binded')}}</span>
+                                <p v-show="isBinded" class="bankInfo" style="color: #fff;">{{user.username}}</p>
+                                <div v-show="!isBinded" class="bankInfo">
+                                    <Input v-model="nickname" placeholder="请输入昵称" size="large" class="bankInfo"/>
+                                </div>
+                                <a v-if="user.username==null && status==0" class="btn" @click="bindUserName">{{$t('uc.safe.bind')}}</a>
+                                <a v-else-if="status==1" class="btn" @click="saveUserName">{{$t('uc.safe.save')}}</a>
+                                <span v-else>{{$t('uc.safe.binded')}}</span>
                             </div>
                         </div>
                         <!-- 6 -->
@@ -510,6 +513,9 @@ export default {
       }
     };
     return {
+      isBinded: true,
+      status: 0,
+      nickname: "",
       fGetBackFundpwd: false,
       imgPreview: "",
       imgNext: "10000000000",
@@ -739,6 +745,25 @@ export default {
     };
   },
   methods: {
+      bindUserName() {
+          this.isBinded = false;
+          this.status = 1;
+      },
+      saveUserName() {
+          let params = {};
+          params["userName"] = this.nickname;
+          this.$http.post(this.host + "/uc/approve/update/userName", params).then(response => {
+              let resp = response.body;
+              if (resp.code==0) {
+                  this.$Message.success("绑定成功");
+                  this.isBinded = true;
+                  window.location.reload();
+              } else {
+                  this.$Message.error(resp.message);
+              }
+          });
+          this.status = 0;
+      },
       getCountryList() {
           let api = '/uc/support/country';
           this.$http.post(this.host + api).then(response => {

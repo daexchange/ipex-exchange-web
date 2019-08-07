@@ -798,7 +798,7 @@ module.exports = {
             required2_5: '标注“IPEX”、申请日期和您的签名；',
             required2_6: '签名必须与护照上的姓名一致；',
             required2_7: '图像必须为JPG / JPEG / PNG格式，且不得大于2M。',
-            save: '保 存',
+            save: '保存',
             reset: '重置',
             email: '邮箱',
             bindemail: '绑定邮箱',
