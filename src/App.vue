@@ -169,6 +169,7 @@ export default {
     return {
       // container_test:"container_test",
       pageView: "page-view",
+      minHeight: null,
       utc: null,
       time: null,
       content: " ",
