@@ -32,9 +32,8 @@
                                 <div v-show="!isBinded" class="bankInfo">
                                     <Input v-model="nickname" placeholder="请输入昵称" size="large" class="bankInfo"/>
                                 </div>
-                                <a v-if="user.username==null && status==0" class="btn" @click="bindUserName">{{$t('uc.safe.bind')}}</a>
-                                <a v-else-if="status==1" class="btn" @click="saveUserName">{{$t('uc.safe.save')}}</a>
-                                <span v-else>{{$t('uc.safe.binded')}}</span>
+                                <a v-if="status==0" class="btn" @click="bindUserName">{{$t('uc.safe.set')}}</a>
+                                <a v-else class="btn" @click="saveUserName">{{$t('uc.safe.save')}}</a>
                             </div>
                         </div>
                         <!-- 6 -->
