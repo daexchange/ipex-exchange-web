@@ -1067,8 +1067,8 @@
             },
             reloadAd() {
                 // this.tabPage = "buy";
-                this.loadAd(1, 1, this.advertiment.bid);
-                this.loadAd(1, 0, this.advertiment.ask);
+                this.loadAd(1, 0, this.advertiment.bid);
+                this.loadAd(1, 1, this.advertiment.ask);
             },
             strpro(str) {
                 let newStr = str;
