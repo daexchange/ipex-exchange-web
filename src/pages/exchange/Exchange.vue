@@ -1884,7 +1884,7 @@ export default {
               widget.chart().setChartType(1);
               widget.setSymbol("", "1");
             })
-            .append("<span>M1</span>")
+            .append("<span>1min</span>")
             .addClass("selected");
 
           widget
@@ -1901,7 +1901,7 @@ export default {
               widget.chart().setChartType(1);
               widget.setSymbol("", "5");
             })
-            .append("<span>M5</span>");
+            .append("<span>5min</span>");
 
           widget
             .createButton()
@@ -1917,7 +1917,7 @@ export default {
               widget.chart().setChartType(1);
               widget.setSymbol("", "15");
             })
-            .append("<span>M15</span>");
+            .append("<span>15min</span>");
 
           widget
             .createButton()
@@ -1933,7 +1933,7 @@ export default {
               widget.chart().setChartType(1);
               widget.setSymbol("", "30");
             })
-            .append("<span>M30</span>");
+            .append("<span>30min</span>");
 
           widget
             .createButton()
@@ -1949,7 +1949,7 @@ export default {
               widget.chart().setChartType(1);
               widget.setSymbol("", "60");
             })
-            .append("<span>H1</span>");
+            .append("<span>1hour</span>");
 
           widget
             .createButton()
@@ -1965,7 +1965,7 @@ export default {
               widget.chart().setChartType(1);
               widget.setSymbol("", "1D");
             })
-            .append("<span>D1</span>");
+            .append("<span>1day</span>");
 
           widget
             .createButton()
@@ -1981,7 +1981,7 @@ export default {
               widget.chart().setChartType(1);
               widget.setSymbol("", "1W");
             })
-            .append("<span>W1</span>");
+            .append("<span>1week</span>");
 
           widget
             .createButton()
@@ -1997,7 +1997,7 @@ export default {
               widget.chart().setChartType(1);
               widget.setSymbol("", "1M");
             })
-            .append("<span>M1</span>");
+            .append("<span>1month</span>");
         });
       });
     },
