@@ -2952,6 +2952,7 @@ export default {
               title: that.$t("exchange.tip"),
               desc: that.$t("exchange.success")
             });
+            this.form.buy.marketAmount = 0;
             this.refreshAccount();
           } else {
             this.$Notice.error({
@@ -3054,6 +3055,7 @@ export default {
               title: that.$t("exchange.tip"),
               desc: that.$t("exchange.success")
             });
+            this.form.sell.marketAmount = 0;
             this.refreshAccount();
           } else {
             this.$Notice.error({
