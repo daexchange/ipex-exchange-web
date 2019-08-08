@@ -13,10 +13,14 @@
                             <!--防止自动填入邮箱地址和密码-->
                             <Input type="password"  style="position: absolute;z-index: -999"/>
                             <Input v-model="formItem2.emailCode" @keyup.native="disable()" :placeholder="$t('uc.regist.emailcodetip')">
-                                <Button :loading="formItem2.loading" slot="append">
-                                    <span v-if="!formItem2.loading" v-show="!formItem2.show" @click="initGtCaptcha(formItem2.email)">{{$t('uc.regist.sendcode')}}</span>
-                                    <span v-else v-show="!formItem2.show">{{$t('uc.regist.sendingcode')}}</span>
-                                    <span v-show="formItem2.show">{{ formItem2.count }}s 后获取验证码</span>
+                                <Button :loading="formItem2.loading" slot="append" v-if="!formItem2.loading" v-show="!formItem2.show" @click="initGtCaptcha(formItem2.email)">
+                                    <span>{{$t('uc.regist.sendcode')}}</span>
+                                </Button>
+                                <Button :loading="formItem2.loading" slot="append" v-else v-show="!formItem2.show">
+                                    <span>{{$t('uc.regist.sendingcode')}}</span>
+                                </Button>
+                                <Button :loading="formItem2.loading" slot="append" v-show="formItem2.show">
+                                    <span>{{ formItem2.count }}s 后获取验证码</span>
                                 </Button>
                             </Input>
                         </FormItem>
