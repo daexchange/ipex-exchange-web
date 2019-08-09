@@ -756,8 +756,9 @@ export default {
               let resp = response.body;
               if (resp.code==0) {
                   this.$Message.success("绑定成功");
-                  //this.isBinded = true;
-                  window.location.reload();
+                  this.isBinded = true;
+                  //window.location.reload();
+                  this.getMember();
               } else {
                   this.$Message.error(resp.message);
               }
