@@ -1778,7 +1778,7 @@
                     this.getCurrentOrder(); //当前委托
                     this.getHistoryOrder(); //历史委托
                 }
-                this.getFavor();
+                //this.getFavor();
                 this.sliderBuyLimitPercent = 0;
                 this.sliderSellLimitPercent = 0;
                 this.sliderBuyMarketPercent = 0;
