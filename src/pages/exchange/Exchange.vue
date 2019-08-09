@@ -99,21 +99,21 @@
                 <div class="trade_wrap">
                     <div class="trade_panel trade_panel_logout">
                         <div class="mask" v-show="!isLogin">
-              <span>{{$t("exchange.qingxian")}}
-                <router-link to="/login">
-                  <span style="color:#f0a70a;">{{$t("common.login")}}</span>
-                </router-link> /
-                <router-link to="/register">
-                  <span style="color:#f67951;">{{$t("common.register")}}</span>
-                </router-link>
-              </span>
+                          <span>{{$t("exchange.qingxian")}}
+                            <router-link to="/login">
+                              <span style="color:#f0a70a;">{{$t("common.login")}}</span>
+                            </router-link> /
+                            <router-link to="/register">
+                              <span style="color:#f67951;">{{$t("common.register")}}</span>
+                            </router-link>
+                          </span>
                         </div>
                         <div class="mask" v-show="isLogin&&!member.realName">
-              <span>{{$t("exchange.qingxian")}}
-                <router-link to="/uc/safe">
-                  <span style="color:#f0a70a;">{{$t("exchange.shimingrenzheng")}}</span>
-                </router-link>
-              </span>
+                          <span>{{$t("exchange.qingxian")}}
+                            <router-link to="/uc/safe">
+                              <span style="color:#f0a70a;">{{$t("exchange.shimingrenzheng")}}</span>
+                            </router-link>
+                          </span>
                         </div>
                         <div class="trade_menu">
                             <span @click="limited_price"
@@ -2272,7 +2272,7 @@
                             this.form.buy.limitPrice = this.form.sell.limitPrice = coin.price;
                         }
                     }
-                    if (this.basecion === 'favor' && this.isLogin) {
+                    if (this.isLogin) {
                         this.getFavor();
                     }
                     require(["../../assets/js/exchange.js"], function (e) {
