@@ -398,9 +398,9 @@ export default {
             this.$refs[name].validate((valid) => {
                 if (valid) {
                     this.submit(name)
-                } else {
+                }/* else {
                     this.$Message.error(this.$t('uc.account.save_failure'));
-                }
+                }*/
             })
         },
         handleReset(name) {
