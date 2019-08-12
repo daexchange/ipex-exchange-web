@@ -485,6 +485,7 @@ module.exports = {
 				accounttip: '请填入收款人账户注册邮箱',
 				numtip2: '请填写正确转账数量，最小值为',
 				accounterr: '转账账户格式不正确',
+                accountret: '转账账户不能是本账户',
 				numtip1: '输入转账数量',
 				numtip2: '请填写正确转账数量',
 			},

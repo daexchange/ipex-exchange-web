@@ -375,9 +375,7 @@ export default {
         this.$Message.error(this.$t("uc.finance.transfer.accounttip"));
         return false;
       } else if (
-        this.withdrawAmount == "" ||
-        this.withdrawAmount == 0 ||
-        this.withdrawAmount> this.currentCoin.balance
+        this.withdrawAmount == "" || this.withdrawAmount == 0 || this.withdrawAmount > this.currentCoin.balance
       ) {
         this.$Message.error(
 		  this.$t("uc.finance.transfer.numtip2") 
@@ -403,7 +401,9 @@ export default {
 	  } */else if (!reg.test(this.withdrawAdress)) {
 		this.$Message.error(this.$t("uc.finance.transfer.accounterr"));
 	   	return false;
-      } else {
+      } else if (this.withdrawAdress === this.member.email) {
+	    this.$Message.error(this.$t("uc.finance.transfer.accountret"));
+     } else {
         return true;
       }
     },
