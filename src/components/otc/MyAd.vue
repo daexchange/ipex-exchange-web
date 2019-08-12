@@ -250,7 +250,51 @@ export default {
       });
     },
     publish() {
-      this.$router.push(this.api.otc.createAd);
+      this.$http.post(this.host + "/uc/approve/security/setting", {})
+              .then(response => {
+                let resp = response.body;
+                if (resp.code === 0) {
+                  if (resp.data.realName == null || resp.data.realName == "") {
+                    this.$Modal.confirm({
+                      title: '您还未进行实名认证',
+                      content: '<p>是否去进行实名认证？</p>',
+                      onOk: () => {
+                        this.$router.push("/uc/safe");
+                        return;
+                      },
+                      onCancel: () => { return; }
+                    });
+                  } else if (resp.data.fundsVerified == 0) {
+                    this.$Modal.confirm({
+                      title: '您还未设置资金密码',
+                      content: '<p>是否去设置资金密码？</p>',
+                      onOk: () => {
+                        this.$router.push("/uc/safe");
+                        return;
+                      },
+                      onCancel: () => { return; }
+                    });
+                  } else {
+                    //获取个人安全信息
+                    this.$http.get(this.host + this.api.uc.identification).then(res => {
+                      let certifiedBusinessStatus = res.body.data.certifiedBusinessStatus;
+                      if (certifiedBusinessStatus !== 2) {
+                        this.$Modal.confirm({
+                          title: '您还未申请商家认证',
+                          content: '<p>是否去申请商家认证？</p>',
+                          onOk: () => {
+                            this.$router.push("/identbusiness");
+                            return;
+                          },
+                          onCancel: () => { return; }
+                        });
+                      } else {
+                        this.$router.push(this.api.otc.createAd);
+                      }
+                    });
+                  }
+                }
+              });
     }
   },
   computed: {
