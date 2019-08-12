@@ -6,8 +6,7 @@
                 <Icon v-else type="ios-star-outline" color="#f0a70a" size="24"/>
             </div>
             <div class="item">
-        <span class="coin">{{currentCoin.coin}}/{{currentCoin.base}}
-        </span>
+                <span class="coin">{{currentCoin.coin}}/{{currentCoin.base}}</span>
             </div>
             <div class="item">
                 <span class="text">{{$t("exchange.lastprice")}}</span>
@@ -16,8 +15,7 @@
             </div>
             <div class="item">
                 <span class="text">{{$t("exchange.daychange")}}</span>
-                <span class="num"
-                      :class="{buy:currentCoin.change>0,sell:currentCoin.change<0}">{{currentCoin.rose}}</span>
+                <span class="num" :class="{buy:currentCoin.change>0,sell:currentCoin.change<0}">{{currentCoin.rose}}</span>
             </div>
             <div class="item">
                 <span class="text">{{$t("exchange.high")}}</span>
@@ -92,8 +90,7 @@
             <span @click="changeImgTable('k')" :class="{active:currentImgTable==='k'}">k线图</span>
             <span @click="changeImgTable('s')" :class="{active:currentImgTable==='s'}">深度图</span>
           </div> -->
-                    <div id="kline_container" :class="{hidden:currentImgTable==='s'}">
-                    </div>
+                    <div id="kline_container" :class="{hidden:currentImgTable==='s'}"></div>
                     <!-- <DepthGraph :class="{hidden:currentImgTable==='k'}" ref="depthGraph"></DepthGraph> -->
                 </div>
                 <div class="trade_wrap">
@@ -335,7 +332,6 @@
                 <Table v-else :columns="historyOrder.columns" :data="historyOrder.rows"></Table>
             </div>
         </div>
-
     </div>
 </template>
 <style scoped lang="scss">
