@@ -196,9 +196,10 @@
           <Row>
             <Col span="8">
             <FormItem :label="bizhong">
-              <Select v-model="apply_form.coinSymbol" :placeholder="select" @on-change="onCoinChange">
+              <!--<Select v-model="apply_form.coinSymbol" :placeholder="select" @on-change="onCoinChange">
                 <Option v-for="(item,index) in auditCurrency" :value="item.coin.unit" :key="index"></Option>
-              </Select>
+              </Select>-->
+              <Input disabled placeholder="         ETH" style="width: 100px;"/>
             </FormItem>
             </Col>
             <Col span="8">
@@ -465,138 +466,128 @@ export default {
       this.modal_read = false;
       this.modal_apply = true;
     },
-    apply3(form) {
-      if (this.apply_form.telno == "") {
-        this.$store.state.lang != "English" &&
-		  //this.$Message.error("请填写手机号")
-		 this.$message({
-          		message: '请填写手机号',
-          		type: 'error',
-           		center:true
-         });	 
-		  
-        this.$store.state.lang == "English" &&
-		//  this.$Message.error("Please fill in your cell phone number");
-		this.$message({
-          	message: 'Please fill in your cell phone number',
-          	type: 'error',
-           	center:true
-		});
-        return;
-      }
-      if (this.apply_form.wechat == "") {
-        this.$store.state.lang != "English" &&
-		 // this.$Message.error("请填写微信号")
-		this.$message({
-          		message: '请填写微信号',
-          		type: 'error',
-           		center:true
-        });
-        this.$store.state.lang == "English" &&
-		 // this.$Message.error("Please fill in your cell wechat number");
-		  this.$message({
-          	message: 'Please fill in your cell wechat number',
-          	type: 'error',
-           	center:true
-		});
-        return;
-      }
-      if (this.apply_form.qq == "") {
-        this.$store.state.lang != "English" &&
-		 // this.$Message.error("请填写qq号");
-		this.$message({
-          		message: '请填写qq号',
-          		type: 'error',
-           		center:true
-        });
-		  
-        this.$store.state.lang == "English" &&
-         // this.$Message.error("Please fill in your cell qq number");
-	    this.$message({
-          		message: 'Please fill in your cell qq number',
-          		type: 'error',
-           		center:true
-        });
-	 
-	 	return;
-	  }
-	  if (this.apply_form.coinSymbol == "") {
-		this.$store.state.lang != "English" &&
-		  this.$message({
-          		message: '请选择保证金币种',
-          		type: 'error',
-           		center:true
-         	 })
-		  ;
-         this.$store.state.lang == "English" &&
-		 this.$message({
-          	message: 'Please select the coin',
-          	type: 'error',
-           	center:true	
-         });
-         return;
-	  }
-	  
-      if (this.apply_form.assetData == "") {
-        this.$store.state.lang != "English" &&
-		 // this.$Message.error("请上传资产证明");
-		  this.$message({
-          		message: '请上传资产证明',
-          		type: 'error',
-           		center:true
-         	 })
-		  ;
-        this.$store.state.lang == "English" &&
-		//  this.$Message.error("Please upload the asset certificate");
-		this.$message({
-          	message: 'Please upload the asset certificate',
-          	type: 'error',
-           	center:true	
-        });
-        return;
-      }
-      if (this.apply_form.tradeData == "") {
-        this.$store.state.lang != "English" &&
-		  //this.$Message.error("请上传交易证明");
-		  this.$message({
-          	message: '请上传交易证明',
-          	type: 'error',
-           	center:true	
+    valide() {
+      debugger
+      let reg = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
+      if (this.apply_form.telno == "" || !reg.test(this.apply_form.telno)) {
+        if (this.$store.state.lang === "English") {
+          this.$message({
+            message: 'Please enter the correct mobile phone number',
+            type: 'error',
+            center:true
           });
-        this.$store.state.lang == "English" &&
-          //this.$Message.error("Please upload the transaction certificate");
-		 this.$message({
-          	message: 'Please upload the transaction certificate',
-          	type: 'error',
-           	center:true	
+          return false;
+        }
+        this.$message({
+          message: '请填写正确的手机号',
+          type: 'error',
+          center:true
+        });
+        return false;
+      } else if (this.apply_form.wechat == "") {
+        if (this.$store.state.lang === "English") {
+          this.$message({
+            message: 'Please enter WeChat ID',
+            type: 'error',
+            center:true
           });
-		
-		return;
+          return false;
+        }
+        this.$message({
+          message: '请填写微信号',
+          type: 'error',
+          center:true
+        });
+        return false;
+      } else if (this.apply_form.qq == "") {
+        if (this.$store.state.lang === "English") {
+          this.$message({
+            message: 'Please enter your QQ number',
+            type: 'error',
+            center: true
+          });
+          return false;
+        }
+        this.$message({
+          message: '请填写qq号',
+          type: 'error',
+          center: true
+        });
+        return false;
+      } /*else if (this.apply_form.coinSymbol == "") {
+        if (this.$store.state.lang === "English") {
+          this.$message({
+            message: 'Please select the coin',
+            type: 'error',
+            center:true
+          });
+          return false;
+        }
+        this.$message({
+          message: '请选择保证金币种',
+          type: 'error',
+          center:true
+        });
+        return false;
+      }*/ else if (this.apply_form.assetData == "") {
+        if (this.$store.state.lang == "English") {
+          this.$message({
+            message: 'Please upload the asset certificate',
+            type: 'error',
+            center:true
+          });
+          return false;
+        }
+        this.$message({
+          message: '请上传资产证明',
+          type: 'error',
+          center:true
+        })
+        return false;
+      } else if (this.apply_form.tradeData == "") {
+        if (this.$store.state.lang == "English") {
+          this.$message({
+            message: 'Please upload the transaction certificate',
+            type: 'error',
+            center:true
+          });
+          return false;
+        }
+        this.$message({
+          message: '请上传交易证明',
+          type: 'error',
+          center:true
+        });
+        return false;
+      } else {
+        return true;
       }
-      var params = {};
-      params["businessAuthDepositId"] = this.getAudiCoin(
-        this.apply_form.coinSymbol
-      ).id;
-      params["json"] = JSON.stringify(this.apply_form);
-      this.$http
-        .post(this.host + "/uc/approve/certified/business/apply", params)
-        .then(res => {
-          var resp = res.body;
-          if (resp.code == 0) {
-            this.$Message.success("提交成功!");
-            this.modal_apply = false;
-            this.certStatus = 1;
-          } else {
-			//this.$Message.error(resp.message);
-			this.$message({
-          		message: resp.message,
-          		type: 'error',
-           		center:true	
-          	});
-          }
-        }).catch(error => {
+    },
+    apply3() {
+      if (this.valide()) {
+        var params = {};
+        params["businessAuthDepositId"] = this.getAudiCoin(
+                this.apply_form.coinSymbol
+        ).id;
+        params["json"] = JSON.stringify(this.apply_form);
+        this.$http.post(this.host + "/uc/approve/certified/business/apply", params).then(res => {
+                  var resp = res.body;
+                  if (resp.code == 0) {
+                    this.$Message.success("提交成功!");
+                    this.modal_apply = false;
+                    this.certStatus = 1;
+                  } else {
+                    //this.$Message.error(resp.message);
+                    this.$message({
+                      message: resp.message,
+                      type: 'error',
+                      center:true
+                    });
+                  }
+                }).catch(error => {
           alert("提交失败，请重新提交！")
-      });
+        });
+      }
     }
   },
   created() {

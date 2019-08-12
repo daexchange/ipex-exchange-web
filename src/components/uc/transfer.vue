@@ -403,6 +403,7 @@ export default {
 	   	return false;
       } else if (this.withdrawAdress === this.member.email) {
 	    this.$Message.error(this.$t("uc.finance.transfer.accountret"));
+	    return false;
      } else {
         return true;
       }
