@@ -178,6 +178,9 @@ export default {
     };
   },
   mounted() {
+    /*if (this.isMobile()) {
+      window.location.href = "http://www.baidu.com"
+    }*/
     this.minHeight = document.documentElement.clientHeight - 260
     /*window.onresize = function () {
         this.minHeight = document.documentElement.clientHeight - 200
@@ -251,7 +254,13 @@ export default {
     this.pageView = "page-view";
   },
   methods: {
-      reload() {
+    isMobile() {
+      let flag = navigator.userAgent.match(
+              /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+      );
+      return flag;
+    },
+    reload() {
         this.isRouterAlive = false;
         this.$nextTick(function () {
             this.isRouterAlive = true;
