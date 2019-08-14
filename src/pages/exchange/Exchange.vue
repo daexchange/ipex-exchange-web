@@ -928,12 +928,16 @@
                                     props: {
                                         // color:"red",
                                         type: params.row.isFavor
-                                            ? "android-star"
-                                            : "android-star-outline"
+                                            ? "ios-star"
+                                            : "ios-star-outline"
+                                    },
+                                    style: {
+                                        fontSize: "16px",
+                                        paddingBottom: "6px"
                                     },
                                     nativeOn: {
                                         click: () => {
-                                            event.stopPropagation(); //阻止事件冒泡
+                                            /*event.stopPropagation(); //阻止事件冒泡
                                             if (this.isLogin) {
                                                 if (
                                                     event.currentTarget.className ==
@@ -949,7 +953,8 @@
                                                 }
                                             } else {
                                                 this.$Message.warning("请先登录");
-                                            }
+                                            }*/
+                                            this.tabCoinFavorChange(params.row);
                                         }
                                     }
                                 }),
@@ -1022,12 +1027,16 @@
                                         props: {
                                             // color:"red",
                                             type: params.row.isFavor
-                                                ? "android-star"
-                                                : "android-star-outline"
+                                                ? "ios-star"
+                                                : "ios-star-outline"
+                                        },
+                                        style: {
+                                            fontSize: "16px",
+                                            paddingBottom: "6px"
                                         },
                                         nativeOn: {
                                             click: () => {
-                                                event.stopPropagation(); //阻止事件冒泡
+                                                /*event.stopPropagation(); //阻止事件冒泡
                                                 if (this.isLogin) {
                                                     if (
                                                         event.currentTarget.className ==
@@ -1043,7 +1052,8 @@
                                                     }
                                                 } else {
                                                     this.$Message.warning("请先登录");
-                                                }
+                                                }*/
+                                                this.tabCoinFavorChange(params.row);
                                             }
                                         }
                                     }),
@@ -2204,7 +2214,7 @@
                 this.$http.post(this.host + this.api.market.thumb, params).then(response => {
                     //先清空已有数据
                     this.coins._map = [];
-                    this.coins.favor = [];
+                    // this.coins.favor = [];
                     this.coins['tableData'] = [];
 
                     var resp = response.body;
@@ -2219,8 +2229,11 @@
                         coin.coin = resp[i].symbol.split("/")[0];
                         coin.base = resp[i].symbol.split("/")[1];
                         coin.href = (coin.coin + "_" + coin.base).toLowerCase();
-                        coin.isFavor = false;
-
+                        for (let i=0; i<this.coins.favor.length; i++) {
+                            if (coin.coin==this.coins.favor[i].coin && coin.base==this.coins.favor[i].base) {
+                                coin.isFavor = true;
+                            }
+                        }
                         this.coins._map[coin.symbol] = coin;
                         this.coins['tableData'].push(coin);
 
@@ -2903,6 +2916,17 @@
             market_price() {
                 this.showMarket = true;
             },
+            tabCoinFavorChange(row) {
+                if (!this.isLogin) {
+                    this.$Message.warning(this.$t("common.logintip"));
+                    return;
+                }
+                if (row.isFavor==true) {
+                    this.cancelCollect(row);
+                } else {
+                    this.collect(row);
+                }
+            },
             currentCoinFavorChange() {
                 if (!this.isLogin) {
                     this.$Message.warning(this.$t("common.logintip"));
@@ -2960,11 +2984,7 @@
                         });
                 }
             },
-            collect(index, row) {
-                if (!this.isLogin) {
-                    this.$Message.info(this.$t("common.logintip"));
-                    return;
-                }
+            collect(row) {
                 var params = {};
                 params["symbol"] = row.symbol;
                 this.$http
@@ -2982,11 +3002,7 @@
                         }
                     });
             },
-            cancelCollect(index, row) {
-                if (!this.isLogin) {
-                    this.$Message.info(this.$t("common.logintip"));
-                    return;
-                }
+            cancelCollect(row) {
                 var params = {};
                 params["symbol"] = row.symbol;
                 this.$http
