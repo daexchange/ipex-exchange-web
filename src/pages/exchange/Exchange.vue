@@ -954,7 +954,7 @@
                                             } else {
                                                 this.$Message.warning("请先登录");
                                             }*/
-                                            this.tabCoinFavorChange(params.row);
+                                            this.tabCoinFavorChange(params.row, params.index);
                                         }
                                     }
                                 }),
@@ -1053,7 +1053,7 @@
                                                 } else {
                                                     this.$Message.warning("请先登录");
                                                 }*/
-                                                this.tabCoinFavorChange(params.row);
+                                                this.tabCoinFavorChange(params.row, params.index);
                                             }
                                         }
                                     }),
@@ -2219,8 +2219,8 @@
 
                     var resp = response.body;
 
-                    for (var i = 0; i < resp.length; i++) {
-                        var coin = resp[i];
+                    for (let i = 0; i < resp.length; i++) {
+                        let coin = resp[i];
 
                         coin.price = resp[i].close = resp[i].close.toFixed(this.baseCoinScale);
                         coin.rose = resp[i].chg > 0
@@ -2230,7 +2230,7 @@
                         coin.base = resp[i].symbol.split("/")[1];
                         coin.href = (coin.coin + "_" + coin.base).toLowerCase();
                         for (let i=0; i<this.coins.favor.length; i++) {
-                            if (coin.coin==this.coins.favor[i].coin && coin.base==this.coins.favor[i].base) {
+                            if (coin.coin == this.coins.favor[i].coin && coin.base == this.coins.favor[i].base) {
                                 coin.isFavor = true;
                             }
                         }
@@ -2252,19 +2252,17 @@
                 this.$http.post(this.host + this.api.market.thumb, params).then(response => {
                     var resp = response.body;
                     //先清空已有数据
+                    this.coins._map = [];
+                    this.coins.favor = [];
+                    this.coins['tableData'] = [];
                     for (var i = 0; i < resp.length; i++) {
                         var coin = resp[i];
                         coin.base = resp[i].symbol.split("/")[1];
                         this.coins[coin.base] = [];
-                        this.coins._map = [];
-                        this.coins.favor = [];
                     }
-                    this.coins['tableData'] = [];
                     for (var i = 0; i < resp.length; i++) {
                         var coin = resp[i];
-                        coin.price = resp[i].close = resp[i].close.toFixed(
-                            this.baseCoinScale
-                        );
+                        coin.price = resp[i].close = resp[i].close.toFixed(this.baseCoinScale);
                         coin.rose =
                             resp[i].chg > 0
                                 ? "+" + (resp[i].chg * 100).toFixed(2) + "%"
@@ -2916,7 +2914,7 @@
             market_price() {
                 this.showMarket = true;
             },
-            tabCoinFavorChange(row) {
+            tabCoinFavorChange(row, index) {
                 if (!this.isLogin) {
                     this.$Message.warning(this.$t("common.logintip"));
                     return;
@@ -2924,7 +2922,7 @@
                 if (row.isFavor==true) {
                     this.cancelCollect(row);
                 } else {
-                    this.collect(row);
+                    this.collect(row, index);
                 }
             },
             currentCoinFavorChange() {
@@ -2984,7 +2982,7 @@
                         });
                 }
             },
-            collect(row) {
+            collect(row, index) {
                 var params = {};
                 params["symbol"] = row.symbol;
                 this.$http
@@ -2994,7 +2992,8 @@
                         if (resp.code == 0) {
                             this.$Message.info(this.$t("exchange.do_favorite"));
                             this.getCoin(row.symbol).isFavor = true;
-                            row.isFavor = true;
+                            //row.isFavor = true;
+                            //this.coins.tableData[index].isFavor = true;
                             this.coins.favor.push(row);
                             if (this.currentCoin.symbol == row.symbol) {
                                 this.currentCoinIsFavor = true;
