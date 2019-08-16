@@ -650,7 +650,7 @@
             position: absolute;
             top: 0px;
             z-index: 999;
-            left: 160px;
+            left: 170px;
             width: 650px;
             background-color: #141e2b;
             display: flex;
