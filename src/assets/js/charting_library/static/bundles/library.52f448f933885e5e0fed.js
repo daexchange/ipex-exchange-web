@@ -14684,8 +14684,8 @@ webpackJsonp([4], [function(t, e, i) {
             }, {
                 key: "_loadLogo",
                 value: function(t) {
-                    var e = this;
-                    this._showLogo && (this._logo = new Image, this._logo.src = F ? q.fallbackImages[t] : "data:image/svg+xml;charset=utf-8," + encodeURIComponent(T[t]), this._logo.addEventListener("load", function() { N && (e._logo = a(e._logo, e._logoWidth, e._logoHeight)), e._logoReady = !0, "function" == typeof e._onReadyCallback && e._onReadyCallback() }))
+                 //   var e = this;
+                  //  this._showLogo && (this._logo = new Image, this._logo.src = F ? q.fallbackImages[t] : "data:image/svg+xml;charset=utf-8," + encodeURIComponent(T[t]), this._logo.addEventListener("load", function() { N && (e._logo = a(e._logo, e._logoWidth, e._logoHeight)), e._logoReady = !0, "function" == typeof e._onReadyCallback && e._onReadyCallback() }))
                 }
             }, {
                 key: "_checkLayout",
@@ -14707,7 +14707,7 @@ webpackJsonp([4], [function(t, e, i) {
                             this.show = !1
                     }
                     switch (this._layout) {
-                        case P:
+                      /*  case P:
                             this._txt = $.t("{0} chart by TradingView").format(this._symbol);
                             break;
                         case A:
@@ -14724,7 +14724,7 @@ webpackJsonp([4], [function(t, e, i) {
                             this._showLogo = !0, this._txt = $.t("charts by TradingView");
                             break;
                         case O:
-                            this._txt = $.t("powered by TradingView")
+                            this._txt = $.t("powered by TradingView")*/
                     }
                 }
             }, {
@@ -14742,8 +14742,8 @@ webpackJsonp([4], [function(t, e, i) {
             }, {
                 key: "draw",
                 value: function(t) {
-                    var e, i;
-                    this._layout === k || this._layout === E ? (e = '12px "Trebuchet MS", Tahoma, Arial, sans-serif', t.font = e, i = t.measureText(this._txt).width, this.width = i + t.measureText("TradingView").width, t.save(), t.globalAlpha = .7, t.fillStyle = this._colorOldGray, t.fillText(this._txt, 0, 12), t.fillStyle = this._colorOldBlue, t.fillText("TradingView", i, 12), t.restore()) : this._showLogo && this._logoReady ? (t.drawImage(this._logo, -2, N ? -2 : -.5, this._logoWidth, this._logoHeight), t.save(), t.translate(this._logoWidth, 0), this._drawTextStroke(t), this._drawTextFill(t), t.restore(), this.width = this._logoWidth + this._strokeCanv.width / this._upscaleRatio / H) : (t.save(), t.translate(0, N ? 4 : 0), this._drawTextStroke(t), this._drawTextFill(t), t.restore(), this.width = this._strokeCanv.width / this._upscaleRatio / H)
+                  //  var e, i;
+                 //   this._layout === k || this._layout === E ? (e = '12px "Trebuchet MS", Tahoma, Arial, sans-serif', t.font = e, i = t.measureText(this._txt).width, this.width = i + t.measureText("TradingView").width, t.save(), t.globalAlpha = .7, t.fillStyle = this._colorOldGray, t.fillText(this._txt, 0, 12), t.fillStyle = this._colorOldBlue, t.fillText("TradingView", i, 12), t.restore()) : this._showLogo && this._logoReady ? (t.drawImage(this._logo, -2, N ? -2 : -.5, this._logoWidth, this._logoHeight), t.save(), t.translate(this._logoWidth, 0), this._drawTextStroke(t), this._drawTextFill(t), t.restore(), this.width = this._logoWidth + this._strokeCanv.width / this._upscaleRatio / H) : (t.save(), t.translate(0, N ? 4 : 0), this._drawTextStroke(t), this._drawTextFill(t), t.restore(), this.width = this._strokeCanv.width / this._upscaleRatio / H)
                 }
             }]), t
         }(), G = function() {

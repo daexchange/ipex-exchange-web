@@ -1950,13 +1950,12 @@
                         "mainSeriesProperties.candleStyle.wickUpColor": "#589065",
                         "mainSeriesProperties.candleStyle.wickDownColor": "#AE4E54",
                         "paneProperties.legendProperties.showLegend": false,
-
                         "mainSeriesProperties.areaStyle.color1": "rgba(71, 78, 112, 0.5)",
                         "mainSeriesProperties.areaStyle.color2": "rgba(71, 78, 112, 0.5)",
                         "mainSeriesProperties.areaStyle.linecolor": "#9194a4"
                     },
                     time_frames: [
-                        {
+                        /* {
                             text: "1min",
                             resolution: "1",
                             description: "realtime",
@@ -1972,7 +1971,7 @@
                             description: "1hour",
                             title: "1hour"
                         },
-                        /*{ text: "4hour", resolution: "240", description: "4hour",title: "4hour" },*/
+                       { text: "4hour", resolution: "240", description: "4hour",title: "4hour" },
                         {
                             text: "1day",
                             resolution: "1D",
@@ -1985,52 +1984,33 @@
                             description: "1week",
                             title: "1week"
                         },
-                        {text: "1mon", resolution: "1M", description: "1mon"}
+                        {text: "1mon", resolution: "1M", description: "1mon"}*/
                     ]
                 };
+                
                 if (that.skin === "day") {
                     config.toolbar_bg = "#fff";
                     config.custom_css_url = "bundles/common_day.css";
                     config.overrides["paneProperties.background"] = "#fff";
-                    config.overrides["mainSeriesProperties.candleStyle.upColor"] =
-                        "#a6d3a5";
-                    config.overrides["mainSeriesProperties.candleStyle.downColor"] =
-                        "#ffa5a6";
+                    config.overrides["mainSeriesProperties.candleStyle.upColor"] ="#a6d3a5";
+                    config.overrides["mainSeriesProperties.candleStyle.downColor"] = "#ffa5a6";
                 }
                 require(["@js/charting_library/charting_library.min.js"], function (tv) {
                     var widget = (window.tvWidget = new TradingView.widget(config));
                     widget.onChartReady(function () {
                         widget.chart().executeActionById("drawingToolbarAction");
-                        widget
-                            .chart()
-                            .createStudy("Moving Average", false, false, [5], null, {
-                                "plot.color": "#965FC4"
-                            });
-                        widget
-                            .chart()
-                            .createStudy("Moving Average", false, false, [10], null, {
-                                "plot.color": "#84AAD5"
-                            });
-
-                        widget
-                            .createButton()
-                            .attr("title", "realtime")
+                        widget.chart().createStudy("Moving Average", false, false, [5], null, {"plot.color": "#965FC4"});
+                        widget.chart().createStudy("Moving Average", false, false, [10], null, {"plot.color": "#84AAD5"});
+                        
+                        widget.createButton().attr("title", "realtime")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
-                                $(this)
-                                    .addClass("selected")
-                                    .parent(".group")
-                                    .siblings(".group")
-                                    .find(".button.selected")
-                                    .removeClass("selected");
+                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(3);
                                 widget.setSymbol("", "1");
-                            })
-                            .append("<span>分时</span>");
-
-                        widget
-                            .createButton()
-                            .attr("title", "M1")
+                            }).append("<span>分时</span>");
+                       
+                        widget.createButton().attr("title", "M1")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this)
@@ -2041,13 +2021,9 @@
                                     .removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1");
-                            })
-                            .append("<span>1min</span>")
-                            .addClass("selected");
-
-                        widget
-                            .createButton()
-                            .attr("title", "M5")
+                            }).append("<span>1min</span>").addClass("selected");
+                            
+                        widget.createButton().attr("title", "M5")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this)
@@ -2058,12 +2034,8 @@
                                     .removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "5");
-                            })
-                            .append("<span>5min</span>");
-
-                        widget
-                            .createButton()
-                            .attr("title", "M15")
+                            }).append("<span>5min</span>");
+                        widget.createButton().attr("title", "M15")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this)
@@ -2074,12 +2046,8 @@
                                     .removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "15");
-                            })
-                            .append("<span>15min</span>");
-
-                        widget
-                            .createButton()
-                            .attr("title", "M30")
+                            }).append("<span>15min</span>");
+                        widget.createButton().attr("title", "M30")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this)
@@ -2090,12 +2058,8 @@
                                     .removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "30");
-                            })
-                            .append("<span>30min</span>");
-
-                        widget
-                            .createButton()
-                            .attr("title", "H1")
+                            }).append("<span>30min</span>");
+                        widget.createButton().attr("title", "1hour")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this)
@@ -2106,12 +2070,8 @@
                                     .removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "60");
-                            })
-                            .append("<span>1hour</span>");
-
-                        widget
-                            .createButton()
-                            .attr("title", "D1")
+                            }).append("<span>1hour</span>");
+                        widget.createButton().attr("title", "1day")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this)
@@ -2122,12 +2082,8 @@
                                     .removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1D");
-                            })
-                            .append("<span>1day</span>");
-
-                        widget
-                            .createButton()
-                            .attr("title", "W1")
+                            }).append("<span>1day</span>");
+                        widget.createButton().attr("title", "1week")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this)
@@ -2138,12 +2094,8 @@
                                     .removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1W");
-                            })
-                            .append("<span>1week</span>");
-
-                        widget
-                            .createButton()
-                            .attr("title", "M1")
+                            }).append("<span>1week</span>");
+                        widget.createButton().attr("title", "1month")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this)
@@ -2154,8 +2106,7 @@
                                     .removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1M");
-                            })
-                            .append("<span>1month</span>");
+                            }).append("<span>1month</span>");
                     });
                 });
             },
