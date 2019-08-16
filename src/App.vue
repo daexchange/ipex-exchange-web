@@ -178,9 +178,9 @@ export default {
     };
   },
   mounted() {
-    /*if (this.isMobile()) {
-      window.location.href = "http://www.baidu.com"
-    }*/
+    if (this.isMobile()) {
+      window.location.href = "http://mobile-ipex.openserver.cn/";
+    }
     this.minHeight = document.documentElement.clientHeight - 260
     /*window.onresize = function () {
         this.minHeight = document.documentElement.clientHeight - 200
