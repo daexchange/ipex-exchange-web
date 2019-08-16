@@ -1,10 +1,10 @@
 <template>
     <div class="container exchange" :class="skin">
         <div class="symbol">
-            <div class="item" @click="currentCoinFavorChange">
+            <!--<div class="item" @click="currentCoinFavorChange">
                 <Icon v-if="currentCoinIsFavor" type="ios-star" color="#f0a70a" size="24"/>
                 <Icon v-else type="ios-star-outline" color="#f0a70a" size="24"/>
-            </div>
+            </div>-->
             <div class="item">
                 <span class="coin">{{currentCoin.coin}}/{{currentCoin.base}}</span>
             </div>
