@@ -279,7 +279,7 @@ export default {
       if (index == 1) {
         if (this.formValidateAddr.email) {
           //获取邮箱code
-          this.$http.post(this.host + "/uc/add/address/code").then(response => {
+          this.$http.post(this.host + "/uc/email/withdraw/address/code").then(response => {
             var resp = response.body;
             if (resp.code == 0) {
               this.$Message.success(resp.message);
