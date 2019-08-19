@@ -12,7 +12,7 @@ var WebsockFeed = function(url,coin,stompClient,scale){
 WebsockFeed.prototype.onReady=function(callback){
     var config = {};
     config.exchanges = [];
-    config.supported_resolutions = ["1","5","15","30","60","240","1D","1W","1M"];
+    config.supported_resolutions = ["1","5","15","30","60","240","1day","1week","1month"];
     config.supports_group_request = false;
     config.supports_marks = false;
     config.supports_search = false;
@@ -96,7 +96,8 @@ WebsockFeed.prototype.getBars = function(symbolInfo, resolution, from, to, onHis
     var bars = [];
     var that = this;
 
-    this._send(this._datafeedURL+'/history',{
+   this._send(this._datafeedURL+'/history',{
+  //	this._send('http://127.0.0.1:6004/market/history',{
         symbol: symbolInfo.name,
         from: from*1000,
         to: firstDataRequest ? new Date().getTime():to*1000,
@@ -106,7 +107,15 @@ WebsockFeed.prototype.getBars = function(symbolInfo, resolution, from, to, onHis
         var data = response;
         for(var i = 0;i<data.length;i++){
             var item = data[i];
-            bars.push({time:item[0],open:item[1],high:item[2],low:item[3],close:item[4],volume:item[5]})
+            bars.push({
+            time:item.time,
+            open:item.openPrice,
+            high:item.highestPrice,
+            low:item.lowestPrice,
+            close:item.closePrice,
+            volume:item.volume
+            })
+            //bars.push({time:item[0],open:item[1],high:item[2],low:item[3],close:item[4],volume:item[5]})
         }
         that.lastBar = bars.length > 0 ? bars[bars.length-1]:null;
         that.currentBar = that.lastBar;
