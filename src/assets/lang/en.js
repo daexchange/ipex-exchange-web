@@ -135,7 +135,8 @@ module.exports = {
             amount: 'amount',
             fee: 'fee',
         },
-        realtime: 'realtime',
+		realtime: 'realtime',
+		chartingLibraryLocale: 'en'
     },
     otc: {
         ad: 'Advertising',

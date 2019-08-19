@@ -136,7 +136,8 @@ module.exports = {
             amount: '数量',
             fee: '手续费',
         },
-        realtime: '分时',
+		realtime: '分时',
+		chartingLibraryLocale: 'zh'
     },
     otc: {
         ad: '广告中心',

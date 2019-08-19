@@ -863,7 +863,6 @@
     var moment = require("moment");
     import DepthGraph from "@components/exchange/DepthGraph.vue";
     import $ from "@js/jquery.min.js";
-    //import {loadBaseSymbol} from '@/config/exchange'
 
     export default {
         components: {expandRow, DepthGraph},
@@ -1901,7 +1900,8 @@
                     fullscreen: true,
                     symbol: that.symbol,
                     interval: "1",
-                    timezone: "Asia/Shanghai",
+					//timezone: "Asia/Shanghai",
+					timezone: "UTC",  //时区
                     toolbar_bg: "#18202a",
                     container_id: "kline_container",
                     datafeed: that.datafeed,
@@ -1909,7 +1909,7 @@
                         process.env.NODE_ENV === "production"
                             ? "/assets/charting_library/"
                             : "src/assets/js/charting_library/",
-                    locale: "zh",
+                    locale: that.$t("exchange.chartingLibraryLocale"),
                     debug: false,
                     drawings_access: {
                         type: "black",
@@ -1949,9 +1949,9 @@
                         "mainSeriesProperties.candleStyle.drawBorder": false,
                         "mainSeriesProperties.candleStyle.wickUpColor": "#589065",
                         "mainSeriesProperties.candleStyle.wickDownColor": "#AE4E54",
-                        "paneProperties.legendProperties.showLegend": false,
+                        "paneProperties.legendProperties.showLegend": false,// 隐藏左上角标题
                         "mainSeriesProperties.areaStyle.color1": "rgba(71, 78, 112, 0.5)",
-                        "mainSeriesProperties.areaStyle.color2": "rgba(71, 78, 112, 0.5)",
+						"mainSeriesProperties.areaStyle.color2": "rgba(71, 78, 112, 0.5)",
                         "mainSeriesProperties.areaStyle.linecolor": "#9194a4"
                     },
                     time_frames: [
@@ -1994,15 +1994,44 @@
                     config.overrides["paneProperties.background"] = "#fff";
                     config.overrides["mainSeriesProperties.candleStyle.upColor"] ="#a6d3a5";
                     config.overrides["mainSeriesProperties.candleStyle.downColor"] = "#ffa5a6";
-                }
+				}
+				
                 require(["@js/charting_library/charting_library.min.js"], function (tv) {
                     var widget = (window.tvWidget = new TradingView.widget(config));
                     widget.onChartReady(function () {
                         widget.chart().executeActionById("drawingToolbarAction");
                         widget.chart().createStudy("Moving Average", false, false, [5], null, {"plot.color": "#965FC4"});
                         widget.chart().createStudy("Moving Average", false, false, [10], null, {"plot.color": "#84AAD5"});
+					/**	 该方式暂时有点击事件失效问题
+						var buttons = [
+        {title:'realtime',resolution:'1',chartType:3},
+        {title:'1min',resolution:'1',chartType:1},
+        {title:'5min',resolution:'5',chartType:1},
+        {title:'15min',resolution:'15',chartType:1},
+        {title:'30min',resolution:'30',chartType:1},
+        {title:'1hour',resolution:'60',chartType:1},
+        {title:'1day',resolution:'1D',chartType:1},
+        {title:'1week',resolution:'1W',chartType:1},
+		{title:'1month',resolution:'1M',chartType:1},
+						];
+						for(var i = 0; i < buttons.length; i++){
+							var button = buttons[i];
+							var text ;
+							if (i==0) {
+								text ='分时';
+							} else {
+								text = button.title;				
+							}
+							widget.createButton().attr("title", button.title)
+                            .on("click", function () {
+                                if ($(this).hasClass("selected")) return;
+                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
+                                widget.chart().setChartType(button.chartType);
+                                widget.setSymbol("", button.resolution);
+                            }).append("<span>").append(text).append("</span>");	
+						}*/
                         
-                        widget.createButton().attr("title", "realtime")
+					  	widget.createButton().attr("title", "realtime")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
@@ -2013,12 +2042,7 @@
                         widget.createButton().attr("title", "M1")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
-                                $(this)
-                                    .addClass("selected")
-                                    .parent(".group")
-                                    .siblings(".group")
-                                    .find(".button.selected")
-                                    .removeClass("selected");
+                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1");
                             }).append("<span>1min</span>").addClass("selected");
@@ -2026,87 +2050,52 @@
                         widget.createButton().attr("title", "M5")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
-                                $(this)
-                                    .addClass("selected")
-                                    .parent(".group")
-                                    .siblings(".group")
-                                    .find(".button.selected")
-                                    .removeClass("selected");
+                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "5");
                             }).append("<span>5min</span>");
                         widget.createButton().attr("title", "M15")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
-                                $(this)
-                                    .addClass("selected")
-                                    .parent(".group")
-                                    .siblings(".group")
-                                    .find(".button.selected")
-                                    .removeClass("selected");
+                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "15");
                             }).append("<span>15min</span>");
                         widget.createButton().attr("title", "M30")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
-                                $(this)
-                                    .addClass("selected")
-                                    .parent(".group")
-                                    .siblings(".group")
-                                    .find(".button.selected")
-                                    .removeClass("selected");
+                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "30");
                             }).append("<span>30min</span>");
                         widget.createButton().attr("title", "1hour")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
-                                $(this)
-                                    .addClass("selected")
-                                    .parent(".group")
-                                    .siblings(".group")
-                                    .find(".button.selected")
-                                    .removeClass("selected");
+                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "60");
                             }).append("<span>1hour</span>");
                         widget.createButton().attr("title", "1day")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
-                                $(this)
-                                    .addClass("selected")
-                                    .parent(".group")
-                                    .siblings(".group")
-                                    .find(".button.selected")
-                                    .removeClass("selected");
+                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1D");
                             }).append("<span>1day</span>");
                         widget.createButton().attr("title", "1week")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
-                                $(this)
-                                    .addClass("selected")
-                                    .parent(".group")
-                                    .siblings(".group")
-                                    .find(".button.selected")
-                                    .removeClass("selected");
+                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1W");
                             }).append("<span>1week</span>");
                         widget.createButton().attr("title", "1month")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
-                                $(this)
-                                    .addClass("selected")
-                                    .parent(".group")
-                                    .siblings(".group")
-                                    .find(".button.selected")
-                                    .removeClass("selected");
+                                $(this).addClass("selected") .parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1M");
-                            }).append("<span>1month</span>");
+                            }).append("<span>1month</span>"); 
                     });
                 });
             },
@@ -2196,6 +2185,7 @@
                 });
             },
             getSymbol() {
+				this.startWebsock();
                 let params = {
                     coinSymbol: this.form.coinSymbol,
                     basecion: this.basecion
@@ -2233,10 +2223,9 @@
                     if (this.isLogin) {
                         this.getFavor();
                     }
-                    require(["../../assets/js/exchange.js"], function (e) {
+                  require(["../../assets/js/exchange.js"], function (e) {
                         e.clickScTab();
                     });
-                    this.startWebsock();
                 });
             },
             getSymbolScale() {
@@ -2560,23 +2549,24 @@
                         }
                     });
             },
-            washBidData(bidData) {
-
-
-            },
             startWebsock() {
                 if (this.stompClient) {
                     this.stompClient.ws.close();
                 }
                 var stompClient = null;
-                var that = this;
-                var socket = new SockJS(that.host + that.api.market.ws);
+				var that = this;
+				// 建立连接对象（还未发起连接）
+				var socket = new SockJS(that.host + that.api.market.ws);
+				
+				// 获取 STOMP 子协议的客户端对象
                 stompClient = Stomp.over(socket);
                 this.stompClient = stompClient;
                 stompClient.debug = false;
                 // this.datafeed = new Datafeeds.WebsockFeed(that.host+'/market',this.currentCoin,stompClient);
-                // this.getKline();
+				// this.getKline();
+				// 向服务器发起websocket连接并发送CONNECT帧
                 stompClient.connect({}, function (frame) {
+					// 连接成功时（服务器响应 CONNECTED 帧）的回调方法
                     that.datafeed = new Datafeeds.WebsockFeed(
                         that.host + "/market",
                         that.currentCoin,
@@ -3325,4 +3315,3 @@
         }
     };
 </script>
-
