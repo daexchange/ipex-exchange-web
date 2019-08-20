@@ -95,9 +95,15 @@ WebsockFeed.prototype._send = function(url, params) {
 WebsockFeed.prototype.getBars = function(symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest){
     var bars = [];
     var that = this;
-	if(firstDataRequest==false){
-	  return;
+   
+    if(firstDataRequest==false && (resolution==='1D'||resolution==='1W'||resolution==='1M')){
+       that.lastBar = bars.length > 0 ? bars[bars.length-1]:null;
+       that.currentBar = that.lastBar;
+       var noData = bars.length == 0;
+       var retBars = onHistoryCallback(bars,{noData:noData});
+       return;
 	}
+	
    this._send(this._datafeedURL+'/history',{
   //	this._send('http://127.0.0.1:6004/market/history',{
         symbol: symbolInfo.name,
@@ -107,15 +113,17 @@ WebsockFeed.prototype.getBars = function(symbolInfo, resolution, from, to, onHis
     })
     .done(function(response) {
         var data = response;
+         
         for(var i = 0;i<data.length;i++){
             var item = data[i];
+            
             bars.push({
-            time:item.time,
-            open:item.openPrice,
-            high:item.highestPrice,
-            low:item.lowestPrice,
-            close:item.closePrice,
-            volume:item.volume
+            	time:item.time,
+           	 	open:item.openPrice,
+            	high:item.highestPrice,
+            	low:item.lowestPrice,
+            	close:item.closePrice,
+            	volume:item.volume
             })
             //bars.push({time:item[0],open:item[1],high:item[2],low:item[3],close:item[4],volume:item[5]})
         }
