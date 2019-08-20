@@ -861,11 +861,11 @@
     var Stomp = require("stompjs");
     var SockJS = require("sockjs-client");
     var moment = require("moment");
-    import DepthGraph from "@components/exchange/DepthGraph.vue";
+   // import DepthGraph from "@components/exchange/DepthGraph.vue";
     import $ from "@js/jquery.min.js";
 
     export default {
-        components: {expandRow, DepthGraph},
+        components: {expandRow},
         data() {
             let self = this;
             return {
@@ -2490,7 +2490,7 @@
                         }
                     });
             },
-            getPlateFull() {
+         /**   getPlateFull() {
                 //深度图
                 var params = {};
                 params["symbol"] = this.currentCoin.symbol;
@@ -2502,7 +2502,7 @@
                         resp.skin = this.skin;
                         this.$refs.depthGraph.draw(resp);
                     });
-            },
+            },*/
             updatePlate(type, row) {
                 //发现该方法未被使用（zhp）
                 if (type == "sell") {
@@ -2572,7 +2572,7 @@
                         that.currentCoin,
                         stompClient,
                         that.baseCoinScale
-                    );
+					);
                     that.getKline();
                     //订阅价格变化消息
                     stompClient.subscribe("/topic/market/thumb", function (msg) {
