@@ -1899,7 +1899,7 @@
                     autosize: true,
                     fullscreen: true,
                     symbol: that.symbol,
-                    interval: "1",
+                    interval: "30",
 					//timezone: "Asia/Shanghai",
 					timezone: "UTC",  //时区
                     toolbar_bg: "#18202a",
@@ -2045,7 +2045,7 @@
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1");
-                            }).append("<span>1min</span>").addClass("selected");
+                            }).append("<span>1min</span>");
                             
                         widget.createButton().attr("title", "M5")
                             .on("click", function () {
@@ -2067,7 +2067,7 @@
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "30");
-                            }).append("<span>30min</span>");
+                            }).append("<span>30min</span>").addClass("selected");
                         widget.createButton().attr("title", "1hour")
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;

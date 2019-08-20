@@ -12,7 +12,7 @@ var WebsockFeed = function(url,coin,stompClient,scale){
 WebsockFeed.prototype.onReady=function(callback){
     var config = {};
     config.exchanges = [];
-    config.supported_resolutions = ["1","5","15","30","60","240","1day","1week","1month"];
+    config.supported_resolutions = ["1","5","15","30","60","240","1D","1W","1M"];
     config.supports_group_request = false;
     config.supports_marks = false;
     config.supports_search = false;
@@ -95,7 +95,9 @@ WebsockFeed.prototype._send = function(url, params) {
 WebsockFeed.prototype.getBars = function(symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest){
     var bars = [];
     var that = this;
-
+	if(firstDataRequest==false){
+	  return;
+	}
    this._send(this._datafeedURL+'/history',{
   //	this._send('http://127.0.0.1:6004/market/history',{
         symbol: symbolInfo.name,
