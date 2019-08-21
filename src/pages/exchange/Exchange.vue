@@ -1899,9 +1899,10 @@
                     autosize: true,
                     fullscreen: true,
                     symbol: that.symbol,
-                    interval: "30",
-					//timezone: "Asia/Shanghai",
-					timezone: "UTC",  //时区
+					interval: "30",
+					timezone: "Asia/Shanghai",//时区
+					volume_precision: 8,
+					//timezone: "UTC",  
                     toolbar_bg: "#18202a",
                     container_id: "kline_container",
                     datafeed: that.datafeed,
@@ -1926,7 +1927,7 @@
                         "header_saveload",
                         "use_localstorage_for_settings",
                         "left_toolbar",
-                        "volume_force_overlay"
+                        "volume_force_overlay" // 成交量(柱状图)与k线分离
                     ],
                     enabled_features: [
                         "hide_last_na_study_output",
@@ -1934,11 +1935,12 @@
                     ],
                     custom_css_url: "bundles/common.css",
                     supported_resolutions: ["1", "5", "15", "30", "60", "1D", "1W", "1M"],
-                    charts_storage_url: "http://saveload.tradingview.com",
+                    //charts_storage_url: "http://saveload.tradingview.com",
                     charts_storage_api_version: "1.1",
                     client_id: "tradingview.com",
                     user_id: "public_user_id",
                     overrides: {
+						"volumePaneSize": 'small', //成交量高度设置，可选值 large, medium, small, tiny
                         "paneProperties.background": "#1B1E2E",
                         "paneProperties.vertGridProperties.color": "rgba(0,0,0,.1)",
                         "paneProperties.horzGridProperties.color": "rgba(0,0,0,.1)",
@@ -2031,71 +2033,70 @@
                             }).append("<span>").append(text).append("</span>");	
 						}*/
                         
-					  	widget.createButton().attr("title", "realtime")
+					  	widget.createButton().attr("title", that.$t("exchange.realtime"))
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(3);
                                 widget.setSymbol("", "1");
-                            }).append("<span>分时</span>");
-                       
-                        widget.createButton().attr("title", "M1")
+                            }).append("<span>").append(that.$t("exchange.realtime")).append("</span>");
+                        widget.createButton().attr("title", that.$t("exchange.M1"))
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1");
-                            }).append("<span>1min</span>");
+                            }).append("<span>").append(that.$t("exchange.M1")).append("</span>");
                             
-                        widget.createButton().attr("title", "M5")
+                        widget.createButton().attr("title", that.$t("exchange.M5"))
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "5");
-                            }).append("<span>5min</span>");
-                        widget.createButton().attr("title", "M15")
+                            }).append("<span>").append(that.$t("exchange.M5")).append("</span>");
+                        widget.createButton().attr("title", that.$t("exchange.M15"))
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "15");
-                            }).append("<span>15min</span>");
-                        widget.createButton().attr("title", "M30")
+                            }).append("<span>").append(that.$t("exchange.M15")).append("</span>");
+                        widget.createButton().attr("title", that.$t("exchange.M30"))
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "30");
-                            }).append("<span>30min</span>").addClass("selected");
-                        widget.createButton().attr("title", "1hour")
+                            }).append("<span>").append(that.$t("exchange.M30")).append("</span>").addClass("selected");
+                        widget.createButton().attr("title", that.$t("exchange.M60"))
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "60");
-                            }).append("<span>1hour</span>");
-                        widget.createButton().attr("title", "1day")
+                             }).append("<span>").append(that.$t("exchange.M60")).append("</span>")
+                        widget.createButton().attr("title", that.$t("exchange.D1"))
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1D");
-                            }).append("<span>1day</span>");
-                        widget.createButton().attr("title", "1week")
+                             }).append("<span>").append(that.$t("exchange.D1")).append("</span>")
+                        widget.createButton().attr("title", that.$t("exchange.W1"))
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1W");
-                            }).append("<span>1week</span>");
-                        widget.createButton().attr("title", "1month")
+                             }).append("<span>").append(that.$t("exchange.W1")).append("</span>")
+                        widget.createButton().attr("title", that.$t("exchange.Mon1"))
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this).addClass("selected") .parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1M");
-                            }).append("<span>1month</span>"); 
+                            }).append("<span>").append(that.$t("exchange.Mon1")).append("</span>")
                     });
                 });
             },
