@@ -136,6 +136,14 @@ module.exports = {
             fee: 'fee',
         },
 		realtime: 'realtime',
+		M1: '1min',
+		M5: '5min',
+		M15: '15min',
+		M30: '30min',
+		M60: '1hour',
+		D1: '1day',
+		W1: '1week',
+		Mon1: '1month',
 		chartingLibraryLocale: 'en'
     },
     otc: {

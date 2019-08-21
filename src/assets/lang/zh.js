@@ -137,6 +137,14 @@ module.exports = {
             fee: '手续费',
         },
 		realtime: '分时',
+		M1: '1分钟',
+		M5: '5分钟',
+		M15: '15分钟',
+		M30: '30分钟',
+		M60: '1小时',
+		D1: '1天',
+		W1: '1周',
+		Mon1: '1月',
 		chartingLibraryLocale: 'zh'
     },
     otc: {
