@@ -160,11 +160,11 @@ import Vue from "vue";
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "app",
-    provide() {
+  provide() {
       return {
           reload: this.reload
       }
-    },
+  },
   data() {
     return {
       // container_test:"container_test",
@@ -278,7 +278,7 @@ export default {
       this.$store.commit("navigate", "nav-index");
       this.$store.commit("recoveryMember");
       this.$store.commit("initLang");
-      this.checkLogin();
+     // this.checkLogin();
     },
     logout() {
       this.$http.post(this.host + "/uc/loginout", {}).then(response => {
