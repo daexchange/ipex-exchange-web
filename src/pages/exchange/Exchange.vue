@@ -321,9 +321,9 @@
             <div class="order-handler">
                 <span @click="changeOrder('current')" :class="{active:selectedOrder==='current'}">{{$t('exchange.curdelegation')}}</span>
                 <span @click="changeOrder('history')" :class="{active:selectedOrder==='history'}">{{$t('exchange.hisdelegation')}}</span>
-                <router-link v-show="selectedOrder==='current'" class="linkmore" to="/uc/entrust/current">查看更多>>
+                <router-link v-show="selectedOrder==='current'" class="linkmore" to="/uc/entrust/current">{{$t('otc.index.viewmore')}}>>
                 </router-link>
-                <router-link v-show="selectedOrder==='history'" class="linkmore" to="/uc/entrust/history">查看更多>>
+                <router-link v-show="selectedOrder==='history'" class="linkmore" to="/uc/entrust/history">{{$t('otc.index.viewmore')}}>>
                 </router-link>
             </div>
             <div class="table">
@@ -1750,7 +1750,6 @@
             },
             init() {
                 var params = this.$route.params[0];
-                // var params = this.$route.params.pathMatch;
                 if (params == undefined) {
                     this.$router.push("/exchange/" + this.defaultPath);
                     params = this.defaultPath;
@@ -1771,13 +1770,14 @@
 
                 this.$store.commit("navigate", "nav-exchange");
                 this.$store.commit("setSkin", this.skin);
-                this.loadBaseSymbol();
-                this.getCNYRate();
-                this.getSymbolScale();
+			   
+			    this.loadBaseSymbol();//获取结算货币列表
+                this.getSymbolScale();//精度
                 this.getSymbol(); //包含 K线图、getFavor、startWebsock等
                 this.getPlate(); //买卖盘
                 // this.getPlateFull(); //深度图
-                this.getTrade();
+				this.getTrade();
+				this.getCNYRate(); //获取人民币汇率
                 if (this.isLogin && this.member.realName) {
                     this.getWallet(); //账户资产信息
                     this.getCurrentOrder(); //当前委托
@@ -1884,8 +1884,9 @@
                     .then(response => {
                         var resp = response.body;
                         this.CNYRate = resp.data;
-                    });
-                this.$http.get(this.host + "/uc/coin/cny-rate/ETH").then(response => {
+					});
+				
+                this.$http.get(this.host + "/uc/coin/cny-rate/"+this.basecion).then(response => {
                     var resp = response.body;
                     this.CNYPrice = resp.data;
                 })
