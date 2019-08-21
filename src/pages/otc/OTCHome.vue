@@ -32,7 +32,7 @@
                 <div class="text-price-coin"><h3>{{ pane }}</h3></div>
                 <div class="text-price-price">
                     <div style="display: inline-block">{{ price }} CNY</div>
-                    <div :class="updownPr" style="font-size: 14px; display: inline-block">{{ updown }}%</div>
+                    <div :class="updownPr" style="font-size: 14px; display: inline-block">{{ rosePercent }}%</div>
                 </div>
                 <div class="text-price-average">最新成交均价 {{ average }} CNY</div>
             </div><hr>
@@ -46,17 +46,20 @@
         name: "OTCHome",
         data() {
             return {
-                pane: '',
-                price: '7.00',
+                pane: 'ETH',
+                price: '',
                 range: 0.01,
                 updown: '',
                 updownPr: '',
                 average: 6.93,
                 coins: [],
+                rose: null,
+                rosePercent: '',
             }
         },
         created: function () {
-            this.initPr();
+            //this.initPr();
+            this.tabSelected();
             this.initCoin();
         },
         computed: {
@@ -65,15 +68,39 @@
             }
         },
         methods: {
+            getCNYRate() {
+                this.$http.get(this.host + this.api.uc.cnyrate + this.pane).then(response => {
+                    let resp = response.body;
+                    if (resp.code == 0) {
+                        this.price = resp.data.toFixed(2);
+                    } else {
+                        this.price = 1986.05;
+                    }
+                })
+            },
+            //现在没有直接查询ETH和PWR人民币价格的接口，先用TLM/ETH和IPEX/PWR的价格顶上
+            getSymbolsThumb(param) {
+                this.$http.post(this.host + this.api.market.getSymbolsThumb, param).then(response => {
+                    let resp = response.body;
+                    if (resp.code == 0) {
+                        this.rose = resp[i].chg;
+                        this.rosePercent = this.rose > 0 ? "+" + (this.rose * 100).toFixed(2) : (this.rose * 100).toFixed(2);
+                    } else {
+                        this.rosePercent = "0.00";
+                    }
+                    this.initPr();
+                });
+            },
             initPr () {
-                if (this.range>0) {
-                    this.updown = '+' + this.range;
+                if (this.rose>0) {
+                    //this.updown = '+' + this.range;
                     this.updownPr = 'text-price-up';
-                } else if (this.range<0) {
+                } /*else if (this.rose<0) {
                     this.updown = this.range;
                     this.updownPr = 'text-price-down';
-                } else {
-                    this.updown = '0.00';
+                }*/ else {
+                    //this.updown = '0.00';
+                    this.updownPr = 'text-price-down';
                 }
             },
             initCoin () {
@@ -94,6 +121,12 @@
                 this.$store.commit("buyInSel", false);
             },
             tabSelected () {
+                if (this.pane === 'ETH') {
+                    this.getSymbolsThumb('TLM/ETH');
+                } else if (this.pane === 'PWR') {
+                    this.getSymbolsThumb('IPEX/PWR');
+                }
+                this.getCNYRate();
                 this.$router.push("/otc/trade/" + this.pane);
 			},
 			publishAdver () {

@@ -86,7 +86,7 @@
       <div class="content_wrapper">
         <div class="content1">
           <h5>平台介绍</h5>
-          <p style="font-size: 16px">IPEX国际数字资产交易服务平台以数字资产交易服务为重点，提供专业的交易功能，智能交易和智能撮合，多方委托下单，便捷交易，资金委托，账户轻松管理</p>
+          <p style="font-size: 16px">IPEX星际数字加密资产交易平台以数字资产交易服务为重点，提供专业的交易功能，智能交易和智能撮合，多方委托下单，便捷交易，资金委托，账户轻松管理</p>
         </div>
         <!-- <div class="content1" style="border:none;">
           <h5>ZTuo目标</h5>

@@ -13,6 +13,7 @@ export default {
         announcement: '/uc/announcement/page', //公告列表
         paydividends: "/uc/bonus/user/page", //持币分红
         mylistrecord: "/uc/mine/detail/", //交易挖矿详情
+        cnyrate: '/uc/coin/cny-rate/',
     },
     market: { //币币交易行情接口
         // ws: '/market/market-ws',
@@ -42,6 +43,6 @@ export default {
         coin: '/otc/coin/all', //查询支持的币种
         advertise: '/otc/advertise/page-by-unit', //获取广告
         createAd: '/uc/ad/create', //创建广告
-        adDetail: '/otc/advertise/detail'
+        adDetail: '/otc/advertise/detail',
     }
 }
