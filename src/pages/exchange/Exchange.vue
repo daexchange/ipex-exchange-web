@@ -1774,10 +1774,11 @@
 			    this.loadBaseSymbol();//获取结算货币列表
                 this.getSymbolScale();//精度
                 this.getSymbol(); //包含 K线图、getFavor、startWebsock等
-                this.getPlate(); //买卖盘
+			    this.getCNYRate(); //获取人民币汇率
+			    this.getPlate(); //买卖盘
                 // this.getPlateFull(); //深度图
 				this.getTrade();
-				this.getCNYRate(); //获取人民币汇率
+				
                 if (this.isLogin && this.member.realName) {
                     this.getWallet(); //账户资产信息
                     this.getCurrentOrder(); //当前委托
