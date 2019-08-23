@@ -2002,6 +2002,7 @@
 				
                     var widget = (window.tvWidget = new TradingView.widget(config));
                     widget.onChartReady(function () {
+                        document.getElementById('kline_container').childNodes[0].setAttribute('style', 'display:block;width:100%;height:100%;');
                         widget.chart().executeActionById("drawingToolbarAction");
                         widget.chart().createStudy("Moving Average", false, false, [5], null, {"plot.color": "#965FC4"});
                         widget.chart().createStudy("Moving Average", false, false, [10], null, {"plot.color": "#84AAD5"});
