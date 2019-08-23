@@ -327,7 +327,7 @@ Datafeeds.UDFCompatibleDatafeed.prototype.getBars = function(symbolInfo, resolut
     if (rangeStartDate > 0 && (rangeStartDate + '').length > 10) {
         throw new Error(['Got a JS time instead of Unix one.', rangeStartDate, rangeEndDate]);
     }
-
+ 
     this._send(this._datafeedURL + this._historyURL, {
             symbol: symbolInfo.ticker.toUpperCase(),
             resolution: resolution,

@@ -2000,7 +2000,6 @@
                     config.overrides["mainSeriesProperties.candleStyle.downColor"] = "#ffa5a6";
 				}
 				
-                require(["@js/charting_library/charting_library.min.js"], function (tv) {
                     var widget = (window.tvWidget = new TradingView.widget(config));
                     widget.onChartReady(function () {
                         widget.chart().executeActionById("drawingToolbarAction");
@@ -2100,7 +2099,6 @@
                                 widget.setSymbol("", "1M");
                             }).append("<span>").append(that.$t("exchange.Mon1")).append("</span>")
                     });
-                });
             },
             getFavor() {
                 //查询自选币对（收藏）
