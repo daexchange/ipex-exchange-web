@@ -36,14 +36,15 @@ webpackJsonp([4], [function(t, e, i) {
                 }, n)
             }, n) : n(), V = $.Deferred(), $.when(s, V, O).done(function() {
                 if ($(window).resize(), $(".loading-indicator").hide(), setTimeout(D, 0), t.enabled("14851")) {
-                    ! function(t, e, i, o, n, s, r) {
+                    /** ! function(t, e, i, o, n, s, r) {
                         t.GoogleAnalyticsObject = n, t[n] = t[n] || function() {
                             (t[n].q = t[n].q || []).push(arguments)
                         }, t[n].l = 1 * new Date, s = e.createElement(i), r = e.getElementsByTagName(i)[0], s.async = 1, s.src = o, r.parentNode.insertBefore(s, r)
-                    }(window, document, "script", "//www.google-analytics.com/analytics.js", "ga");
+                    }(window, document, "script", "//ipex.openserver.cn/assets/charting_library/static/js/analytics.js", "ga");
                     var e = document.URL.match(RegExp("(:?.*://)([^/]+)/.*"))[2];
                     ga("create", "UA-53174009-1", "auto"),
                         ga("set", "anonymizeIp", !0), ga("set", { hostname: e, page: e, referrer: e }), ga("send", "pageview")
+                */
                 }
             }),
             function() {
