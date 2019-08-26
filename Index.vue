@@ -1700,5 +1700,3 @@ export default {
   margin-top: 10px;
 }
 </style>
-
-

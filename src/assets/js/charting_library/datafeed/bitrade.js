@@ -95,8 +95,8 @@ WebsockFeed.prototype._send = function(url, params) {
 WebsockFeed.prototype.getBars = function(symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest){
     var bars = [];
     var that = this;
-   
-    if(firstDataRequest==false && (resolution==='1D'||resolution==='1W'||resolution==='1M')){
+  
+    if(firstDataRequest==false){
        that.lastBar = bars.length > 0 ? bars[bars.length-1]:null;
        that.currentBar = that.lastBar;
        var noData = bars.length == 0;
