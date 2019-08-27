@@ -95,8 +95,9 @@ WebsockFeed.prototype._send = function(url, params) {
 WebsockFeed.prototype.getBars = function(symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest){
     var bars = [];
     var that = this;
-  
-    if(firstDataRequest==false){
+       
+    //经分析，优化为按天月日查询，一次加载
+    if(firstDataRequest==false && (resolution==='1D'||resolution==='1W'||resolution==='1M')){
        that.lastBar = bars.length > 0 ? bars[bars.length-1]:null;
        that.currentBar = that.lastBar;
        var noData = bars.length == 0;
@@ -104,8 +105,7 @@ WebsockFeed.prototype.getBars = function(symbolInfo, resolution, from, to, onHis
        return;
 	}
 	
-   this._send(this._datafeedURL+'/history',{
-  //	this._send('http://127.0.0.1:6004/market/history',{
+    this._send(this._datafeedURL+'/history',{
         symbol: symbolInfo.name,
         from: from*1000,
         to: firstDataRequest ? new Date().getTime():to*1000,
@@ -125,7 +125,6 @@ WebsockFeed.prototype.getBars = function(symbolInfo, resolution, from, to, onHis
             	close:item.closePrice,
             	volume:item.volume
             })
-            //bars.push({time:item[0],open:item[1],high:item[2],low:item[3],close:item[4],volume:item[5]})
         }
         that.lastBar = bars.length > 0 ? bars[bars.length-1]:null;
         that.currentBar = that.lastBar;
