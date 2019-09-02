@@ -1751,7 +1751,7 @@
             init() {
                 var params = this.$route.params[0];
                 if (params == undefined) {
-                    this.$router.push("/exchange/" + this.defaultPath);
+                   // this.$router.push("/exchange/" + this.defaultPath);
                     params = this.defaultPath;
                 }
 
@@ -1773,7 +1773,7 @@
 
 			    this.loadBaseSymbol();//获取结算货币列表
                 this.getSymbolScale();//精度
-                this.getSymbol(); //包含 K线图、getFavor、startWebsock等
+                this.getSymbol(); //包含 K线图、getFavor等
 			    this.getCNYRate(); //获取人民币汇率
 			    this.getPlate(); //买卖盘
                 // this.getPlateFull(); //深度图
@@ -2551,105 +2551,10 @@
                         }
                     });
             },
-            startWebsock() {
-                if (this.stompClient) {
-                    this.stompClient.ws.close();
-                }
-                var stompClient = null;
-				var that = this;
-				// 建立连接对象（还未发起连接）
-				var socket = new SockJS(that.host + that.api.market.ws);
-
-				// 获取 STOMP 子协议的客户端对象
-                stompClient = Stomp.over(socket);
-                this.stompClient = stompClient;
-                stompClient.debug = false;
-                // this.datafeed = new Datafeeds.WebsockFeed(that.host+'/market',this.currentCoin,stompClient);
-				// this.getKline();
-				// 向服务器发起websocket连接并发送CONNECT帧
-                stompClient.connect({}, function (frame) {
-					// 连接成功时（服务器响应 CONNECTED 帧）的回调方法
-                    that.datafeed = new Datafeeds.WebsockFeed(
-                        that.host + "/market",
-                        that.currentCoin,
-                        stompClient,
-                        that.baseCoinScale
-					);
-                    that.getKline();
-                    //订阅价格变化消息
-                    stompClient.subscribe("/topic/market/thumb", function (msg) {
-                        var resp = JSON.parse(msg.body);
-                        var coin = that.getCoin(resp.symbol);
-                        if (coin != null) {
-                            // coin.price = resp.close.toFixed(2);
-                            coin.price = resp.close;
-                            coin.rose =
-                                resp.chg > 0
-                                    ? "+" + (resp.chg * 100).toFixed(2) + "%"
-                                    : (resp.chg * 100).toFixed(2) + "%";
-                            // coin.close = resp.close.toFixed(2);
-                            // coin.high = resp.high.toFixed(2);
-                            // coin.low = resp.low.toFixed(2);
-                            coin.close = resp.close;
-                            coin.high = resp.high;
-                            coin.low = resp.low;
-                            coin.turnover = parseInt(resp.volume);
-                            coin.volume = resp.volume;
-                            coin.usdRate = resp.usdRate;
-                        }
-                    });
-                    //订阅实时成交信息
-                    stompClient.subscribe(
-                        "/topic/market/trade/" + that.currentCoin.symbol,
-                        function (msg) {
-                            var resp = JSON.parse(msg.body);
-                            if (resp.length > 0) {
-                                for (var i = 0; i < resp.length; i++) {
-                                    that.trade.rows.unshift(resp[i]);
-                                }
-                            }
-                            if (that.trade.rows.length > 30) {
-                                that.trade.rows = that.trade.rows.slice(0, 30);
-                            }
-                        }
-                    );
-                    if (that.isLogin) {
-                        //订阅委托取消信息
-                        stompClient.subscribe(
-                            "/topic/market/order-canceled/" +
-                            that.currentCoin.symbol +
-                            "/" +
-                            that.member.id,
-                            function (msg) {
-                                var resp = JSON.parse(msg.body);
-                                that.refreshAccount();
-                            }
-                        );
-                        //订阅委托交易完成
-                        stompClient.subscribe(
-                            "/topic/market/order-completed/" +
-                            that.currentCoin.symbol +
-                            "/" +
-                            that.member.id,
-                            function (msg) {
-                                var resp = JSON.parse(msg.body);
-                                that.refreshAccount();
-                            }
-                        );
-                        //订阅委托部分交易
-                        stompClient.subscribe(
-                            "/topic/market/order-trade/" +
-                            that.currentCoin.symbol +
-                            "/" +
-                            that.member.id,
-                            function (msg) {
-                                var resp = JSON.parse(msg.body);
-                                that.refreshAccount();
-                            }
-                        );
-                    }
-
-                    //订阅盘口消息
+            subscribeTradePlate(){
+                var that = this;
+                var stompClient = this.stompClient;
+                //订阅盘口消息
                     stompClient.subscribe(
                         "/topic/market/trade-plate/" + that.currentCoin.symbol,
                         function (msg) {
@@ -2717,44 +2622,13 @@
                                     }
                                 }
 
-                                //for (var i = askLength; i > 0; i--) {
                                 for (var i = 0; i < askLength; i++) {
                                     var ask = askData[i];
                                     ask.direction = "SELL";
                                     ask.position = i;
                                     that.plate.askRows.push(ask);
                                 }
-                                /** var asks = resp.items;
-
-                                 let totle = 0;
-                                 for (var i = that.plate.maxPostion - 1; i >= 0; i--) {
-                var ask = {};
-                if (i < asks.length) {
-                  ask = asks[i];
-                } else {
-                  ask["price"] = 0;
-                  ask["amount"] = 0;
-                }
-                ask.direction = "SELL";
-                ask.position = i + 1;
-				that.plate.askRows.push(ask);
-				that.plate.askRowsTemp.push(ask);
-              }
-                                 for (var i = that.plate.askRows.length - 1; i >= 0; i--) {
-                if (
-                  i == that.plate.askRows.length - 1 ||
-                  that.plate.askRows[i].price == 0
-                ) {
-                  that.plate.askRows[i].totalAmount =
-                    that.plate.askRows[i].amount;
-                } else {
-                  that.plate.askRows[i].totalAmount =
-                    that.plate.askRows[i + 1].totalAmount +
-                    that.plate.askRows[i].amount;
-                }
-                totle += that.plate.askRows[i].amount;
-              }
-                                 that.plate.askTotle = totle; */
+ 
                             } else {
                                 let items = resp.items;
                                 that.plate.bidRows = [];
@@ -2826,29 +2700,137 @@
                                         that.plate.bidRows.push(bid);
                                     }
                                 }
-                                //that.washBidData(bidData);
-                                /** var bids = resp.items;
-                                 that.plate.bidRows = [];
-                                 let totle = 0;
-                                 for (var i = 0; i < that.plate.maxPostion; i++) {
-                var bid = {};
-                if (i < bids.length) {
-                  bid = bids[i];
-                } else {
-                  bid["price"] = 0;
-                  bid["amount"] = 0;
-                }
-                bid.direction = "BUY";
-                bid.position = i + 1;
-                that.plate.bidRows.push(bid);
-              }
-
-                                 that.plate.bidTotle = totle;*/
-
-
                             }
                         }
                     );
+            },
+            subscribeOrder(){
+                var that = this;
+                var stompClient = this.stompClient;
+                //订阅委托取消信息
+                        stompClient.subscribe(
+                            "/topic/market/order-canceled/" +
+                            that.currentCoin.symbol +
+                            "/" +
+                            that.member.id,
+                            function (msg) {
+                                var resp = JSON.parse(msg.body);
+                                that.refreshAccount();
+                            }
+                        );
+                        //订阅委托交易完成
+                        stompClient.subscribe(
+                            "/topic/market/order-completed/" +
+                            that.currentCoin.symbol +
+                            "/" +
+                            that.member.id,
+                            function (msg) {
+                                var resp = JSON.parse(msg.body);
+                                that.refreshAccount();
+                            }
+                        );
+                        //订阅委托部分交易
+                        stompClient.subscribe(
+                            "/topic/market/order-trade/" +
+                            that.currentCoin.symbol +
+                            "/" +
+                            that.member.id,
+                            function (msg) {
+                                var resp = JSON.parse(msg.body);
+                                that.refreshAccount();
+                            }
+                        );
+            },
+            subscribeTrade(){
+                var that = this;
+                var stompClient = this.stompClient;
+
+                //订阅实时成交信息
+                 stompClient.subscribe(
+                        "/topic/market/trade/" + that.currentCoin.symbol,
+                        function (msg) {
+                            var resp = JSON.parse(msg.body);
+                            if (resp.length > 0) {
+                                for (var i = 0; i < resp.length; i++) {
+                                    that.trade.rows.unshift(resp[i]);
+                                }
+                            }
+                            if (that.trade.rows.length > 30) {
+                                that.trade.rows = that.trade.rows.slice(0, 30);
+                            }
+                        }
+                    );
+            },
+            subscribeThumb(){
+                var that = this;
+                var stompClient = this.stompClient;
+                 //订阅价格变化消息
+                    stompClient.subscribe("/topic/market/thumb", function (msg) {
+                        var resp = JSON.parse(msg.body);
+                        var coin = that.getCoin(resp.symbol);
+                        if (coin != null) {
+                            // coin.price = resp.close.toFixed(2);
+                            coin.price = resp.close;
+                            coin.rose =
+                                resp.chg > 0
+                                    ? "+" + (resp.chg * 100).toFixed(2) + "%"
+                                    : (resp.chg * 100).toFixed(2) + "%";
+                            // coin.close = resp.close.toFixed(2);
+                            // coin.high = resp.high.toFixed(2);
+                            // coin.low = resp.low.toFixed(2);
+                            coin.close = resp.close;
+                            coin.high = resp.high;
+                            coin.low = resp.low;
+                            coin.turnover = parseInt(resp.volume);
+                            coin.volume = resp.volume;
+                            coin.usdRate = resp.usdRate;
+                        }
+                    });
+            },
+            startWebsock() {
+                var that = this;
+                if (this.stompClient) {
+                    this.stompClient.ws.close();
+                    console.log('关闭旧通道');
+                }
+                var stompClient = null;
+                 
+                // 建立连接对象（还未发起连接）
+                // 不同的浏览器对websocket的支持不同 跟参数币种
+				var socket = new SockJS(that.host + that.api.market.ws); //连接SockJS的endpoint节点"/market-ws"
+
+                //使用STOMP自协议的WebSocket客户端
+				// 获取 STOMP 子协议的客户端对象
+                stompClient = Stomp.over(socket);
+
+                this.stompClient = stompClient;
+                stompClient.debug = false;
+
+				// 向服务器发起websocket连接并发送CONNECT帧
+                stompClient.connect({}, function (frame) { //连接WebSocket服务端
+                    // 连接成功时（服务器响应 CONNECTED 帧）的回调方法
+                    console.log('链接成功!');
+                    that.datafeed = new Datafeeds.WebsockFeed(
+                        that.host + "/market",
+                        that.currentCoin,
+                        stompClient,
+                        that.baseCoinScale
+					);
+                    that.getKline();
+
+                    //订阅价格变化消息
+                    that.subscribeThumb();
+
+                    //订阅实时成交信息
+                    that.subscribeTrade();
+
+                    if (that.isLogin) {
+                        that.subscribeOrder();
+                    }
+                    //订阅盘口消息
+                    that.subscribeTradePlate();
+                },(error) => {
+                        console.log('链接失败:' + error);
                 });
             },
             limited_price() {
