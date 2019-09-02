@@ -11,6 +11,13 @@ module.exports = {
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {
+          /**   '/api': { //使用代理实现跨域
+                target: 'https://ipex.openserver.cn',  //目标接口域名
+                changeOrigin: true,  //是否跨域
+                pathRewrite: {
+                '^/api': '/api'   //重写接口
+                }
+            },*/
             // '/uc':{
             //     target: 'http://172.24.102.98:6001',
             //     secure: false
