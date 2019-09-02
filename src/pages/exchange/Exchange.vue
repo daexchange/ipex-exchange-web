@@ -1770,7 +1770,7 @@
 
                 this.$store.commit("navigate", "nav-exchange");
                 this.$store.commit("setSkin", this.skin);
-			   
+
 			    this.loadBaseSymbol();//获取结算货币列表
                 this.getSymbolScale();//精度
                 this.getSymbol(); //包含 K线图、getFavor、startWebsock等
@@ -1778,7 +1778,7 @@
 			    this.getPlate(); //买卖盘
                 // this.getPlateFull(); //深度图
 				this.getTrade();
-				
+
                 if (this.isLogin && this.member.realName) {
                     this.getWallet(); //账户资产信息
                     this.getCurrentOrder(); //当前委托
@@ -1886,7 +1886,7 @@
                         var resp = response.body;
                         this.CNYRate = resp.data;
 					});
-				
+
                 this.$http.get(this.host + "/uc/coin/cny-rate/"+this.basecion).then(response => {
                     var resp = response.body;
                     this.CNYPrice = resp.data;
@@ -1904,7 +1904,7 @@
 					interval: "30",
 					timezone: "Asia/Shanghai",//时区
 					volume_precision: 8,
-					//timezone: "UTC",  
+					//timezone: "UTC",
                     toolbar_bg: "#18202a",
                     container_id: "kline_container",
                     datafeed: that.datafeed,
@@ -1991,7 +1991,7 @@
                         {text: "1mon", resolution: "1M", description: "1mon"}*/
                     ]
                 };
-                
+
                 if (that.skin === "day") {
                     config.toolbar_bg = "#fff";
                     config.custom_css_url = "bundles/common_day.css";
@@ -1999,7 +1999,7 @@
                     config.overrides["mainSeriesProperties.candleStyle.upColor"] ="#a6d3a5";
                     config.overrides["mainSeriesProperties.candleStyle.downColor"] = "#ffa5a6";
 				}
-				
+
                     var widget = (window.tvWidget = new TradingView.widget(config));
                     widget.onChartReady(function () {
                         document.getElementById('kline_container').childNodes[0].setAttribute('style', 'display:block;width:100%;height:100%;');
@@ -2024,7 +2024,7 @@
 							if (i==0) {
 								text ='分时';
 							} else {
-								text = button.title;				
+								text = button.title;
 							}
 							widget.createButton().attr("title", button.title)
                             .on("click", function () {
@@ -2032,9 +2032,9 @@
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(button.chartType);
                                 widget.setSymbol("", button.resolution);
-                            }).append("<span>").append(text).append("</span>");	
+                            }).append("<span>").append(text).append("</span>");
 						}*/
-                        
+
 					  	widget.createButton().attr("title", that.$t("exchange.realtime"))
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
@@ -2049,7 +2049,7 @@
                                 widget.chart().setChartType(1);
                                 widget.setSymbol("", "1");
                             }).append("<span>").append(that.$t("exchange.M1")).append("</span>");
-                            
+
                         widget.createButton().attr("title", that.$t("exchange.M5"))
                             .on("click", function () {
                                 if ($(this).hasClass("selected")) return;
@@ -2559,7 +2559,7 @@
 				var that = this;
 				// 建立连接对象（还未发起连接）
 				var socket = new SockJS(that.host + that.api.market.ws);
-				
+
 				// 获取 STOMP 子协议的客户端对象
                 stompClient = Stomp.over(socket);
                 this.stompClient = stompClient;
