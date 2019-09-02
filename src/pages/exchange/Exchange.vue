@@ -143,8 +143,8 @@
                                                    :placeholder="$t('exchange.buyprice')"></Input>
                                             <label>{{currentCoin.base}}</label>
                                             <p class="math_price">≈
-                                                {{currentCoin.usdRate/currentCoin.close*form.buy.limitPrice*CNYRate||0}}
-                                                CNY</p>
+                                                {{form.buy.limitPrice*CNYPrice| toFixed(2) ||0}}
+                                               CNY</p>
                                         </FormItem>
                                         <FormItem>
                                             <Input @on-keyup="keyEvent" v-model="form.buy.limitAmount"
@@ -213,7 +213,8 @@
                                                    :placeholder="$t('exchange.sellprice')"></Input>
                                             <label>{{currentCoin.base}}</label>
                                             <p class="math_price">≈
-                                                {{currentCoin.usdRate/currentCoin.close*form.sell.limitPrice*CNYRate||0}}
+                                              <!--  {{currentCoin.usdRate/currentCoin.close*form.sell.limitPrice*CNYRate||0}}
+                                               -->{{form.sell.limitPrice*CNYPrice| toFixed(2)||0}}
                                                 CNY</p>
                                         </FormItem>
                                         <FormItem>
@@ -295,7 +296,7 @@
                             <span class="price" :class="{buy:currentCoin.change>0,sell:currentCoin.change<0}">{{currentCoin.price}}</span>
                             <span v-if="currentCoin.change>0" class="buy">↑</span>
                             <span v-else-if="currentCoin.change<0" class="sell">↓</span>
-                            <span class="price-cny"> ≈ {{currentCoin.usdRate*CNYRate | toFixed(2)}} CNY</span>
+                            <span class="price-cny"> ≈ {{currentCoin.close*CNYPrice | toFixed(2)}} CNY</span>
                             <div class="Decimal">
                                 <span class="D-number">{{showCoinScale}}</span>
                                 <div class="Decimal-btn">
