@@ -34,11 +34,21 @@
                   </a>
                 </div>
               </div>
+                <div v-show="coinType=='EOS'">
+                    <p class="describe">Memo</p>
+                    <Input :value="'U'+memberId" readonly style="width: 300px; margin-top: 23px"></Input>
+                </div>
             </div>
             <div class="action-content">
               <div class="action-body">
                 <p class="acb-p1">{{$t('common.tip')}}</p>
-                <p class="acb-p2">• {{$t('uc.finance.recharge.msg1')}}<br>• {{$t('uc.finance.recharge.msg2')}}<br>• {{$t('uc.finance.recharge.msg3')}}<br>• {{$t('uc.finance.recharge.msg4')}}<br>• {{$t('uc.finance.recharge.msg5')}}</p>
+                <p class="acb-p2">
+                    • {{$t('uc.finance.recharge.msg1')}}<br>
+                    • {{$t('uc.finance.recharge.msg2')}}<br>
+                    • {{$t('uc.finance.recharge.msg3')}}<br>
+                    • {{$t('uc.finance.recharge.msg4')}}<br>
+                    • {{$t('uc.finance.recharge.msg5')}}<br>
+                    • {{$t('uc.finance.recharge.msg6')}}</p>
               </div>
             </div>
             <div class="action-content">
@@ -82,7 +92,8 @@ export default {
       coinType: "",
       coinList: [],
       tableRecharge: [],
-      allTableRecharge: []
+      allTableRecharge: [],
+        memberId: '',
     };
   },
   methods: {
@@ -180,6 +191,8 @@ export default {
               // 判断是否设置交易密码，未认证跳转到实名认证页面；
               this.$Message.success(this.$t("otc.publishad.submittip3"));
               self.$router.push("/uc/safe");
+            } else {
+                this.memberId = resp.data.id;
             }
           } else {
             this.$Message.error(resp.message);
@@ -319,7 +332,7 @@ export default {
 }
 
 .action-inner .inner-box.deposit-address {
-  width: 80%;
+  width: 60%;
 }
 
 p.describe {
