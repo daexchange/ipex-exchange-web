@@ -10,34 +10,38 @@
           <div class="table-inner action-box open">
             <!-- <i class="angle" style="right: 71px;"></i> -->
             <div class="action-inner">
-              <div class="inner-left">
+              <div class="inner-left" style="width: 10%; float: left">
                 <p class="describe">{{$t('uc.finance.recharge.symbol')}}</p>
                 <Select v-model="coinType" style="width:100px;margin-top: 23px;" @on-change="changeCoin">
                   <Option v-for="item in coinList" :value="item.coin.unit" :key="item.coin.unit">{{ item.coin.unit }}</Option>
                 </Select>
               </div>
-              <div class="inner-box deposit-address">
-                <p class="describe">{{$t('uc.finance.recharge.address')}}</p>
-                <div class="title">
-                  <Input v-model="qrcode.value" readonly style="width: 400px"></Input>
-                  <a v-clipboard:copy="qrcode.value" v-clipboard:success="onCopy" v-clipboard:error="onError" href="javascript:;" id="copyBtn" class="link-copy">{{$t('uc.finance.recharge.copy')}}</a>
-                  <a id="showQRcode" class="link-qrcode" href="javascript:;" @click="showEwm"> {{$t('uc.finance.recharge.qrcode')}}
-                    <Modal v-model="isShowEwm">
-                      <!--<div v-show="isShowEwm" class="show-qrcode">-->
-                      <p slot="header" style="text-align: center;">充币地址二维码</p>
-                      <div class="show-qrcode" style="text-align: center;">
-                        <!--<qriously :value="qrcode.coinName+':'+qrcode.value" :size="qrcode.size" />-->
-                        <qriously :value="qrcode.value" :size="qrcode.size" foreground="#fff" />
-                      </div>
-                      <div slot="footer"></div>
-                    </Modal>
-                  </a>
+              <div style="width: 80%; float: right">
+                <div style="float: left; width: 39%">
+                  <p class="describe">{{$t('uc.finance.recharge.address')}}</p>
+                  <Input v-model="qrcode.value" readonly style="width: 400px; margin-top: 23px"></Input>
+                </div>
+                <div style="float: right; width: 61%">
+                  <div v-show="coinType=='EOS'" style="float: left">
+                    <p class="describe">Memo</p>
+                    <Input :value="'U'+memberId" readonly style="width: 120px; margin-top: 23px"></Input>
+                  </div>
+                  <div style="margin-left: 20px; float: left; margin-top: 50px; margin-left: 20px">
+                    <a v-clipboard:copy="qrcode.value" v-clipboard:success="onCopy" v-clipboard:error="onError" href="javascript:;" id="copyBtn" class="link-copy">{{$t('uc.finance.recharge.copy')}}</a>
+                    <a id="showQRcode" class="link-qrcode" href="javascript:;" @click="showEwm"> {{$t('uc.finance.recharge.qrcode')}}
+                      <Modal v-model="isShowEwm">
+                        <!--<div v-show="isShowEwm" class="show-qrcode">-->
+                        <p slot="header" style="text-align: center;">充币地址二维码</p>
+                        <div class="show-qrcode" style="text-align: center;">
+                          <!--<qriously :value="qrcode.coinName+':'+qrcode.value" :size="qrcode.size" />-->
+                          <qriously :value="qrcode.value" :size="qrcode.size" foreground="#fff" />
+                        </div>
+                        <div slot="footer"></div>
+                      </Modal>
+                    </a>
+                  </div>
                 </div>
               </div>
-                <div v-show="coinType=='EOS'">
-                    <p class="describe">Memo</p>
-                    <Input :value="'U'+memberId" readonly style="width: 300px; margin-top: 23px"></Input>
-                </div>
             </div>
             <div class="action-content">
               <div class="action-body">
@@ -278,11 +282,11 @@ export default {
   user-select: text;
 }
 
-.action-box .title a.link-copy {
+/*.action-box .title a.link-copy {
   font-size: 14px;
   margin-left: 20px;
   color: #f0a70a;
-}
+}*/
 
 .hb-night a {
   text-decoration: none;
@@ -291,7 +295,19 @@ export default {
   cursor: pointer;
 }
 
-.action-box .title a.link-qrcode {
+/*.action-box .title a.link-qrcode {
+  margin-left: 20px;
+  font-size: 14px;
+  position: relative;
+  color: #f0a70a;
+}*/
+
+.link-copy {
+  font-size: 14px;
+  margin-left: 20px;
+  color: #f0a70a;
+}
+.link-qrcode {
   margin-left: 20px;
   font-size: 14px;
   position: relative;
