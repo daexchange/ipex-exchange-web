@@ -871,6 +871,7 @@
             let self = this;
             return {
                 CNYPrice: 1,
+                coinsCNYRate: [],
                 pane: '',
                 expand: '',
                 baseSymbols: [],
@@ -1670,6 +1671,7 @@
         },
         created: function () {
             this.init();
+            this.getCoinsCNYRate();
         },
         methods: {
             showCNYPrice() {
@@ -1880,11 +1882,24 @@
                 });
             },
             getCNYRate() {
-                this.$http.get(this.host + "/uc/coin/cny-rate/"+
-                this.basecion.toUpperCase()).then(response => {
-                    var resp = response.body;
-                    this.CNYPrice = resp.data;
-                })
+               // this.$http.get(this.host + "/uc/coin/cny-rate/"+
+              //  this.basecion.toUpperCase()).then(response => {
+               //     var resp = response.body;
+                //    this.CNYPrice = resp.data||1;
+               // })
+               this.CNYPrice = this.getCoinCNYRate(this.basecion.toUpperCase());
+            },
+            getCoinCNYRate(symbol) {
+              return this.coinsCNYRate[symbol];
+            },
+            getCoinsCNYRate() {
+             this.$http.get(this.host + "/market/cny-rate/list").then(response => {
+               var data = response.body.data;
+               for(var key in data){     
+                 let CNYPrice = data[key]||1; 
+                 this.coinsCNYRate[key] = CNYPrice; 
+               }
+             });
             },
             getCoin(symbol) {
                 return this.coins._map[symbol];

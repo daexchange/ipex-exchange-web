@@ -154,7 +154,9 @@ export default {
       // currentBonusETHBnous: 0,
       yesDayCashDividensBonusETH: 0,
       // yesDayMineAmountBHB: 0,
-      CNYRate: null,
+     // CNYRate: null,
+      CNYPrice: 1,
+      coinsCNYRate: [],
       dataIndex: [],
       pageNo: 1,
       pageSize: 50,
@@ -227,8 +229,12 @@ export default {
             // var rmb = self.round(self.mul(params.row.price, 6.5), 2);
             // if (self.CNYRate != null)
             //   rmb = self.round(self.mul(params.row.price, self.CNYRate), 2);
-            let CNYRate = self.CNYRate || 6.5,
-              rmb = self.round(self.mul(params.row.usdRate, CNYRate), 2);
+           //  CNYRate = self.CNYRate || 6.5,
+            //  rmb = self.round(self.mul(params.row.usdRate, CNYRate), 2);
+            let paramArray = params.row.symbol.split("/");
+            const basecion = paramArray[1];
+            let CNYRate = self.getCoinCNYRate(basecion);
+            let rmb = self.round(self.mul(params.row.price, CNYRate), 2);
             const isgreen =
               parseFloat(params.row.rose) < 0 ? "none" : "inline-block";
             const nogreen =
@@ -530,8 +536,10 @@ export default {
               // var rmb = self.round(self.mul(params.row.price, 6.5), 2);
               // if (self.CNYRate != null)
               //   rmb = self.round(self.mul(params.row.price, self.CNYRate), 2);
-              let CNYRate = self.CNYRate || 6.5,
-                rmb = self.round(self.mul(params.row.usdRate, self.CNYRate), 2);
+             let paramArray = params.row.symbol.split("/");
+              const basecion = paramArray[1];
+              let CNYRate = self.getCoinCNYRate(basecion);
+              let rmb = self.round(self.mul(params.row.price, CNYRate), 2);
               const isgreen =
                 parseFloat(params.row.rose) < 0 ? "none" : "inline-block";
               const nogreen =
@@ -772,7 +780,7 @@ export default {
     }
   },
   mounted: function() {
-    this.getCNYRate();
+    this.getCoinsCNYRate()
     this.getSymbol();
   },
   methods: {
@@ -909,13 +917,17 @@ export default {
             }
           });
     },
-    getCNYRate() {
-      this.$http
-        .post(this.host + "/market/exchange-rate/usd-cny")
-        .then(response => {
-          var resp = response.body;
-          this.CNYRate = resp.data;
-        });
+    getCoinCNYRate(symbol) {
+        return this.coinsCNYRate[symbol];
+    },
+    getCoinsCNYRate() {
+      this.$http.get(this.host + "/market/cny-rate/list").then(response => {
+         var data = response.body.data;
+         for(var key in data){     
+           let CNYPrice = data[key]||1; 
+           this.coinsCNYRate[key] = CNYPrice; 
+         }
+       });
     },
     donwload(type) {
       const title = this.$t("common.tip");
