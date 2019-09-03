@@ -11,7 +11,7 @@
             <div class="item">
                 <span class="text">{{$t("exchange.lastprice")}}</span>
                 <span class="num" :class="{buy:currentCoin.change>0,sell:currentCoin.change<0}">{{currentCoin.close | toFixed(baseCoinScale)}}</span>
-                <span class="price-cny">￥{{currentCoin.usdRate*CNYRate | toFixed(2)}}</span>
+                <span class="price-cny">￥{{currentCoin.close*CNYPrice | toFixed(2)}}</span>
             </div>
             <div class="item">
                 <span class="text">{{$t("exchange.daychange")}}</span>
@@ -896,7 +896,6 @@
                 currentImgTable: "k",
                 selectedOrder: "current", //当前显示的委托记录
                 selectedPlate: "all", //当前显示的买卖盘
-                CNYRate: null,
                 datafeed: null,
                 //defaultPath: "btc_usdt",
                 defaultPath: "TLM_ETH",
@@ -1881,14 +1880,8 @@
                 });
             },
             getCNYRate() {
-                this.$http
-                    .post(this.host + "/market/exchange-rate/usd-cny")
-                    .then(response => {
-                        var resp = response.body;
-                        this.CNYRate = resp.data;
-					});
-
-                this.$http.get(this.host + "/uc/coin/cny-rate/"+this.basecion).then(response => {
+                this.$http.get(this.host + "/uc/coin/cny-rate/"+
+                this.basecion.toUpperCase()).then(response => {
                     var resp = response.body;
                     this.CNYPrice = resp.data;
                 })
