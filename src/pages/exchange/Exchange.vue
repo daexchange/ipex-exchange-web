@@ -1671,7 +1671,6 @@
         },
         created: function () {
             this.init();
-            this.getCoinsCNYRate();
         },
         methods: {
             showCNYPrice() {
@@ -1756,12 +1755,13 @@
                    // this.$router.push("/exchange/" + this.defaultPath);
                     params = this.defaultPath;
                 }
-
+                
                 var paramArray = params.split("_");
                 const paramArray_0 = paramArray[0];
                 const basecion = paramArray[1];
                 if (basecion && this.basecion != 'favor') {
                     this.basecion = basecion;
+                    this.pane = this.basecion;
                 }
                 var exchangeCoinSettlement = basecion.toUpperCase();
                 var exchangeCoin = paramArray_0.toUpperCase();
@@ -1769,10 +1769,8 @@
                 this.currentCoin.symbol = exchangeCoin + "/" + exchangeCoinSettlement;
                 this.currentCoin.coin = exchangeCoin;
                 this.currentCoin.base = exchangeCoinSettlement;
-
                 this.$store.commit("navigate", "nav-exchange");
                 this.$store.commit("setSkin", this.skin);
-
 			    this.loadBaseSymbol();//获取结算货币列表
                 this.getSymbolScale();//精度
                 this.getSymbol(); //包含 K线图、getFavor等
@@ -1882,12 +1880,12 @@
                 });
             },
             getCNYRate() {
-               // this.$http.get(this.host + "/uc/coin/cny-rate/"+
-              //  this.basecion.toUpperCase()).then(response => {
-               //     var resp = response.body;
-                //    this.CNYPrice = resp.data||1;
-               // })
-               this.CNYPrice = this.getCoinCNYRate(this.basecion.toUpperCase());
+                this.$http.get(this.host + "/uc/coin/cny-rate/"+
+                this.basecion.toUpperCase()).then(response => {
+                    var resp = response.body;
+                    this.CNYPrice = resp.data||1;
+                })
+              // this.CNYPrice = this.getCoinCNYRate(this.basecion.toUpperCase());
             },
             getCoinCNYRate(symbol) {
               return this.coinsCNYRate[symbol];
