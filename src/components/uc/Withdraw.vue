@@ -106,9 +106,7 @@
         {{$t('uc.finance.withdraw.fundpwdtip')}}<br/>
         <Input type="password" v-model="fundpwd" :placeholder="$t('otc.chat.msg7')"></Input>
       </p> -->
-      <p slot="header">
-        提示
-      </p>
+      <p slot="header">安全验证</p>
       <Form class="withdraw-form-inline" ref="formInline" :model="formInline" inline>
         <!-- <FormItem>
           <Input type="text" v-model="user.mobilePhone" disabled></Input>
@@ -398,6 +396,8 @@ export default {
     },
     apply() {
       if (this.valid()) {
+        this.formInline.code = "";
+        this.formInline.fundpwd = "";
         this.modal = true;
         let timercode = setInterval(() => {
           if (this.countdown <= 0) {
