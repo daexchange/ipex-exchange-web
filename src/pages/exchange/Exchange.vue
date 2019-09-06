@@ -1761,7 +1761,7 @@
                 const basecion = paramArray[1];
                 if (basecion && this.basecion != 'favor') {
                     this.basecion = basecion;
-                    this.pane = this.basecion;
+                    this.pane = this.basecion.toLowerCase();
                 }
                 var exchangeCoinSettlement = basecion.toUpperCase();
                 var exchangeCoin = paramArray_0.toUpperCase();
