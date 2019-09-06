@@ -36,6 +36,8 @@
               <!-- 登录 -->
               <div class="login_register isLogin" v-if="isLogin">
                 <div class="mymsg">
+               <!--   <router-link to="/uc/safe">资产</router-link>
+                  <router-link to="/uc/safe">订单</router-link> -->
                   <router-link to="/uc/safe">{{$t("common.center")}}</router-link>
                 </div>
                 <Dropdown>

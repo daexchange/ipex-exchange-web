@@ -174,10 +174,10 @@ export default {
       this.formInline.fundpwd = "";
     },
     sendCode() {
+      this.settime();
       this.$http.post(this.host + "/uc/email/withdraw/code").then(response => {
         var resp = response.body;
         if (resp.code == 0) {
-          this.settime();
           this.$Notice.success({
             title: this.$t("common.tip"),
             desc: resp.message
