@@ -17,7 +17,7 @@ import Api from './config/api';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'
 import $ from '@js/jquery.min.js';
-import TradingView from '@js/charting_library/charting_library.min.js';
+//import TradingView from '@js/charting_library/charting_library.min.js';
 var moment = require('moment');
 Vue.use(iView);
 Vue.use(VueClipboard)

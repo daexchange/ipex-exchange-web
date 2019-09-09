@@ -491,7 +491,7 @@ module.exports = {
 				toaccount: '转账账户',
 				record: '转账记录',
 				time: '转账时间',
-				accounttip: '请填入收款人账户注册邮箱',
+				accounttip: '请输入收款人账户',
 				numtip2: '请填写正确转账数量，最小值为',
 				accounterr: '转账账户格式不正确',
                 accountret: '转账账户不能是本账户',

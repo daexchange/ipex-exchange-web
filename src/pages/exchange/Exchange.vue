@@ -1909,15 +1909,14 @@
                     fullscreen: true,
                     symbol: that.symbol,
 					interval: "30",
-					timezone: "Asia/Shanghai",//时区
+					timezone: "Asia/Shanghai",//时区//timezone: "UTC",
 					volume_precision: 8,
-					//timezone: "UTC",
                     toolbar_bg: "#18202a",
                     container_id: "kline_container",
                     datafeed: that.datafeed,
                     library_path:
                         process.env.NODE_ENV === "production"
-                            ? "/assets/charting_library/"
+                            ? "/assets/chart_main/"
                             : "src/assets/js/charting_library/",
                     locale: that.$t("exchange.chartingLibraryLocale"),
                     debug: false,
@@ -1948,6 +1947,7 @@
                     charts_storage_api_version: "1.1",
                     client_id: "tradingview.com",
                     user_id: "public_user_id",
+                    loading_screen:{ backgroundColor: "#000000",foregroundColor: "#000000", },
                     overrides: {
 						"volumePaneSize": 'small', //成交量高度设置，可选值 large, medium, small, tiny
                         "paneProperties.background": "#1B1E2E",
@@ -3306,3 +3306,18 @@
         }
     };
 </script>
+<style scoped lang="scss">
+ .bottom-widgetbar-content.backtesting .button, .header-chart-panel .button, .hotlist-controls .button, .symbol-edit-widget .button {
+    display: block;
+    position: relative;
+    float: left;
+    cursor: default;
+    padding: 7px 12px;
+    border: 1px solid;
+    height: 14px;
+    color: #E91E63;
+    font-size: 11px;
+    font-weight: 600;
+   }
+   
+</style>

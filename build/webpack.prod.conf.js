@@ -122,6 +122,11 @@ const webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       },
       {
+          from: path.resolve(__dirname, '../src/assets/chart_main'),
+          to: config.build.assetsSubDirectory+'/chart_main',
+          ignore: ['.*']
+      },
+      {
         from: path.resolve(__dirname, '../favicon.ico'),
         to: config.build.assetsRoot,
       },
