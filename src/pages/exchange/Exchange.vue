@@ -1587,25 +1587,26 @@
             }
         },
         watch: {
-            "form.buy.limitPrice": function (val) {
+            "form.buy.limitPrice": function (val) {//价格
                 let price = this.form.buy.limitPrice,
-                    account = this.wallet.base,
+                    account = this.wallet.base,//钱包余额
                     amount = 0;
                 if (val > 0) {
-                    amount = this.toFloor(
-                        account
+                	//计算数量限制
+                	if (this.form.buy.limitAmount!=0&&this.sliderBuyLimitPercent==0) {
+                		amount = this.form.buy.limitAmount;
+                	} else {
+                		amount = this.toFloor(
+                        	account
                             .div(price)
                             .mul(this.sliderBuyLimitPercent)
-                            .mul(0.01),
-                        this.coinScale
-                    );
+                            .mul(0.01),this.coinScale
+                    	);
+                    	this.form.buy.limitAmount = amount;
+                	}
                 }
-                this.form.buy.limitAmount = amount;
+                
                 this.form.buy.limitTurnover = val.mul(amount);
-                // this.toFloor(
-                //  ,
-                //   this.baseCoinScale
-                // );
             },
             "form.buy.limitAmount": function (val) {
                 this.form.buy.limitTurnover = this.toFloor(
@@ -1917,7 +1918,7 @@
                     library_path:
                         process.env.NODE_ENV === "production"
                             ? "/assets/chart_main/"
-                            : "src/assets/js/charting_library/",
+                            : "src/assets/chart_main/",
                     locale: that.$t("exchange.chartingLibraryLocale"),
                     debug: false,
                     drawings_access: {
@@ -3277,31 +3278,29 @@
             dateFormat: function (tick) {
                 return moment(tick).format("YYYY-MM-DD HH:mm:ss");
             },
-            keyEvent(event) {
+            keyEvent(event) {// 计算精度是否合法
                 var re1 = new RegExp(
                     "([0-9]+.[0-9]{" + this.baseCoinScale + "})[0-9]*",
                     ""
                 );
-                this.form.buy.limitPrice = this.form.buy.limitPrice
-                    .toString()
-                    .replace(re1, "$1");
-                this.form.sell.limitPrice = this.form.sell.limitPrice
-                    .toString()
-                    .replace(re1, "$1");
-                this.form.buy.marketAmount = this.form.buy.marketAmount
-                    .toString()
-                    .replace(re1, "$1");
-
                 var re2 = new RegExp("([0-9]+.[0-9]{" + this.coinScale + "})[0-9]*", "");
+                
+                //限价买
                 this.form.buy.limitAmount = this.form.buy.limitAmount
-                    .toString()
-                    .replace(re2, "$1");
+                    .toString().replace(re2, "$1");
+                this.form.buy.limitPrice = this.form.buy.limitPrice
+                    .toString().replace(re1, "$1");
+                
+                //限价卖
                 this.form.sell.limitAmount = this.form.sell.limitAmount
-                    .toString()
-                    .replace(re2, "$1");
+                    .toString().replace(re2, "$1");
+                this.form.sell.limitPrice = this.form.sell.limitPrice
+                    .toString().replace(re1, "$1");
+                
+                this.form.buy.marketAmount = this.form.buy.marketAmount
+                    .toString().replace(re1, "$1");
                 this.form.sell.marketAmount = this.form.sell.marketAmount
-                    .toString()
-                    .replace(re2, "$1");
+                    .toString().replace(re2, "$1");
             }
         }
     };
