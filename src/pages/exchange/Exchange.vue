@@ -1966,38 +1966,7 @@
 						"mainSeriesProperties.areaStyle.color2": "rgba(71, 78, 112, 0.5)",
                         "mainSeriesProperties.areaStyle.linecolor": "#9194a4"
                     },
-                    time_frames: [
-                        /* {
-                            text: "1min",
-                            resolution: "1",
-                            description: "realtime",
-                            title: that.$t("exchange.realtime")
-                        },
-                        {text: "1min", resolution: "1", description: "1min"},
-                        {text: "5min", resolution: "5", description: "5min"},
-                        {text: "15min", resolution: "15", description: "15min"},
-                        {text: "30min", resolution: "30", description: "30min"},
-                        {
-                            text: "1hour",
-                            resolution: "60",
-                            description: "1hour",
-                            title: "1hour"
-                        },
-                       { text: "4hour", resolution: "240", description: "4hour",title: "4hour" },
-                        {
-                            text: "1day",
-                            resolution: "1D",
-                            description: "1day",
-                            title: "1day"
-                        },
-                        {
-                            text: "1week",
-                            resolution: "1W",
-                            description: "1week",
-                            title: "1week"
-                        },
-                        {text: "1mon", resolution: "1M", description: "1mon"}*/
-                    ]
+                    time_frames: []
                 };
 
                 if (that.skin === "day") {
@@ -2014,99 +1983,39 @@
                         widget.chart().executeActionById("drawingToolbarAction");
                         widget.chart().createStudy("Moving Average", false, false, [5], null, {"plot.color": "#965FC4"});
                         widget.chart().createStudy("Moving Average", false, false, [10], null, {"plot.color": "#84AAD5"});
-					/**	 该方式暂时有点击事件失效问题
+						
 						var buttons = [
-        {title:'realtime',resolution:'1',chartType:3},
-        {title:'1min',resolution:'1',chartType:1},
-        {title:'5min',resolution:'5',chartType:1},
-        {title:'15min',resolution:'15',chartType:1},
-        {title:'30min',resolution:'30',chartType:1},
-        {title:'1hour',resolution:'60',chartType:1},
-        {title:'1day',resolution:'1D',chartType:1},
-        {title:'1week',resolution:'1W',chartType:1},
-		{title:'1month',resolution:'1M',chartType:1},
+        					{title:'exchange.realtime',resolution:'1',chartType:3},
+        					{title:'exchange.M1',resolution:'1',chartType:1},
+        					{title:'exchange.M5',resolution:'5',chartType:1},
+        					{title:'exchange.M15',resolution:'15',chartType:1},
+        					{title:'exchange.M30',resolution:'30',chartType:1},
+        					{title:'exchange.M60',resolution:'60',chartType:1},
+        					{title:'exchange.D1',resolution:'1D',chartType:1},
+        					{title:'exchange.W1',resolution:'1W',chartType:1},
+							{title:'exchange.Mon1',resolution:'1M',chartType:1},
 						];
 						for(var i = 0; i < buttons.length; i++){
-							var button = buttons[i];
-							var text ;
+							let title = that.$t(buttons[i].title);
+							let symbol = buttons[i].resolution;
 							if (i==0) {
-								text ='分时';
-							} else {
-								text = button.title;
-							}
-							widget.createButton().attr("title", button.title)
-                            .on("click", function () {
-                                if ($(this).hasClass("selected")) return;
-                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
-                                widget.chart().setChartType(button.chartType);
-                                widget.setSymbol("", button.resolution);
-                            }).append("<span>").append(text).append("</span>");
-						}*/
-
-					  	widget.createButton().attr("title", that.$t("exchange.realtime"))
-                            .on("click", function () {
+								widget.createButton().attr("title", title)
+                            	.on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(3);
-                                widget.setSymbol("", "1");
-                            }).append("<span>").append(that.$t("exchange.realtime")).append("</span>");
-                        widget.createButton().attr("title", that.$t("exchange.M1"))
-                            .on("click", function () {
+                                widget.setSymbol("", symbol);
+                            	}).append("<span>").append(title).append("</span>").addClass("selected");
+							} else {
+								widget.createButton().attr("title", title)
+                            	.on("click", function () {
                                 if ($(this).hasClass("selected")) return;
                                 $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
                                 widget.chart().setChartType(1);
-                                widget.setSymbol("", "1");
-                            }).append("<span>").append(that.$t("exchange.M1")).append("</span>");
-
-                        widget.createButton().attr("title", that.$t("exchange.M5"))
-                            .on("click", function () {
-                                if ($(this).hasClass("selected")) return;
-                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
-                                widget.chart().setChartType(1);
-                                widget.setSymbol("", "5");
-                            }).append("<span>").append(that.$t("exchange.M5")).append("</span>");
-                        widget.createButton().attr("title", that.$t("exchange.M15"))
-                            .on("click", function () {
-                                if ($(this).hasClass("selected")) return;
-                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
-                                widget.chart().setChartType(1);
-                                widget.setSymbol("", "15");
-                            }).append("<span>").append(that.$t("exchange.M15")).append("</span>");
-                        widget.createButton().attr("title", that.$t("exchange.M30"))
-                            .on("click", function () {
-                                if ($(this).hasClass("selected")) return;
-                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
-                                widget.chart().setChartType(1);
-                                widget.setSymbol("", "30");
-                            }).append("<span>").append(that.$t("exchange.M30")).append("</span>").addClass("selected");
-                        widget.createButton().attr("title", that.$t("exchange.M60"))
-                            .on("click", function () {
-                                if ($(this).hasClass("selected")) return;
-                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
-                                widget.chart().setChartType(1);
-                                widget.setSymbol("", "60");
-                             }).append("<span>").append(that.$t("exchange.M60")).append("</span>")
-                        widget.createButton().attr("title", that.$t("exchange.D1"))
-                            .on("click", function () {
-                                if ($(this).hasClass("selected")) return;
-                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
-                                widget.chart().setChartType(1);
-                                widget.setSymbol("", "1D");
-                             }).append("<span>").append(that.$t("exchange.D1")).append("</span>")
-                        widget.createButton().attr("title", that.$t("exchange.W1"))
-                            .on("click", function () {
-                                if ($(this).hasClass("selected")) return;
-                                $(this).addClass("selected").parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
-                                widget.chart().setChartType(1);
-                                widget.setSymbol("", "1W");
-                             }).append("<span>").append(that.$t("exchange.W1")).append("</span>")
-                        widget.createButton().attr("title", that.$t("exchange.Mon1"))
-                            .on("click", function () {
-                                if ($(this).hasClass("selected")) return;
-                                $(this).addClass("selected") .parent(".group").siblings(".group").find(".button.selected").removeClass("selected");
-                                widget.chart().setChartType(1);
-                                widget.setSymbol("", "1M");
-                            }).append("<span>").append(that.$t("exchange.Mon1")).append("</span>")
+                                widget.setSymbol("", symbol);
+                           		}).append("<span>").append(title).append("</span>");
+							}
+						}
                     });
             },
             getFavor() {
