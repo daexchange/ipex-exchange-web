@@ -1783,7 +1783,6 @@
                 if (this.isLogin && this.member.realName) {
                     this.getWallet(); //账户资产信息
                     this.getCurrentOrder(); //当前委托
-                    this.getHistoryOrder(); //历史委托
                 }
                 //this.getFavor();
                 this.sliderBuyLimitPercent = 0;
@@ -1812,6 +1811,9 @@
             },
             changeOrder(str) {
                 this.selectedOrder = str;
+                if (this.selectedOrder=='history') {
+                	this.getHistoryOrder(); //历史委托
+                } 
             },
             setback() {
                 var obk = document.getElementsByClassName("container")[0];
@@ -1909,7 +1911,7 @@
                     autosize: true,
                     fullscreen: true,
                     symbol: that.symbol,
-					interval: "30",
+					interval: "1",
 					timezone: "Asia/Shanghai",//时区//timezone: "UTC",
 					volume_precision: 8,
                     toolbar_bg: "#18202a",
@@ -1935,14 +1937,14 @@
                         "header_screenshot",
                         "header_saveload",
                         "use_localstorage_for_settings",
-                        "left_toolbar",
+                         "left_toolbar",
                         "volume_force_overlay" // 成交量(柱状图)与k线分离
                     ],
                     enabled_features: [
                         "hide_last_na_study_output",
                         "move_logo_to_main_pane"
                     ],
-                    custom_css_url: "bundles/common.css",
+                  //  custom_css_url: "chart.css",
                     supported_resolutions: ["1", "5", "15", "30", "60", "1D", "1W", "1M"],
                     //charts_storage_url: "http://saveload.tradingview.com",
                     charts_storage_api_version: "1.1",
@@ -1977,12 +1979,14 @@
                     config.overrides["mainSeriesProperties.candleStyle.downColor"] = "#ffa5a6";
 				}
 
-                    var widget = (window.tvWidget = new TradingView.widget(config));
-                    widget.onChartReady(function () {
-                        document.getElementById('kline_container').childNodes[0].setAttribute('style', 'display:block;width:100%;height:100%;');
-                        widget.chart().executeActionById("drawingToolbarAction");
-                        widget.chart().createStudy("Moving Average", false, false, [5], null, {"plot.color": "#965FC4"});
-                        widget.chart().createStudy("Moving Average", false, false, [10], null, {"plot.color": "#84AAD5"});
+                var widget = (window.tvWidget = new TradingView.widget(config));
+                    
+                widget.onChartReady(function () {
+                	document.getElementById('kline_container').childNodes[0].setAttribute('style', 'display:block;width:100%;height:100%;');
+                    widget.chart().executeActionById("drawingToolbarAction");
+                  	//移动平均线
+                    widget.chart().createStudy("Moving Average", false, false, [5], null, {"plot.color": "#965FC4"});
+                    widget.chart().createStudy("Moving Average", false, false, [10], null, {"plot.color": "#84AAD5"});
 						
 						var buttons = [
         					{title:'exchange.realtime',resolution:'1',chartType:3},
@@ -2910,7 +2914,6 @@
                             });
                             this.getWallet();
                             this.getCurrentOrder();
-                            this.getHistoryOrder();
                             this.form.buy.limitAmount = 0;
                         } else {
                             this.$Notice.error({
@@ -3121,6 +3124,7 @@
                 } else {
                     pageNo = pageNo - 1;
                 }
+                
                 this.historyOrder.rows = []; //清空数据
                 var params = {};
                 params["pageNo"] = pageNo;
@@ -3178,7 +3182,6 @@
             },
             refreshAccount: function () {
                 this.getCurrentOrder();
-                this.getHistoryOrder();
                 this.getWallet();
             },
             timeFormat: function (tick) {
