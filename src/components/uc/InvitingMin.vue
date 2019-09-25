@@ -214,7 +214,7 @@
                 let params = {}
                 params['pageNo'] = pageNo;
                 params['pageSize'] = this.pageSize;
-                this.$http.post(this.host + '/uc/asset/transaction/all', params).then(response => {
+                this.$http.post(this.host + this.api.uc.transactionall, params).then(response => {
                     var resp = response.body;
                     if (resp.content) {
                         this.tableRecord = resp.content

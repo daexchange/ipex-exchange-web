@@ -30,6 +30,40 @@ export default {
 		businessauthdepositlist: "/uc/uc/approve/business-auth-deposit/list",
 		announcement: "/uc/uc/announcement/more",
 		accountSetting: "/uc/uc/approve/account/setting",
+		approveupdatebank: '/uc/uc/approve/update/bank',
+		approvebindbank: '/uc/uc/approve/bind/bank',
+		approveupdateali: '/uc/uc/approve/update/ali',
+		approvebindali: '/uc/uc/approve/bind/ali',
+		transactionall: '/uc/uc/asset/transaction/all',
+		assetwallet: "/uc/uc/legal-currency/asset/wallet",
+		assetcoin: '/uc/uc/legal-currency/asset/coin',
+		assettransfer: "/uc/uc/legal-currency/asset/transfer",
+		coininfo: "/uc/uc/withdraw/support/coin/info",
+		recordpage: "/uc/uc/transfer-self/record/page",
+		matchcheck:"/uc/uc/asset/wallet/match-check",
+		walletmatch:"/uc/uc/asset/wallet/match",
+		walletresetaddress: "/uc/uc/asset/wallet/reset-address",
+		updateuserName: '/uc/uc/approve/update/userName',
+		approverealname: '/uc/uc/approve/real/name',
+		approvebindemail: '/uc/uc/approve/bind/email',
+		approveupdatepassword: '/uc/uc/approve/update/password',
+		updatetransactionpassword: '/uc/uc/approve/update/transaction/password',
+		approvetransactionpassword: '/uc/uc/approve/transaction/password',
+		resettransactionpassword: '/uc/uc/approve/reset/transaction/password',
+		bindemailcode: '/uc/uc/bind/email/code',
+		emailupdatepasswordcode:"/uc/uc/email/update/password/code",
+		emailtransactioncode: '/uc/uc/email/transaction/code',
+		emailexangetransfercode: '/uc/uc/email/exange/transfer/code',
+		exangeassettransfer: '/uc/uc/exange/asset/transfer',
+		exangeassetwallet: '/uc/uc/exange/asset/wallet',
+		transferotherrecordpage: '/uc/uc/transfer-other/record/page',
+		emailwithdrawcode: '/uc/uc/email/withdraw/code',
+		withdrawapplycode: '/uc/uc/withdraw/apply/code',
+		withdrawrecord: '/uc/uc/withdraw/record',
+		withdrawaddresspage: '/uc/uc/withdraw/address/page',
+		emailwithdrawaddresscode: '/uc/uc/email/withdraw/address/code',
+   		withdrawaddressdelete: '/uc/uc/withdraw/address/delete',
+   		withdrawaddressadd: '/uc/uc/withdraw/address/add',
     },
     market: { //币币交易行情接口
         market: "/market/market",
@@ -55,7 +89,10 @@ export default {
         favorFind: '/exchange/exchange/favor/find', //查询自选
         favorAdd: '/exchange/exchange/favor/add', //添加自选
         favorDelete: '/exchange/exchange/favor/delete', //删除自选
-        orderCancel: '/exchange/exchange/order/cancel' //取消委托
+        orderCancel: '/exchange/exchange/order/cancel', //取消委托
+        orderpersonalcurrent: '/exchange/exchange/order/personal/current',
+    	orderpersonalhistory: "/exchange/exchange/order/personal/history",
+    
     },
     otc: {
         coin: '/otc/otc/coin/all', //查询支持的币种
@@ -67,8 +104,12 @@ export default {
         ordersell: "/otc/otc/order/sell",
         buy: "/otc/otc/order/buy",
         orderpre: "/otc/otc/order/pre",
-        member: "/ot/otc/advertise/member",
-        create: "/ot/otc/advertise/create",
-        update: "/ot/otc/advertise/update",
+        member: "/otc/otc/advertise/member",
+        create: "/otc/otc/advertise/create",
+        update: "/otc/otc/advertise/update",
+        onshelves: "/otc/otc/advertise/on/shelves",
+        offshelves: "/otc/otc/advertise/off/shelves",
+        delete: "/otc/otc/advertise/delete",
+        self: "/otc/otc/order/self",
     }
 }

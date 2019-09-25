@@ -111,7 +111,7 @@ export default {
       this.clearValues();
       //获取地址
       this.$http
-		.post(this.host + "/uc/withdraw/support/coin/info")
+		.post(this.host + this.api.uc.coininfo)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0 && resp.data.length > 0) {
@@ -165,7 +165,7 @@ export default {
         symbol,
         type
       };
-      this.$http.post(this.host + "/uc/transfer-self/record/page", params).then(response => {
+      this.$http.post(this.host + this.api.uc.recordpage, params).then(response => {
           var resp = response.body;
           if (resp.code == 0) {
             this.loading = false;

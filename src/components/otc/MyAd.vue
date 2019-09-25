@@ -130,7 +130,7 @@ export default {
                         canshu["id"] = params.row.id;
                         // canshu['status'] = params.row.status == 0 ? 1 : 0
                         self.$http
-                          .post(self.host + "/otc/advertise/on/shelves", canshu)
+                          .post(self.host + this.api.otc.onshelves, canshu)
                           .then(response => {
                             var resp = response.body;
                             if (resp.code == 0) {
@@ -147,7 +147,7 @@ export default {
                         // canshu['status'] = params.row.status == 0 ? 1 : 0
                         self.$http
                           .post(
-                            self.host + "/otc/advertise/off/shelves",
+                            self.host + this.api.otc.offshelves,
                             canshu
                           )
                           .then(response => {
@@ -186,7 +186,7 @@ export default {
                           content: "<p>" + self.$t("common.delete") + "</p>",
                           onOk: () => {
                             self.$http
-                              .post(self.host + "/otc/advertise/delete", canshu)
+                              .post(self.host + this.api.otc.delete, canshu)
                               .then(response => {
                                 var resp = response.body;
                                 if (resp.code == 0) {

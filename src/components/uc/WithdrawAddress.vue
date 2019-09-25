@@ -219,7 +219,7 @@ export default {
     getMember() {
       //获取个人安全信息
       this.$http
-        .post(this.host + "/uc/approve/security/setting")
+        .post(this.host + this.api.uc.securitySetting)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0) {
@@ -240,7 +240,7 @@ export default {
     getCoin() {
       //币种
       this.$http
-        .post(this.host + "/uc/withdraw/support/coin")
+        .post(this.host + this.api.uc.coininfo) 
         .then(response => {
           var resp = response.body;
           if (resp.code == 0) {
@@ -258,7 +258,7 @@ export default {
       params["pageNo"] = pageNo;
       params["pageSize"] = pageSize;
       this.$http
-        .post(this.host + "/uc/withdraw/address/page", params)
+        .post(this.host + this.api.uc.withdrawaddresspage, params)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0 && resp.data.content) {
@@ -279,7 +279,7 @@ export default {
       if (index == 1) {
         if (this.formValidateAddr.email) {
           //获取邮箱code
-          this.$http.post(this.host + "/uc/email/withdraw/address/code").then(response => {
+          this.$http.post(this.host + this.api.uc.emailwithdrawaddresscode).then(response => {
             var resp = response.body;
             if (resp.code == 0) {
               this.$Message.success(resp.message);
@@ -305,7 +305,7 @@ export default {
         if (this.formValidateAddr.mobileNo) {
           //获取手机code
           this.$http
-            .post(this.host + "/uc/mobile/add/address/code")
+            .post(this.host + "/uc/mobile/add/address/code" )
             .then(response => {
               var resp = response.body;
               if (resp.code == 0) {
@@ -361,7 +361,7 @@ export default {
           let params = {};
           params["id"] = id;
           this.$http
-            .post(this.host + "/uc/withdraw/address/delete", params)
+            .post(this.host + this.api.uc.withdrawaddressdelete, params)
             .then(response => {
               var resp = response.body;
               if (resp.code == 0) {
@@ -399,7 +399,7 @@ export default {
       param["remark"] = this.remark;
 
       this.$http
-        .post(this.host + "/uc/withdraw/address/add", param)
+        .post(this.host + this.api.uc.withdrawaddressadd, param)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0) {

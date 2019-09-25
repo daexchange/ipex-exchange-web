@@ -37,7 +37,7 @@
               <!-- v-if="titleLang(item.title)===lang" @mouseover="stop()" @mouseout="startMove()" -->
               <div v-for="(item,index) in FAQList" class="cal_content1">
                 <div v-for="(con,j) in item" class="cal_content" @mouseover="stop()" @mouseout="startMove()">
-                  <router-link :to="{path: '/notice/index', query: { 'id': con.id }}">{{strde(con.title)}}</router-link>
+                  <router-link :to="{path: '/confirmation', query: { 'id': con.id }}">{{strde(con.title)}}</router-link>
                 </div>
               </div>
             </div>
@@ -902,7 +902,7 @@ export default {
     },
     getCNYRate() {
       this.$http
-        .post(this.host + "/market/exchange-rate/usd-cny")
+        .post(this.host + this.api.market.usdCny)
         .then(response => {
           var resp = response.body;
           this.CNYRate = resp.data;
@@ -921,7 +921,7 @@ export default {
       let param = {};
       param["sysAdvertiseLocation"] = 1;
       this.$http
-        .post(this.host + "/uc/ancillary/system/advertise", param)
+        .post(this.host + this.api.uc.advertise, param)
         .then(response => {
           var result = response.body;
           if (result.code == 0 && result.data.length > 0) {

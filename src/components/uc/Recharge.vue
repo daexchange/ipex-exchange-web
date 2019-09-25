@@ -163,7 +163,7 @@ export default {
         pageSize = 10,
         type = 0,
         params = { memberId, pageNo, pageSize, type };
-      this.$http.post(this.host + "/uc/asset/transaction/all", params).then(response => {
+      this.$http.post(this.host + this.api.uc.transactionall, params).then(response => {
           var resp = response.body;
           if (resp.code == 0) {
             if (resp.data) {
@@ -180,7 +180,7 @@ export default {
     },
     getMember() {
       let self = this;
-      this.$http.post(this.host + "/uc/approve/security/setting").then(response => {
+      this.$http.post(this.host + this.api.uc.securitySetting).then(response => {
           var resp = response.body;
           if (resp.code == 0) {
             if (resp.data.realName == null || resp.data.realName == "") {

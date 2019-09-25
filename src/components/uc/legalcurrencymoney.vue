@@ -57,7 +57,7 @@ export default {
   methods: {
     getMoney() {
       //获取
-      this.$http.post(this.host + "/uc/legal-currency/asset/wallet").then(response => {
+      this.$http.post(this.host + this.api.uc.assetwallet).then(response => {
         var resp = response.body;
         if (resp.code == 0) {
           this.tableMoney = resp.data;
@@ -86,7 +86,7 @@ export default {
       this.coinId = coinName;
       //获取
       this.$http
-        .post(this.host + "/uc/legal-currency/asset/coin?coinId="+coinName)
+        .post(this.host + this.api.uc.assetcoin+"?coinId="+coinName)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0) {
@@ -130,7 +130,7 @@ export default {
         params["coinId"] = this.coinId;
         
         this.$http
-          .post(this.host + "/uc/legal-currency/asset/transfer", params)
+          .post(this.host + this.api.uc.assettransfer, params)
           .then(response => {
             var resp = response.body;
             if (resp.code == 0) {

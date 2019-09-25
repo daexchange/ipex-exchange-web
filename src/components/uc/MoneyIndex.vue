@@ -41,7 +41,7 @@ export default {
   methods: {
     getMoney() {
       //获取
-      this.$http.post(this.host + "/uc/asset/wallet").then(response => {
+      this.$http.post(this.host + this.api.uc.wallet).then(response => {
         var resp = response.body;
         if (resp.code == 0) {
           this.tableMoney = resp.data;
@@ -59,7 +59,7 @@ export default {
     getGCCMatchAmount() {
       //获取
       this.$http
-        .post(this.host + "/uc/asset/wallet/match-check")
+        .post(this.host + this.api.uc.matchcheck)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0) {
@@ -87,7 +87,7 @@ export default {
         let params = {};
         params["amount"] = this.matchAmount;
         this.$http
-          .post(this.host + "/uc/asset/wallet/match", params)
+          .post(this.host + this.api.uc.walletmatch, params)
           .then(response => {
             var resp = response.body;
             if (resp.code == 0) {
@@ -103,7 +103,7 @@ export default {
       let params = {};
       params["unit"] = unit;
       this.$http
-        .post(this.host + "/uc/asset/wallet/reset-address", params)
+        .post(this.host + this.api.uc.walletresetaddress, params)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0) {

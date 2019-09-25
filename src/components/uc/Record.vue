@@ -138,7 +138,7 @@ export default {
     },
     getAddrList() {
       //获取地址
-      this.$http.post(this.host + "/uc/withdraw/support/coin/info").then(response => {
+      this.$http.post(this.host + this.api.uc.coininfo).then(response => {
           var resp = response.body;
           if (resp.code == 0 && resp.data.length > 0) {
             this.coinList = resp.data;
@@ -194,7 +194,7 @@ export default {
         symbol,
         type
       };
-      this.$http.post(this.host + "/uc/asset/transaction/all", params).then(response => {
+      this.$http.post(this.host + this.api.uc.transactionall, params).then(response => {
           var resp = response.body;
           if (resp.code == 0) {
             this.loading = false;

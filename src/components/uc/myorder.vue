@@ -104,7 +104,7 @@ export default {
       params["pageNo"] = pageNo;
       params["pageSize"] = this.pageSize;
       this.currentPage = pageNo + 1;
-      this.$http.post(this.host + "/otc/order/self", params).then(response => {
+      this.$http.post(this.host + this.api.otc.self, params).then(response => {
         var resp = response.body;
         if (resp.code == 0 && resp.data.content) {
           this.tableOrder = resp.data.content;
@@ -129,7 +129,7 @@ export default {
         params["orderSn"] = this.ordKeyword;
       }
       this.currentPage = 1;
-      this.$http.post(this.host + "/otc/order/self", params).then(response => {
+      this.$http.post(this.host + this.api.otc.self, params).then(response => {
         var resp = response.body;
         if (resp.code == 0 && resp.data.content) {
           this.tableOrder = resp.data.content;

@@ -223,7 +223,7 @@ export default {
       if (typeof this.recordValue == "number")
         params["type"] = this.recordValue;
       this.$http
-        .post(this.host + "/uc/asset/transaction/all", params)
+        .post(this.host + this.api.uc.transactionall, params)
         .then(response => {
           var resp = response.body;
           if (resp.content) {

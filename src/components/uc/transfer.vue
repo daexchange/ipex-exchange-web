@@ -159,7 +159,7 @@ export default {
       this.formInline.fundpwd = "";
     },
     sendCode() {
-      this.$http.post(this.host + "/uc/email/exange/transfer/code").then(response => {
+      this.$http.post(this.host + this.api.uc.emailexangetransfercode).then(response => {
         var resp = response.body;
         if (resp.code == 0) {
           this.settime();
@@ -239,7 +239,7 @@ export default {
       params["jyPassword"] = this.formInline.fundpwd;
       params["code"] = this.formInline.code;
       this.$http
-        .post(this.host + "/uc/exange/asset/transfer", params)
+        .post(this.host + this.api.uc.exangeassettransfer, params)
         .then(response => {
           this.fundpwd = "";
           var resp = response.body;
@@ -284,7 +284,7 @@ export default {
       this.clearValues();
       //获取地址
       this.$http
-		.post(this.host + "/uc/exange/asset/wallet")
+		.post(this.host + this.api.uc.exangeassetwallet)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0 && resp.data.length > 0) {
@@ -314,7 +314,7 @@ export default {
       params["page"] = this.transaction.page;
       params["pageSize"] = this.transaction.pageSize;
       this.$http
-        .post(this.host + "/uc/transfer-other/record/page", params)
+        .post(this.host + this.api.uc.transferotherrecordpage, params)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0) {

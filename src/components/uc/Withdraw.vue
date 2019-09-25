@@ -175,7 +175,7 @@ export default {
     },
     sendCode() {
       this.settime();
-      this.$http.post(this.host + "/uc/email/withdraw/code").then(response => {
+      this.$http.post(this.host + this.api.uc.emailwithdrawcode).then(response => {
         var resp = response.body;
         if (resp.code == 0) {
           this.$Notice.success({
@@ -254,7 +254,7 @@ export default {
       params["jyPassword"] = this.formInline.fundpwd;
       params["code"] = this.formInline.code;
       this.$http
-        .post(this.host + "/uc/withdraw/apply/code", params)
+        .post(this.host + this.api.uc.withdrawapplycode, params)
         .then(response => {
           this.fundpwd = "";
           var resp = response.body;
@@ -276,7 +276,7 @@ export default {
       this.clearValues();
       //获取地址
       this.$http
-        .post(this.host + "/uc/withdraw/support/coin/info")
+        .post(this.host + this.api.uc.coininfo)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0 && resp.data.length > 0) {
@@ -304,7 +304,7 @@ export default {
       params["page"] = this.transaction.page;
       params["pageSize"] = this.transaction.pageSize;
       this.$http
-        .post(this.host + "/uc/withdraw/record", params)
+        .post(this.host + this.api.uc.withdrawrecord, params)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0) {
@@ -411,7 +411,7 @@ export default {
     getMember() {
       //获取个人安全信息
       this.$http
-        .post(this.host + "/uc/approve/security/setting")
+        .post(this.host + this.api.uc.securitySetting)
         .then(response => {
           var resp = response.body;
           if (resp.code == 0) {

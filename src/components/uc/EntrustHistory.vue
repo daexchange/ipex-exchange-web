@@ -285,7 +285,7 @@ export default {
       var that = this;
       this.orders = [];
       this.$http
-        .post(this.host + "/exchange/order/personal/history", params)
+        .post(this.host + this.api.exchange.orderpersonalhistory, params)
         .then(response => {
           var resp = response.body;
           let rows = [];

@@ -203,7 +203,7 @@ export default {
         };
         return {
             uploadHeaders:{'x-auth-token':localStorage.getItem('TOKEN')},
-            uploadUrl:this.host+'/uc/upload/fastdfs/image',
+            uploadUrl:this.host+this.api.uc.uploadfastdfsimage,
             aliImg:'',
             aliPreview:'',
             weImg:'',
@@ -416,7 +416,7 @@ export default {
                 param['realName'] = this.formValidate1.name
                 param['cardNo'] = this.formValidate1.bankNo
               if (this.user.bankVerified==1) { //修改
-                this.$http.post(this.host + '/uc/approve/update/bank', param).then(response => {
+                this.$http.post(this.host + this.api.uc.approveupdatebank, param).then(response => {
                   var resp = response.body;
                   if (resp.code == 0) {
                     this.$Message.success(this.$t('uc.account.save_success'));
@@ -427,7 +427,7 @@ export default {
                   }
                 })
               }else { //设置
-                this.$http.post(this.host + '/uc/approve/bind/bank', param).then(response => {
+                this.$http.post(this.host + this.api.uc.approvebindbank, param).then(response => {
                     var resp = response.body;
                     if (resp.code == 0) {
                         this.$Message.success(this.$t('uc.account.save_success'));
@@ -448,7 +448,7 @@ export default {
                 param['qrCodeUrl'] = this.aliPreview;
 
                 if (this.user.aliVerified==1){
-                  this.$http.post(this.host + '/uc/approve/update/ali', param).then(response => {
+                  this.$http.post(this.host + this.api.uc.approveupdateali, param).then(response => {
                     var resp = response.body;
                     if (resp.code == 0) {
                       this.$Message.success(this.$t('uc.account.save_success'));
@@ -459,7 +459,7 @@ export default {
                     }
                   })
                 }else {
-                  this.$http.post(this.host + '/uc/approve/bind/ali', param).then(response => {
+                  this.$http.post(this.host + this.api.uc.approvebindali, param).then(response => {
                       var resp = response.body;
                       if (resp.code == 0) {
                           this.$Message.success(this.$t('uc.account.save_success'));
@@ -512,7 +512,7 @@ export default {
         },
         getAccount() {
             //获取个人账户信息
-            this.$http.post(this.host + '/uc/approve/account/setting').then(response => {
+            this.$http.post(this.host + this.api.uc.accountSetting).then(response => {
                 var resp = response.body;
                 // console.log(resp);
                 if (resp.code == 0) {
