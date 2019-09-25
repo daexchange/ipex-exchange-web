@@ -766,7 +766,7 @@ export default {
           this.status = 0;
       },
       getCountryList() {
-          let api = '/uc/support/country';
+          let api = this.api.common.area;
           this.$http.post(this.host + api).then(response => {
               let countryList = response.data.data;
               console.log(countryList);

@@ -170,7 +170,7 @@
                 this.$refs[name].resetFields();
             },
             getCountryList() {
-                let api = '/uc/support/country';
+                let api = this.api.common.area;
                 this.$http.post(this.host + api).then(response => {
                     let countryList = response.data.data;
                     this.countryList = countryList;
@@ -190,7 +190,7 @@
                 if (tab === 'key2') {
                     this.formItem2.loading = true;
                     params["email"] = this.formItem2.email;
-                    api = "/uc/email/code";
+                    api = this.api.uc.emailcode;
                 }
                 this.$http.post(this.host + api, params).then(response => {
                     let status = response.data;
@@ -297,7 +297,7 @@
                                 // params["username"] = this.formItem2.username;
                                 params["password"] = this.formItem2.password;
 
-                                api = "/uc/register/email";
+                                api = this.api.uc.registeremail;
                             } else {
                                 this.title = '请阅读并同意《用户协议》';
                                 this.errorMsg(this.title);

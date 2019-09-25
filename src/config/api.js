@@ -64,6 +64,8 @@ export default {
 		emailwithdrawaddresscode: '/uc/uc/email/withdraw/address/code',
    		withdrawaddressdelete: '/uc/uc/withdraw/address/delete',
    		withdrawaddressadd: '/uc/uc/withdraw/address/add',
+   		emailcode: '/uc/uc/email/code',
+   		registeremail: '/uc/uc/register/email',
     },
     market: { //币币交易行情接口
         market: "/market/market",
