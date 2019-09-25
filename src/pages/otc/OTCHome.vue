@@ -134,7 +134,7 @@
                     /*this.$router.push({
                         path: "/uc/ad/create"
                     });*/
-                    this.$http.post(this.host + "/uc/approve/security/setting", {})
+                    this.$http.post(this.host + this.api.uc.securitySetting, {})
                         .then(response => {
                             let resp = response.body;
                             if (resp.code === 0) {

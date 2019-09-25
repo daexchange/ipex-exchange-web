@@ -73,7 +73,7 @@ export default {
       //   }
       // });
       this.$http
-        .post(this.host + "/uc/announcement/more", { id })
+        .post(this.host + this.api.uc.announcement, { id })
         .then(response => {
           var result = response.body;
           if (result.code == 0) {

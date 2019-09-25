@@ -264,7 +264,7 @@
         });
       },
       logout() {
-        this.$http.post(this.host + "/uc/logout", {}).then(response => {
+        this.$http.post(this.host + that.api.uc.logout, {}).then(response => {
           var resp = response.body;
           if (resp.code === 0) {
             localStorage.setItem("MEMBER", JSON.stringify(null));

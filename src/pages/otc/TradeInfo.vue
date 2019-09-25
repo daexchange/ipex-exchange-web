@@ -217,7 +217,7 @@ export default {
     getIdAdv() {
       //获取id广告信息
       this.$http
-        .post(this.host + "/otc/order/pre", { id: this.$route.query.tradeId })
+        .post(this.host + this.api.otc.orderpre, { id: this.$route.query.tradeId })
         .then(response => {
           var resp = response.body;
           if (resp.code == 0) {
@@ -260,7 +260,7 @@ export default {
           param["money"] = this.buyPrice;
           param["amount"] = this.nuyNum;
           this.$http
-            .post(this.host + "/otc/order/buy", param)
+            .post(this.host + this.api.otc.buy, param)
             .then(response => {
               this.btnDisabled = false;
               var resp = response.body;
@@ -283,7 +283,7 @@ export default {
           param["money"] = this.buyPrice;
           param["amount"] = this.nuyNum;
           this.$http
-            .post(this.host + "/otc/order/sell", param)
+            .post(this.host + this.api.otc.ordersell, param)
             .then(response => {
               this.btnDisabled = false;
               var resp = response.body;

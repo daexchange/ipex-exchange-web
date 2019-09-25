@@ -331,7 +331,7 @@ export default {
     getAdv() {
       //获取个人账户信息
       this.$http
-        .post(this.host + "/otc/advertise/member", {
+        .post(this.host + this.api.otc.member, {
           name: this.$route.query.id
         })
         .then(response => {

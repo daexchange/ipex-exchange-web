@@ -302,7 +302,7 @@ export default {
       assetImg: "",
       tradeImg: "",
       uploadHeaders: { "x-auth-token": localStorage.getItem("TOKEN") },
-      uploadUrl: this.host + "/uc/upload/fastdfs/image",
+      uploadUrl: this.host + this.api.uc.uploadfastdfsimage,
       returnReason: "",
       refuseReason: ""
     };
@@ -312,7 +312,7 @@ export default {
       let self = this;
       //判断是否进行实名认证；
       this.$http
-        .post(this.host + "/uc/approve/security/setting", {})
+        .post(this.host + this.api.uc.securitySetting, {})
         .then(response => {
           var resp = response.body;
           if (resp.code == 0) {
@@ -348,7 +348,7 @@ export default {
       var params = {};
       params["detail"] = this.returnReason;
       this.$http
-        .post(this.host + "/uc/approve/cancel/business", params)
+        .post(this.host + this.api.uc.approvecancelbusiness, params)
         .then(res => {
           let resp = res.body;
           if (resp.code == 0) {
@@ -409,7 +409,7 @@ export default {
     },
     getAuthFound() {
       this.$http
-        .get(this.host + "/uc/approve/business-auth-deposit/list")
+        .get(this.host + this.api.uc.businessauthdepositlist)
         .then(res => {
           var resp = res.body;
           if (resp.code == 0) {
@@ -569,7 +569,7 @@ export default {
                 this.apply_form.coinSymbol
         ).id;
         params["json"] = JSON.stringify(this.apply_form);
-        this.$http.post(this.host + "/uc/approve/certified/business/apply", params).then(res => {
+        this.$http.post(this.host + this.api.uc.apply, params).then(res => {
                   var resp = res.body;
                   if (resp.code == 0) {
                     this.$Message.success("提交成功!");

@@ -317,7 +317,7 @@ export default {
         params["geetest_validate"] = this._captchaResult.geetest_validate; //极验验证二次验证表单数据 validate
         params["geetest_seccode"] = this._captchaResult.geetest_seccode; //极验验证二次验证表单数据 seccode
 
-        this.$http.post(this.host + "/uc/reset/email/code", params).then(response => {
+        this.$http.post(this.host + this.api.uc.resetEmailCode, params).then(response => {
             this.countdown = 60;
             var resp = response.body;
             if (resp.code == 0) {
@@ -359,7 +359,7 @@ export default {
             params["mode"] = 1;
             params["password"] = this.formInline.password;
             this.$http
-              .post(this.host + "/uc/reset/login/password", params)
+              .post(this.host + this.api.uc.resetLoginPassword, params)
               .then(response => {
                 this.countdown = 60;
                 var resp = response.body;
@@ -383,7 +383,7 @@ export default {
             params["mode"] = 0;
             params["password"] = this.formInline.password;
             this.$http
-              .post(this.host + "/uc/reset/login/password", params)
+              .post(this.host + this.api.uc.resetLoginPassword, params)
               .then(response => {
                 var resp = response.body;
                 if (resp.code == 0) {

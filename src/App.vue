@@ -283,7 +283,7 @@ export default {
      // this.checkLogin();
     },
     logout() {
-      this.$http.post(this.host + "/uc/loginout", {}).then(response => {
+      this.$http.post(this.host + this.api.uc.loginout, {}).then(response => {
         var resp = response.body;
         if (resp.code == 0) {
           this.$Message.success(resp.message);
@@ -297,7 +297,7 @@ export default {
       });
     },
     checkLogin() {
-      this.$http.post(this.host + "/uc/check/login", {}).then(response => {
+      this.$http.post(this.host + this.api.uc.checkLogin, {}).then(response => {
         var result = response.body;
         if (result.code == 0 && result.data == false) {
           this.$store.commit("setMember", null);

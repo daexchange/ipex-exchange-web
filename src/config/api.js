@@ -20,6 +20,16 @@ export default {
         helpDetail: "/uc/uc/ancillary/more/help/detail",
         helpTop: "/uc/uc/ancillary/more/help/page/top",
         securitySetting: "/uc/uc/approve/security/setting",
+        loginout: "/uc/uc/loginout",
+		checkLogin: "/uc/uc/check/login",
+		logout: "/uc/uc/logout",
+		resetEmailCode: "/uc/uc/reset/email/code",
+		resetLoginPassword: "/uc/uc/reset/login/password",
+		uploadfastdfsimage: "/uc/uc/upload/fastdfs/image",
+		approvecancelbusiness: "/uc/uc/approve/cancel/business",
+		businessauthdepositlist: "/uc/uc/approve/business-auth-deposit/list",
+		announcement: "/uc/uc/announcement/more",
+		accountSetting: "/uc/uc/approve/account/setting",
     },
     market: { //币币交易行情接口
         market: "/market/market",
@@ -52,8 +62,13 @@ export default {
         advertise: '/otc/otc/advertise/page-by-unit', //获取广告
         createAd: '/uc/uc/ad/create', //创建广告
         adDetail: '/otc/otc/advertise/detail',
-        advertisePage: '/otc/advertise/page',
-        advertiseAll: '/otc/advertise/all',
-        
+        advertisePage: '/otc/otc/advertise/page',
+        advertiseAll: '/otc/otc/advertise/all',
+        ordersell: "/otc/otc/order/sell",
+        buy: "/otc/otc/order/buy",
+        orderpre: "/otc/otc/order/pre",
+        member: "/ot/otc/advertise/member",
+        create: "/ot/otc/advertise/create",
+        update: "/ot/otc/advertise/update",
     }
 }
