@@ -276,7 +276,7 @@
         });
 	  },
       sendEmailCode(email) {
-        let api = "/uc/email/login/code";
+        let api = this.api.uc.emaillogincode;
         var params = {};
         params['email'] = email;
         this.$http.post(this.host + api, params).then(response => {
@@ -311,7 +311,7 @@
           let resp = response.data;
           if (resp.code === 0) {
               // 登录成功之后，发送登录成功的邮件
-              let api = "/uc/email/login/success/code";
+              let api = this.api.uc.emailloginsuccesscode;
               this.$http.post(this.host + api, param).then((response) =>{
                   let resp = response.data;
                   if (resp.code === 0) {
