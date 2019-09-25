@@ -103,7 +103,7 @@ export default {
         cate: this.cate
       };
       this.$http
-        .post(this.host + "/uc/ancillary/more/help/page", params)
+        .post(this.host + this.api.uc.helpPage, params)
         .then(res => {
           if (res.status == 200 && res.body.code == 0) {
             this.list = res.body.data.content;

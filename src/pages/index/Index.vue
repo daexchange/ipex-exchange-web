@@ -921,7 +921,7 @@ export default {
         return this.coinsCNYRate[symbol];
     },
     getCoinsCNYRate() {
-      this.$http.get(this.host + "/market/cny-rate/list").then(response => {
+      this.$http.get(this.host + this.api.market.cnyRateList).then(response => {
          var data = response.body.data;
          for(var key in data){     
            let CNYPrice = data[key]||1; 
@@ -942,7 +942,7 @@ export default {
       let param = {};
       param["sysAdvertiseLocation"] = 1;
       this.$http
-        .post(this.host + "/uc/ancillary/system/advertise", param)
+        .post(this.host + this.api.uc.advertise, param)
         .then(response => {
           var result = response.body;
           if (result.code == 0 && result.data.length > 0) {

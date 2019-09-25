@@ -57,7 +57,7 @@ export default {
         mockTableData1(index) {
             let data = [];
             let page = 1 || index
-            this.$http.post(this.host + '/otc/advertise/page', { 'pageNo': index }).then(response => {
+            this.$http.post(this.host + this.api.otc.advertisePage, { 'pageNo': index }).then(response => {
                 var resp = response.body;
                 if (resp.code == 0) {
                     for (let i = 0; i < 10; i++) {

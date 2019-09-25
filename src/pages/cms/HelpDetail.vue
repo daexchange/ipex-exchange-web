@@ -46,12 +46,12 @@ export default {
       this.getData(id);
     },
     getTop() {
-      return this.$http.post(this.host + "/uc/ancillary/more/help/page/top", {
+      return this.$http.post(this.host + this.api.uc.helpTop, {
         cate: this.cate
       });
     },
     getArticle() {
-      return this.$http.post(this.host + "/uc/ancillary/more/help/detail", {
+      return this.$http.post(this.host + this.api.uc.helpDetail, {
         id: this.id
       });
     },
@@ -81,7 +81,7 @@ export default {
     },
     getTopList() {
       this.$http
-        .post(this.host + "/uc/ancillary/more/help/page/top", {
+        .post(this.host + this.api.uc.helpTop, {
           cate: this.cate
         })
         .then(res => {
@@ -94,7 +94,7 @@ export default {
     },
     getData(id) {
       this.$http
-        .post(this.host + "/uc/ancillary/more/help/detail", {
+        .post(this.host + this.api.uc.helpDetail, {
           id
         })
         .then(res => {

@@ -231,7 +231,7 @@ export default {
     changePage() {},
     getAd() {
       //获取个人广告
-      this.$http.post(this.host + "/otc/advertise/all").then(response => {
+      this.$http.post(this.host + this.api.otc.advertiseAll).then(response => {
         var resp = response.body;
         if (resp.code == 0) {
           this.tableAdv = resp.data.content;
@@ -250,7 +250,7 @@ export default {
       });
     },
     publish() {
-      this.$http.post(this.host + "/uc/approve/security/setting", {})
+      this.$http.post(this.host + this.api.uc.securitySetting, {})
               .then(response => {
                 let resp = response.body;
                 if (resp.code === 0) {

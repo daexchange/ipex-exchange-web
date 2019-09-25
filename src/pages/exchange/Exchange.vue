@@ -1883,7 +1883,7 @@
                 });
             },
             getCNYRate() {
-                this.$http.get(this.host + "/uc/coin/cny-rate/"+
+                this.$http.get(this.host + this.api.uc.cnyrate+
                 this.basecion.toUpperCase()).then(response => {
                     var resp = response.body;
                     this.CNYPrice = resp.data||1;
@@ -1894,7 +1894,7 @@
               return this.coinsCNYRate[symbol];
             },
             getCoinsCNYRate() {
-             this.$http.get(this.host + "/market/cny-rate/list").then(response => {
+             this.$http.get(this.host +  this.api.market.cnyRateList).then(response => {
                var data = response.body.data;
                for(var key in data){     
                  let CNYPrice = data[key]||1; 
@@ -2732,7 +2732,7 @@
                     // 连接成功时（服务器响应 CONNECTED 帧）的回调方法
                     console.log('链接成功!');
                     that.datafeed = new Datafeeds.WebsockFeed(
-                        that.host + "/market",
+                        that.host + that.api.market.market,
                         that.currentCoin,
                         stompClient,
                         that.baseCoinScale

@@ -108,7 +108,7 @@ export default {
   },
   methods: {
     getData() {
-      this.$http.post(this.host + "/uc/ancillary/more/help").then(res => {
+      this.$http.post(this.host + this.api.uc.help).then(res => {
         if (res.status == 200 && res.body.code == 0) {
           this.helpData = res.body.data;
         } else {
