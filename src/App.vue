@@ -181,7 +181,7 @@ export default {
   },
   mounted() {
     if (this.isMobile()) {
-      window.location.href = "http://mobile-ipex.openserver.cn/";
+      window.location.href = "https://mobile-ipex.ipcom.io/#/";
     }
     this.minHeight = document.documentElement.clientHeight - 260
     /*window.onresize = function () {
