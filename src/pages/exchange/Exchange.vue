@@ -862,7 +862,6 @@
     var Stomp = require("stompjs");
     var SockJS = require("sockjs-client");
     var moment = require("moment");
-   // import DepthGraph from "@components/exchange/DepthGraph.vue";
     import $ from "@js/jquery.min.js";
 
     export default {
@@ -898,10 +897,10 @@
                 selectedOrder: "current", //当前显示的委托记录
                 selectedPlate: "all", //当前显示的买卖盘
                 datafeed: null,
-                //defaultPath: "btc_usdt",
-                defaultPath: "TLM_ETH",
-                // basecion: "usdt",
-                basecion: "ETH",
+                defaultPath: "BTC_USDT",
+                //defaultPath: "TLM_ETH",
+                basecion: "USDT",
+               //basecion: "ETH",
                 coinScale: 4,
                 baseCoinScale: 2,
                 symbolFee: 0.001,
