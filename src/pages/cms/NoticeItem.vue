@@ -6,13 +6,13 @@
       <router-link class="link" to="../notice">
         <公告列表</router-link>
           <div class="header">
-            <h2>{{data.info.title}}</h2>
-            <span>{{data.info.createTime}}</span>
+            <h2>{{ data.info.title }}</h2>
+            <span>{{ data.info.createTime }}</span>
           </div>
           <div class="content">
             <span v-html="data.info.content"></span>
           </div>
-          <div class="nav-bottom">
+          <!--<div class="nav-bottom">
             <div class="left" v-if="data.back">
               <router-link class="link" :to="'../notice/index?id='+data.back.id">
                 <上一篇 <p>{{data.back.title}}</p>
@@ -23,7 +23,7 @@
                 <p>{{data.next.title}}</p>
               </router-link>
             </div>
-          </div>
+          </div>-->
     </div>
   </div>
 </template>
@@ -77,8 +77,8 @@ export default {
         .then(response => {
           var result = response.body;
           if (result.code == 0) {
-            const data = result.data;
-            this.data = data;
+            this.data = result.data;
+            this.data.info = data.content[0];
             // this.title = result.data.title;
             // this.time = result.data.createTime;
             // this.content = result.data.content;
