@@ -78,7 +78,7 @@ export default {
           var result = response.body;
           if (result.code == 0) {
             this.data = result.data;
-            this.data.info = data.content[0];
+            this.data.info = this.data.content[0];
             // this.title = result.data.title;
             // this.time = result.data.createTime;
             // this.content = result.data.content;

@@ -86,17 +86,17 @@ export default {
 		usdCny:"/market/market/exchange-rate/usd-cny",
     },
     exchange: { //币币交易委托提交与查询接口
-        orderAdd: '/exchange/exchange/order/add', //提交订单接口
-        current: '/exchange/exchange/order/current', //当前委托接口
-        history: '/exchange/exchange/order/history', //历史委托接口
-        detail: '/exchange/exchange/order/detail/', //详细订单接口
-        favorFind: '/exchange/exchange/favor/find', //查询自选
-        favorAdd: '/exchange/exchange/favor/add', //添加自选
-        favorDelete: '/exchange/exchange/favor/delete', //删除自选
-        orderCancel: '/exchange/exchange/order/cancel', //取消委托
-        orderpersonalcurrent: '/exchange/exchange/order/personal/current',
-    	orderpersonalhistory: "/exchange/exchange/order/personal/history",
-    
+        orderAdd: '/exchange-api/exchange/order/add', //提交订单接口
+        current: '/exchange-api/exchange/order/current', //当前委托接口
+        history: '/exchange-api/exchange/order/history', //历史委托接口
+        detail: '/exchange-api/exchange/order/detail/', //详细订单接口
+        favorFind: '/exchange-api/exchange/favor/find', //查询自选
+        favorAdd: '/exchange-api/exchange/favor/add', //添加自选
+        favorDelete: '/exchange-api/exchange/favor/delete', //删除自选
+        orderCancel: '/exchange-api/exchange/order/cancel', //取消委托
+        orderpersonalcurrent: '/exchange-api/exchange/order/personal/current',
+    	orderpersonalhistory: "/exchange-api/exchange/order/personal/history",
+
     },
     otc: {
         coin: '/otc/otc/coin/all', //查询支持的币种
