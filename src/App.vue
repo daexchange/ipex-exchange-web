@@ -181,7 +181,7 @@ export default {
   },
   mounted() {
     if (this.isMobile()) {
-      window.location.href = "https://mobile-ipex.ipcom.io/#/";
+      window.location.href = "https://mobile-ipex.turbochain.ai/#/";
     }
     this.minHeight = document.documentElement.clientHeight - 260
     /*window.onresize = function () {

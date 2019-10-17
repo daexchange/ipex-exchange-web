@@ -319,11 +319,11 @@ export default {
             if (resp.data.realName == null || resp.data.realName == "") {
               this.$Message.warning(this.$t("otc.publishad.submittip1"));
               self.$router.push("/uc/safe");
-			} 
+			}
 			//else if (resp.data.phoneVerified == 0) {
           //    this.$Message.warning(this.$t("otc.publishad.submittip2"));
           //    self.$router.push("/uc/safe");
-			//} 
+			//}
 			else if (resp.data.fundsVerified == 0) {
               this.$Message.warning(this.$t("otc.publishad.submittip3"));
               self.$router.push("/uc/safe");
